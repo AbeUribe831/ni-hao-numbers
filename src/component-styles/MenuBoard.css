@@ -1,0 +1,29 @@
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.row-flex-wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.no-padding-margin {
+    padding: 0;
+    margin: 0;
+    width: 5em;
+}
+.underline-button {
+    background: none;
+    border: none;
+    cursor:pointer;
+    margin: 0px 0px 7px 0px;
+    padding: 0;
+    text-decoration: underline;
+    font-size: small;
+}
+
+.underline-button:hover {
+    color: white;
+    background-color: #07CDB6;
+    border-radius: 2px;
+}
