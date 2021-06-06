@@ -6,22 +6,74 @@ export default class MainBoard extends Component {
         super(props);
         // the values in questions and answers determine which options are pressed
         this.state = {
-            questions: ['char, num, listen'],
-            answers: [],
+            questions: {
+                readCharacter: true,
+                readNumber: true,
+                listen: true
+            },
+            answers: {speak: false},
             started: false 
         }
-        this.updateQuestionsAndAnswers = this.updateQuestionsAndAnswers.bind(this);
+        this.updateQuestions = this.updateQuestions.bind(this);
+        this.updateAnswers = this.updateAnswers.bind(this);
+        this.resetQAndA = this.resetQAndA.bind(this);
     }
-    updateQuestionsAndAnswers(questions, answers) {
-        this.setState(() =>({
-            questions: questions,
-            answers: answers
+    
+    resetQAndA() {
+        this.setState({
+            questions: {
+                readCharacter: true,
+                readNumber: true,
+                listen: true,
+            },
+            answers: {speak: false},
+            started: false
+        });
+    }
+    updateQuestions(question) {
+        if (question === 'readCharacter') {
+            this.setState((prevState) =>({
+                questions: {
+                    readCharacter: !prevState.questions.readCharacter,
+                    readNumber: prevState.questions.readNumber,
+                    listen: prevState.questions.listen
+                }
+            }));
+        }
+        else if (question === 'readNumber') {
+            this.setState((prevState) =>({
+                questions: {
+                    readCharacter: prevState.questions.readCharacter,
+                    readNumber: !prevState.questions.readNumber,
+                    listen: prevState.questions.listen
+                }
+            }));
+        }
+        else if (question === 'listen') {
+            this.setState((prevState) =>({
+                questions: {
+                    readCharacter: prevState.questions.readCharacter,
+                    readNumber: prevState.questions.readNumber,
+                    listen: !prevState.questions.listen
+                }
+            }));
+        }
+    }
+    updateAnswers() {
+        this.setState((prevState) => ({
+            answers: {speak: !prevState.answers.speak}
         }));
     }
     render() {
         return (
             <div className="main-board">
-                <MenuBoard questions={this.state.questions} answers={this.state.answers} updateQuestionsAndAnswers={this.updateQuestionsAndAnswers}/>
+                <MenuBoard 
+                    questions={this.state.questions} 
+                    answers={this.state.answers}
+                    updateQuestions={this.updateQuestions} 
+                    updateAnswers={this.updateAnswers}
+                    resetQAndA={this.resetQAndA}
+                />
             </div>
         )
     }
