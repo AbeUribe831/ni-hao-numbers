@@ -63,9 +63,19 @@ function Options (props) {
            <div className='flex-column'>
                 <div className='row-flex-wrap' style={{alignItems: 'center', justifyContent: 'center'}}>
                     <p>range: </p>
-                    <input type='number' name='start'/>
+                    <input 
+                        name={'minBound'} 
+                        value={props.minBound} 
+                        onChange={props.updateMinBound} 
+                        onKeyDown={props.confirmMinIsNumber}
+                    />
                     <p>to</p>
-                    <input type='number' name='end'/>
+                    <input 
+                        name={'maxBound'}
+                        value={props.maxBound}    
+                        onChange={props.updateMaxBound}
+                        onKeyDown={props.confirmMaxIsNumber}
+                    />
                     <p>how many: </p>
                     <input type='number' name='howMany'/>
                 </div>
@@ -82,9 +92,19 @@ function Options (props) {
             <div className="flex-column">
                 <div className='row-flex-wrap' style={{alignItems: 'center', justifyContent: 'center'}}>
                     <p>range: </p>
-                    <input type={'number'} name={'start'} />
+                    <input 
+                        name={'minBound'} 
+                        value={props.minBound} 
+                        onChange={props.updateMinBound} 
+                        onKeyDown={props.confirmMinIsNumber}
+                    />
                     <p>to</p>
-                    <input type={'number'} name={'end'} />
+                    <input 
+                        name={'maxBound'}
+                        value={props.maxBound}    
+                        onChange={props.updateMaxBound}
+                        onKeyDown={props.confirmMaxIsNumber}
+                    />
                     <p>how many: </p>
                     <input type={'number'} name={'howMany'} />
                 </div>
@@ -127,12 +147,18 @@ export default class MenuBoard extends Component {
                     准备好了吗？
                 </div>
                 <Options 
+                    minBound={this.props.minBound}
+                    maxBound={this.props.maxBound}
                     questions={this.props.questions} 
                     answers={this.props.answers}
                     onClickMoreOptions={this.onClickMoreOptions} 
                     moreOptions={this.state.moreOptions} 
                     updateQuestions={this.props.updateQuestions}
                     updateAnswers={this.props.updateAnswers}
+                    updateMinBound={this.props.updateMinBound}
+                    updateMaxBound={this.props.updateMaxBound}
+                    confirmMinIsNumber={this.props.confirmMinIsNumber}
+                    confirmMaxIsNumber={this.props.confirmMaxIsNumber}
                     resetQAndA={this.props.resetQAndA}
                 />
             </div>

@@ -6,6 +6,9 @@ export default class MainBoard extends Component {
         super(props);
         // the values in questions and answers determine which options are pressed
         this.state = {
+            minBound: '0',
+            maxBound: '10',
+            howMany: '15',
             questions: {
                 readCharacter: true,
                 readNumber: true,
@@ -17,8 +20,67 @@ export default class MainBoard extends Component {
         this.updateQuestions = this.updateQuestions.bind(this);
         this.updateAnswers = this.updateAnswers.bind(this);
         this.resetQAndA = this.resetQAndA.bind(this);
+        this.updateMinBound = this.updateMinBound.bind(this);
+        this.updateMaxBound = this.updateMaxBound.bind(this);
+        this.confirmMinIsNumber = this.confirmMinIsNumber.bind(this);
+        this.confirmMaxIsNumber = this.confirmMaxIsNumber.bind(this);
     }
-    
+
+    confirmMaxIsValid() {
+        const minBound = parseFloat(this.state.minBound);
+        const maxBound =  parseFloat(this.state.maxBound);
+            if (minBound >= maxBound) {
+                this.setState((prevState) => ({
+                    maxBound: (minBound + 1).toString()
+                }));
+            }
+    }
+    confirmMinIsNumber(event) {
+        if ((event.key === 'Tab' || event.key ==='Enter') && (!this.state.minBound || isNaN(this.state.minBound))) {
+            this.setState({
+                minBound: '0'
+            });
+        }
+    }
+    confirmMaxIsNumber(event) {
+        if ((event.key === 'Tab' || event.key ==='Enter') && (!this.state.maxBound || isNaN(this.state.maxBound) || parseFloat(this.state.minBound) >= parseFloat(this.state.maxBound))) {
+            this.setState((prevState) => ({
+                maxBound: (parseFloat(prevState.minBound) + 1).toString()
+            }));
+ 
+        }
+    }
+    updateMinBound(event)
+    {
+        let allNumRegex = /^[-]{0,1}[\0\d]*[.]{0,1}[\0\d]*$/g;
+        if (event.target.value.match(allNumRegex)) {
+            this.setState({
+                minBound: event.target.value
+            }, () => {
+                this.confirmMaxIsValid()
+            });
+        }
+        else {
+            this.setState({
+                minBound: '0'
+            });
+        }
+    }
+    updateMaxBound(event)
+    {
+        // let regex = /^[-]{0,1}[\0\d]*$/g;
+        let allNumRegex = /^[-]{0,1}[\0\d]*[.]{0,1}[\0\d]*$/g;
+        if (event.target.value.match(allNumRegex)) {
+            this.setState({
+                maxBound: event.target.value
+            });
+        }
+        else {
+            this.setState((prevState) => ({
+                maxBound: (parseFloat(prevState.minBound) + 1).toString()
+            }));
+        }
+    }
     resetQAndA() {
         this.setState({
             questions: {
@@ -68,10 +130,16 @@ export default class MainBoard extends Component {
         return (
             <div className="main-board">
                 <MenuBoard 
+                    minBound={this.state.minBound}
+                    maxBound={this.state.maxBound}
                     questions={this.state.questions} 
                     answers={this.state.answers}
                     updateQuestions={this.updateQuestions} 
                     updateAnswers={this.updateAnswers}
+                    updateMinBound={this.updateMinBound}
+                    updateMaxBound={this.updateMaxBound}
+                    confirmMinIsNumber={this.confirmMinIsNumber}
+                    confirmMaxIsNumber={this.confirmMaxIsNumber}
                     resetQAndA={this.resetQAndA}
                 />
             </div>
