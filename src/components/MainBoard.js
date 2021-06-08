@@ -22,32 +22,60 @@ export default class MainBoard extends Component {
         this.resetQAndA = this.resetQAndA.bind(this);
         this.updateMinBound = this.updateMinBound.bind(this);
         this.updateMaxBound = this.updateMaxBound.bind(this);
+        this.updateHowMany = this.updateHowMany.bind(this);
         this.confirmMinIsNumber = this.confirmMinIsNumber.bind(this);
         this.confirmMaxIsNumber = this.confirmMaxIsNumber.bind(this);
+        this.confirmHowMany = this.confirmHowMany.bind(this);
     }
 
+    updateHowMany(event) {
+        let allNumRegex = /^[\d]*$/g;
+        if (event.target.value.match(allNumRegex)) {
+            this.setState({
+                howMany: event.target.value
+            }, () => {
+                if (parseInt(this.state.howMany) > 50) {
+                    this.setState({
+                        howMany: '50'
+                    });
+                }
+            });
+        }
+        else {
+            this.setState({
+                howMany: '1'
+            });
+        }
+    }
     confirmMaxIsValid() {
         const minBound = parseFloat(this.state.minBound);
         const maxBound =  parseFloat(this.state.maxBound);
             if (minBound >= maxBound) {
                 this.setState((prevState) => ({
-                    maxBound: (minBound + 1).toString()
+                    maxBound: (prevState.minBound + 1).toString()
                 }));
             }
     }
     confirmMinIsNumber(event) {
-        if ((event.key === 'Tab' || event.key ==='Enter') && (!this.state.minBound || isNaN(this.state.minBound))) {
+        if ((event.key === 'Tab' || event.key ==='Enter') && (this.state.minBound === '' || isNaN(this.state.minBound))) {
             this.setState({
                 minBound: '0'
             });
         }
     }
     confirmMaxIsNumber(event) {
-        if ((event.key === 'Tab' || event.key ==='Enter') && (!this.state.maxBound || isNaN(this.state.maxBound) || parseFloat(this.state.minBound) >= parseFloat(this.state.maxBound))) {
+        if ((event.key === 'Tab' || event.key ==='Enter') && (this.state.maxBound === '' || isNaN(this.state.maxBound) || parseFloat(this.state.minBound) >= parseFloat(this.state.maxBound))) {
             this.setState((prevState) => ({
                 maxBound: (parseFloat(prevState.minBound) + 1).toString()
             }));
  
+        }
+    }
+    confirmHowMany(event) {
+        if ((event.key === 'Tab' || event.key ==='Enter') && (this.state.howMany === '' || parseInt(this.state.howMany)  < 1)) {
+            this.setState({
+                howMany: '1'
+            });
         }
     }
     updateMinBound(event)
@@ -132,14 +160,17 @@ export default class MainBoard extends Component {
                 <MenuBoard 
                     minBound={this.state.minBound}
                     maxBound={this.state.maxBound}
+                    howMany={this.state.howMany}
                     questions={this.state.questions} 
                     answers={this.state.answers}
                     updateQuestions={this.updateQuestions} 
                     updateAnswers={this.updateAnswers}
                     updateMinBound={this.updateMinBound}
                     updateMaxBound={this.updateMaxBound}
+                    updateHowMany={this.updateHowMany}
                     confirmMinIsNumber={this.confirmMinIsNumber}
                     confirmMaxIsNumber={this.confirmMaxIsNumber}
+                    confirmHowMany={this.confirmHowMany}
                     resetQAndA={this.resetQAndA}
                 />
             </div>

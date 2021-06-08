@@ -77,7 +77,12 @@ function Options (props) {
                         onKeyDown={props.confirmMaxIsNumber}
                     />
                     <p>how many: </p>
-                    <input type='number' name='howMany'/>
+                    <input 
+                        name={'howMany'}
+                        value={props.howMany}
+                        onChange={props.updateHowMany}
+                        onKeyDown={props.confirmHowMany}
+                    />
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <button onClick={props.onClickMoreOptions} className='underline-button' style={{textAlign: 'center'}}>more options</button>
@@ -106,7 +111,12 @@ function Options (props) {
                         onKeyDown={props.confirmMaxIsNumber}
                     />
                     <p>how many: </p>
-                    <input type={'number'} name={'howMany'} />
+                    <input 
+                        name={'howMany'}
+                        value={props.howMany}
+                        onChange={props.updateHowMany}
+                        onKeyDown={props.confirmHowMany}
+                    />
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <MoreOptions 
@@ -149,6 +159,7 @@ export default class MenuBoard extends Component {
                 <Options 
                     minBound={this.props.minBound}
                     maxBound={this.props.maxBound}
+                    howMany={this.props.howMany}
                     questions={this.props.questions} 
                     answers={this.props.answers}
                     onClickMoreOptions={this.onClickMoreOptions} 
@@ -157,8 +168,10 @@ export default class MenuBoard extends Component {
                     updateAnswers={this.props.updateAnswers}
                     updateMinBound={this.props.updateMinBound}
                     updateMaxBound={this.props.updateMaxBound}
+                    updateHowMany={this.props.updateHowMany}
                     confirmMinIsNumber={this.props.confirmMinIsNumber}
                     confirmMaxIsNumber={this.props.confirmMaxIsNumber}
+                    confirmHowMany={this.props.confirmHowMany}
                     resetQAndA={this.props.resetQAndA}
                 />
             </div>
