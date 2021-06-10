@@ -1,0 +1,10 @@
+.basic-button {
+    padding: 0em;
+    width: 4em;
+    height: 2em;
+    background: #07CDB6;
+    border: none;
+    border-radius: 5%;
+    color: white;
+    cursor: pointer;
+  }

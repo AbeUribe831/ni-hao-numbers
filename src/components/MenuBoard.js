@@ -46,11 +46,11 @@ class MoreOptions extends Component {
                     <div style={{flexWrap: 'nowrap'}}>
                         <button 
                             style={{backgroundColor: this.props.answers.speak ? '#07CDB6' : 'white'}} 
-                            onClick={() => this.props.updateAnswers()}>speak</button>
+                            onClick={this.props.updateAnswers}>speak</button>
                     </div>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button onClick={() => this.props.onClickMoreOptions()} className='underline-button' style={{textAlign: 'center'}}>hide</button>
+                    <button onClick={this.props.onClickMoreOptions} className='underline-button' style={{textAlign: 'center'}}>hide</button>
                 </div>
             </div>
         );
@@ -88,7 +88,12 @@ function Options (props) {
                     <button onClick={props.onClickMoreOptions} className='underline-button' style={{textAlign: 'center'}}>more options</button>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button style={{type: 'button', cursor: 'pointer'}}>start</button>
+                    <button 
+                        style={{type: 'button', cursor: 'pointer'}}
+                        onClick={props.onClickStart}
+                    >
+                        start
+                    </button>
                 </div>
            </div>
        )
@@ -129,7 +134,12 @@ function Options (props) {
                     />
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button style={{type: 'button', cursor: 'pointer'}}>start</button>
+                    <button 
+                        style={{type: 'button', cursor: 'pointer'}}
+                        onClick={props.onClickStart}
+                    >
+                        start
+                    </button>
                 </div>
            </div>
    )
@@ -173,6 +183,7 @@ export default class MenuBoard extends Component {
                     confirmMaxIsNumber={this.props.confirmMaxIsNumber}
                     confirmHowMany={this.props.confirmHowMany}
                     resetQAndA={this.props.resetQAndA}
+                    onClickStart={this.props.onClickStart}
                 />
             </div>
         )

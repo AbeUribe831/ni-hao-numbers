@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import '../App.css'
 import MenuBoard from './MenuBoard'
+import StudyBoard from './StudyBoard'
+
 export default class MainBoard extends Component {
     constructor(props){
         super(props);
@@ -26,27 +28,11 @@ export default class MainBoard extends Component {
         this.confirmMinIsNumber = this.confirmMinIsNumber.bind(this);
         this.confirmMaxIsNumber = this.confirmMaxIsNumber.bind(this);
         this.confirmHowMany = this.confirmHowMany.bind(this);
+        this.onClickStartedTrue = this.onClickStartedTrue.bind(this);
+        this.onClickStartedFalse = this.onClickStartedFalse.bind(this);
     }
 
-    updateHowMany(event) {
-        let allNumRegex = /^[\d]*$/g;
-        if (event.target.value.match(allNumRegex)) {
-            this.setState({
-                howMany: event.target.value
-            }, () => {
-                if (parseInt(this.state.howMany) > 50) {
-                    this.setState({
-                        howMany: '50'
-                    });
-                }
-            });
-        }
-        else {
-            this.setState({
-                howMany: '1'
-            });
-        }
-    }
+    
     confirmMaxIsValid() {
         const minBound = parseFloat(this.state.minBound);
         const maxBound =  parseFloat(this.state.maxBound);
@@ -73,6 +59,25 @@ export default class MainBoard extends Component {
     }
     confirmHowMany(event) {
         if ((event.key === 'Tab' || event.key ==='Enter') && (this.state.howMany === '' || parseInt(this.state.howMany)  < 1)) {
+            this.setState({
+                howMany: '1'
+            });
+        }
+    }
+    updateHowMany(event) {
+        let allNumRegex = /^[\d]*$/g;
+        if (event.target.value.match(allNumRegex)) {
+            this.setState({
+                howMany: event.target.value
+            }, () => {
+                if (parseInt(this.state.howMany) > 50) {
+                    this.setState({
+                        howMany: '50'
+                    });
+                }
+            });
+        }
+        else {
             this.setState({
                 howMany: '1'
             });
@@ -110,15 +115,25 @@ export default class MainBoard extends Component {
         }
     }
     resetQAndA() {
-        this.setState({
-            questions: {
-                readCharacter: true,
-                readNumber: true,
-                listen: true,
-            },
-            answers: {speak: false},
-            started: false
-        });
+        if(this.state.started){
+            this.setState({
+                questions: {
+                    readCharacter: true,
+                    readNumber: true,
+                    listen: true,
+                },
+            });
+        }
+        else {
+            this.setState({
+                questions: {
+                    readCharacter: true,
+                    readNumber: true,
+                    listen: true,
+                },
+                answers: {speak: false}
+            });
+        }
     }
     updateQuestions(question) {
         if (question === 'readCharacter') {
@@ -154,23 +169,50 @@ export default class MainBoard extends Component {
             answers: {speak: !prevState.answers.speak}
         }));
     }
+    onClickStartedTrue() {
+        this.setState({
+            started: true
+        });
+    }
+    onClickStartedFalse() {
+        this.setState({
+            started: false 
+        });
+    }
     render() {
+        const started = this.state.started;
+        if(!started) { 
+            return (
+                <div className='main-board'>
+                    <MenuBoard 
+                        minBound={this.state.minBound}
+                        maxBound={this.state.maxBound}
+                        howMany={this.state.howMany}
+                        questions={this.state.questions} 
+                        answers={this.state.answers}
+                        updateQuestions={this.updateQuestions} 
+                        updateAnswers={this.updateAnswers}
+                        updateMinBound={this.updateMinBound}
+                        updateMaxBound={this.updateMaxBound}
+                        updateHowMany={this.updateHowMany}
+                        confirmMinIsNumber={this.confirmMinIsNumber}
+                        confirmMaxIsNumber={this.confirmMaxIsNumber}
+                        confirmHowMany={this.confirmHowMany}
+                        resetQAndA={this.resetQAndA}
+                        onClickStart={this.onClickStartedTrue}
+                    />
+                </div>
+            )
+        }
         return (
-            <div className="main-board">
-                <MenuBoard 
+            <div className='main-board'>
+                <StudyBoard
                     minBound={this.state.minBound}
-                    maxBound={this.state.maxBound}
+                    maxBound={this.state.maxBound} 
                     howMany={this.state.howMany}
-                    questions={this.state.questions} 
+                    questions={this.state.questions}
                     answers={this.state.answers}
-                    updateQuestions={this.updateQuestions} 
-                    updateAnswers={this.updateAnswers}
-                    updateMinBound={this.updateMinBound}
-                    updateMaxBound={this.updateMaxBound}
-                    updateHowMany={this.updateHowMany}
-                    confirmMinIsNumber={this.confirmMinIsNumber}
-                    confirmMaxIsNumber={this.confirmMaxIsNumber}
-                    confirmHowMany={this.confirmHowMany}
+                    onClickExit={this.onClickStartedFalse}
                     resetQAndA={this.resetQAndA}
                 />
             </div>
