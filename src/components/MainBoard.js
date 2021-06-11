@@ -3,6 +3,7 @@ import '../App.css'
 import MenuBoard from './MenuBoard'
 import StudyBoard from './StudyBoard'
 
+
 export default class MainBoard extends Component {
     constructor(props){
         super(props);
@@ -32,7 +33,6 @@ export default class MainBoard extends Component {
         this.onClickStartedFalse = this.onClickStartedFalse.bind(this);
     }
 
-    
     confirmMaxIsValid() {
         const minBound = parseFloat(this.state.minBound);
         const maxBound =  parseFloat(this.state.maxBound);
@@ -42,6 +42,9 @@ export default class MainBoard extends Component {
                 }));
             }
     }
+    /*
+    All these confirm methods are for clicking Tab or Enter
+    */
     confirmMinIsNumber(event) {
         if ((event.key === 'Tab' || event.key ==='Enter') && (this.state.minBound === '' || isNaN(this.state.minBound))) {
             this.setState({
@@ -64,6 +67,9 @@ export default class MainBoard extends Component {
             });
         }
     }
+    /*
+    Update methodschecks that the input is a number or empty (empty to allow user to type in a new number)
+    */
     updateHowMany(event) {
         let allNumRegex = /^[\d]*$/g;
         if (event.target.value.match(allNumRegex)) {

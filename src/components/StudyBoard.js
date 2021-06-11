@@ -9,32 +9,11 @@ function getRandomInclusiveInt(min, max) {
     var maxNum = parseInt(max);
     return Math.floor(Math.random() * (maxNum - minNum + 1) + minNum);
 }
+// TODO:: figure out either having a set decimal percision or user decided or input based
 function getRandomInclusiveFloat(min, max) {
     var minNum = parseFloat(min);
     var maxNum = parseFloat(max);
     return Math.random() * (maxNum - minNum + 1) + minNum;
-}
-
-function CurrentStep(props) {
-   return(
-       <p styles={{fontSize: '2em'}}>{props.currentStep} / {props.totalSteps}</p>
-   );
-}
-
-function QuestionStep(props) {
-    return (
-        <p>{props.currentNumber}</p>
-    );
-}
-
-function Buttons(props) {
-    return (
-        <div className='row-flex-wrap' >
-            <button className='basic-button' onClick={props.onClickExit}>Exit</button>
-            <div style={{marginLeft: '0.5em', marginRight: '0.5em'}}/>
-            <button className='basic-button'>Sumbit</button>
-        </div>
-    );
 }
 
 function getAnswerType(questionType, speakBool) {
@@ -51,7 +30,41 @@ function getAnswerType(questionType, speakBool) {
     return AnswerTypes[randomNum];
 
 }
-// TODO:: logic to pair answer type with question type
+/*--------------------------- Actual Components------------------------------------*/
+function CurrentStep(props) {
+   return(
+       <p styles={{fontSize: '2em'}}>{props.currentStep} / {props.totalSteps}</p>
+   );
+}
+function QuestionStep(props) {
+    return (
+        <p>{props.currentNumber}</p>
+    );
+}
+
+function Buttons(props) {
+    return (
+        <div className='row-flex-wrap' >
+            <button className='basic-button' onClick={props.onClickExit}>Exit</button>
+            <div style={{marginLeft: '0.5em', marginRight: '0.5em'}}/>
+            <button 
+                className='basic-button'
+                onClick={props.onClickSubmit}>Sumbit</button>
+        </div>
+    );
+}
+function EndPage(props) {
+    return (
+        <div>
+            <p>非常好</p>
+            <button 
+                className='basic-button'
+                onClick={props.onClickExit}>Exit</button>
+        </div>
+    )
+}
+// TODO:: make user answer a state updated by Answer component
+// TODO:: get numbers from google translate
 export default class StudyBoard extends Component {
     constructor(props){
         super(props);
@@ -63,7 +76,9 @@ export default class StudyBoard extends Component {
                 validQuestions.push(key);
             }
         });
-
+        // creates list of objects that contain the each number the user will practice with along with the 
+        // type of question: like read the numbers as arabic numberal or chineses characters or listening audio
+        // type of answers: either speaking, writing numbers as characters, or write numbers arabic numerals
         const sizeOfList = this.props.howMany;
         let minBound = this.props.minBound;
         let maxBound = this.props.maxBound;
@@ -90,26 +105,43 @@ export default class StudyBoard extends Component {
             currentStep: 1,
             practiceQuestions: practiceQuestions,
         }
+        this.onClickSubmit = this.onClickSubmit.bind(this);
+    }
+    onClickSubmit() {
+        this.setState((prevState) => ({
+            currentStep: prevState.currentStep + 1
+        }));
     }
     componentWillUnmount() {
         this.props.resetQAndA();
     }
     render() {
         const currentStep = this.state.currentStep;
-        return (
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
-                <CurrentStep 
-                    currentStep={currentStep}
-                    totalSteps={this.props.howMany}
-                />
-                <QuestionStep
-                    currentNumber={this.state.practiceQuestions[currentStep - 1].number}
-                />
-                <p>Answers</p>
-                <Buttons 
-                    onClickExit={this.props.onClickExit}
-                />
-            </div>
+        const howMany = parseInt(this.props.howMany);
+        if (currentStep <= howMany) {
+            const currentNumber = this.state.practiceQuestions[currentStep - 1].number;
+            return (
+                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
+                    <CurrentStep 
+                        currentStep={currentStep}
+                        totalSteps={this.props.howMany}
+                    />
+                    <QuestionStep
+                        currentNumber={currentNumber}
+                    />
+                    <p>Answers</p>
+                    <Buttons 
+                        onClickExit={this.props.onClickExit}
+                        onClickSubmit={this.onClickSubmit}
+                    />
+                </div>
+            ) 
+        } 
+        return(
+                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
+                    <EndPage onClickExit={this.props.onClickExit} />
+                </div>
+
         )
     }
 }
