@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { base64StringToBlob, blobToBase64String } from "blob-util";
 import '../component-styles/MenuBoard.css'
 import '../component-styles/StudyBoard.css'
 
@@ -36,9 +37,26 @@ function CurrentStep(props) {
        <p styles={{fontSize: '2em'}}>{props.currentStep} / {props.totalSteps}</p>
    );
 }
+// else display props.question
+// TODO:: create a new button for listening
 function QuestionStep(props) {
+    console.log(props);
+    if(props.currentNumber.listen != null) {
+        // convert base64 string to Audio via blob -> url -> audio
+        const base64Audio = props.currentNumber.listen
+        const blob = base64StringToBlob(base64Audio);
+        const url = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        return (
+            <button 
+                className='basic-button'
+                onClick={() => audio.play() }>
+                Play
+            </button>
+        );
+    }
     return (
-        <p>{props.currentNumber}</p>
+        <p>{props.currentNumber.question}</p>
     );
 }
 
@@ -65,6 +83,7 @@ function EndPage(props) {
 }
 // TODO:: make user answer a state updated by Answer component
 // TODO:: get numbers from google translate
+// TODO:: add a loading page between StudyBoard and post mount
 export default class StudyBoard extends Component {
     constructor(props){
         super(props);
@@ -97,20 +116,41 @@ export default class StudyBoard extends Component {
             }
             practiceQuestions.push({
                 number: randomNum,
-                questionType: questionType,
-                answerType: getAnswerType(questionType, speak)
+                question_type: questionType,
+                answer_type: getAnswerType(questionType, speak)
             });
         }
         this.state = {
-            currentStep: 1,
-            practiceQuestions: practiceQuestions,
+            currentNumber: 0,
+            practiceQuestions: practiceQuestions
         }
+        // TODO:: after practiceQuestions is filled use a promise to either get translated questions and answers or call onClickExit
+        
         this.onClickSubmit = this.onClickSubmit.bind(this);
     }
     onClickSubmit() {
         this.setState((prevState) => ({
             currentStep: prevState.currentStep + 1
         }));
+    }
+    componentDidMount() {
+        const requestOptions = {
+            method: "POST",
+            mode: "cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({practice_questions: this.state.practiceQuestions})
+        };
+        fetch('http://localhost:3000/studyboardSetup', requestOptions)
+            .then(response => response.json())
+            .then(translated_data => {
+                this.setState(() => ({
+                    currentStep: 1,
+                    practiceQuestions: translated_data,
+                }));
+            }).catch(e => {
+                console.log(e);
+                this.props.onClickExit();
+            });
     }
     componentWillUnmount() {
         this.props.resetQAndA();
@@ -119,7 +159,8 @@ export default class StudyBoard extends Component {
         const currentStep = this.state.currentStep;
         const howMany = parseInt(this.props.howMany);
         if (currentStep <= howMany) {
-            const currentNumber = this.state.practiceQuestions[currentStep - 1].number;
+            // const currentNumber = this.state.practiceQuestions[currentStep - 1].number;
+            const currentNumber = this.state.practiceQuestions[currentStep - 1];
             return (
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
                     <CurrentStep 
