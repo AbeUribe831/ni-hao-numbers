@@ -12,6 +12,7 @@ export default class MainBoard extends Component {
             minBound: '0',
             maxBound: '10',
             howMany: '15',
+            decimalPlacement: '0',
             questions: {
                 readCharacter: true,
                 readNumber: true,
@@ -23,6 +24,7 @@ export default class MainBoard extends Component {
         this.updateQuestions = this.updateQuestions.bind(this);
         this.updateAnswers = this.updateAnswers.bind(this);
         this.resetQAndA = this.resetQAndA.bind(this);
+        this.updateDecimalPlacement = this.updateDecimalPlacement.bind(this);
         this.updateMinBound = this.updateMinBound.bind(this);
         this.updateMaxBound = this.updateMaxBound.bind(this);
         this.updateHowMany = this.updateHowMany.bind(this);
@@ -141,6 +143,11 @@ export default class MainBoard extends Component {
             });
         }
     }
+    updateDecimalPlacement(event) {
+        this.setState({
+            decimalPlacement: event.target.value 
+        });
+    }
     updateQuestions(question) {
         if (question === 'readCharacter') {
             this.setState((prevState) =>({
@@ -196,6 +203,8 @@ export default class MainBoard extends Component {
                         howMany={this.state.howMany}
                         questions={this.state.questions} 
                         answers={this.state.answers}
+                        decimalPlacement={this.state.decimalPlacement}
+                        updateDecimalPlacement={this.updateDecimalPlacement}
                         updateQuestions={this.updateQuestions} 
                         updateAnswers={this.updateAnswers}
                         updateMinBound={this.updateMinBound}
@@ -218,6 +227,7 @@ export default class MainBoard extends Component {
                     howMany={this.state.howMany}
                     questions={this.state.questions}
                     answers={this.state.answers}
+                    decimalPlacement={this.state.decimalPlacement}
                     onClickExit={this.onClickStartedFalse}
                     resetQAndA={this.resetQAndA}
                 />

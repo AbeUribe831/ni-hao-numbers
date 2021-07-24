@@ -57,33 +57,57 @@ class MoreOptions extends Component {
     }
 }
 
+function NumberOptions(props) {
+    return (
+        <div className='row-flex-wrap' style={{alignItems: 'center', justifyContent: 'center'}}>
+            <p>range: </p>
+            <input 
+                name={'minBound'} 
+                value={props.minBound} 
+                onChange={props.updateMinBound} 
+                onKeyDown={props.confirmMinIsNumber}
+            />
+            <p>to</p>
+            <input 
+                name={'maxBound'}
+                value={props.maxBound}    
+                onChange={props.updateMaxBound}
+                onKeyDown={props.confirmMaxIsNumber}
+            />
+            <p>how many: </p>
+            <input 
+                name={'howMany'}
+                value={props.howMany}
+                onChange={props.updateHowMany}
+                onKeyDown={props.confirmHowMany}
+            />
+            <p>decial placement</p>
+            <select name="decimal" value={props.decimalPlacement} onChange={props.updateDecimalPlacement} id="decimal">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </div>
+    );
+}
+
 function Options (props) {
    if (props.moreOptions === false) {
        return (
            <div className='flex-column'>
-                <div className='row-flex-wrap' style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <p>range: </p>
-                    <input 
-                        name={'minBound'} 
-                        value={props.minBound} 
-                        onChange={props.updateMinBound} 
-                        onKeyDown={props.confirmMinIsNumber}
-                    />
-                    <p>to</p>
-                    <input 
-                        name={'maxBound'}
-                        value={props.maxBound}    
-                        onChange={props.updateMaxBound}
-                        onKeyDown={props.confirmMaxIsNumber}
-                    />
-                    <p>how many: </p>
-                    <input 
-                        name={'howMany'}
-                        value={props.howMany}
-                        onChange={props.updateHowMany}
-                        onKeyDown={props.confirmHowMany}
-                    />
-                </div>
+                <NumberOptions
+                    minBound={props.minBound}
+                    updateMinBound={props.updateMinBound}
+                    confirmMinIsNumber={props.confirmMinIsNumber}
+                    maxBound={props.maxBound}
+                    decimalPlacement={props.decimalPlacement}
+                    updateMaxBound={props.updateMaxBound}
+                    updateDecimalPlacement={props.updateDecimalPlacement}
+                    confirmMaxIsNumber={props.confirmMaxIsNumber}
+                    howMany={props.howMany}
+                    updateHowMany={props.updateHowMany}
+                    confirmHowMany={props.confirmHowMany}
+                />
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <button onClick={props.onClickMoreOptions} className='underline-button' style={{textAlign: 'center'}}>more options</button>
                 </div>
@@ -100,29 +124,18 @@ function Options (props) {
    } 
    return (
             <div className="flex-column">
-                <div className='row-flex-wrap' style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <p>range: </p>
-                    <input 
-                        name={'minBound'} 
-                        value={props.minBound} 
-                        onChange={props.updateMinBound} 
-                        onKeyDown={props.confirmMinIsNumber}
-                    />
-                    <p>to</p>
-                    <input 
-                        name={'maxBound'}
-                        value={props.maxBound}    
-                        onChange={props.updateMaxBound}
-                        onKeyDown={props.confirmMaxIsNumber}
-                    />
-                    <p>how many: </p>
-                    <input 
-                        name={'howMany'}
-                        value={props.howMany}
-                        onChange={props.updateHowMany}
-                        onKeyDown={props.confirmHowMany}
-                    />
-                </div>
+                 <NumberOptions
+                    minBound={props.minBound}
+                    updateMinBound={props.updateMinBound}
+                    confirmMinIsNumber={props.confirmMinIsNumber}
+                    maxBound={props.maxBound}
+                    updateDecimalPlacement={props.updateDecimalPlacement}
+                    updateMaxBound={props.updateMaxBound}
+                    confirmMaxIsNumber={props.confirmMaxIsNumber}
+                    howMany={props.howMany}
+                    updateHowMany={props.updateHowMany}
+                    confirmHowMany={props.confirmHowMany}
+                />
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <MoreOptions 
                         questions={props.questions} 
@@ -160,31 +173,34 @@ export default class MenuBoard extends Component {
             });
         });
     }
+    // in from add : <form onClick={this.method}
     render() {
         return (
             <div>
                 <div className='welcome-text'>
                     准备好了吗？
                 </div>
-                <Options 
-                    minBound={this.props.minBound}
-                    maxBound={this.props.maxBound}
-                    howMany={this.props.howMany}
-                    questions={this.props.questions} 
-                    answers={this.props.answers}
-                    onClickMoreOptions={this.onClickMoreOptions} 
-                    moreOptions={this.state.moreOptions} 
-                    updateQuestions={this.props.updateQuestions}
-                    updateAnswers={this.props.updateAnswers}
-                    updateMinBound={this.props.updateMinBound}
-                    updateMaxBound={this.props.updateMaxBound}
-                    updateHowMany={this.props.updateHowMany}
-                    confirmMinIsNumber={this.props.confirmMinIsNumber}
-                    confirmMaxIsNumber={this.props.confirmMaxIsNumber}
-                    confirmHowMany={this.props.confirmHowMany}
-                    resetQAndA={this.props.resetQAndA}
-                    onClickStart={this.props.onClickStart}
-                />
+                    <Options 
+                        minBound={this.props.minBound}
+                        maxBound={this.props.maxBound}
+                        howMany={this.props.howMany}
+                        questions={this.props.questions} 
+                        answers={this.props.answers}
+                        decimalPlacement={this.props.decimalPlacement}
+                        onClickMoreOptions={this.onClickMoreOptions} 
+                        moreOptions={this.state.moreOptions} 
+                        updateDecimalPlacement={this.props.updateDecimalPlacement}
+                        updateQuestions={this.props.updateQuestions}
+                        updateAnswers={this.props.updateAnswers}
+                        updateMinBound={this.props.updateMinBound}
+                        updateMaxBound={this.props.updateMaxBound}
+                        updateHowMany={this.props.updateHowMany}
+                        confirmMinIsNumber={this.props.confirmMinIsNumber}
+                        confirmMaxIsNumber={this.props.confirmMaxIsNumber}
+                        confirmHowMany={this.props.confirmHowMany}
+                        resetQAndA={this.props.resetQAndA}
+                        onClickStart={this.props.onClickStart}
+                    />
             </div>
         )
     }
