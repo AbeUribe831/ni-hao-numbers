@@ -71,6 +71,37 @@ function Buttons(props) {
         </div>
     );
 }
+class Loader extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            idle_animation: '.'
+        }
+    }
+    componentDidMount() {
+        this.timer = setInterval(() => {
+            if(this.state.idle_animation.length >= 3) {
+                this.setState({
+                    idle_animation:'.'
+                });
+            }
+            else {
+                this.setState((prevState) => ({
+                    idle_animation: prevState.idle_animation + '.'
+                }));
+            }
+        }, 1000);
+    }
+    componentWillUnmount() {
+        clearInterval(this.timer);
+    }
+
+    render() {
+        return (
+            <p>Loading{this.state.idle_animation}</p>
+        )
+    }
+}
 function EndPage(props) {
     return (
         <div>
@@ -160,6 +191,7 @@ export default class StudyBoard extends Component {
 
            })
         }
+        this.props.updateLoading();
         fetch('http://localhost:5000/studyboardSetup', requestOptions)
             .then(response => response.json())
             .then(translated_data => {
@@ -168,6 +200,7 @@ export default class StudyBoard extends Component {
                     currentStep: 1,
                     practiceQuestions: translated_data,
                 }));
+                this.props.updateLoading();
             }).catch(e => {
                 console.log(e);
                 this.props.onClickExit();
@@ -177,6 +210,11 @@ export default class StudyBoard extends Component {
         this.props.resetQAndA();
     }
     render() {
+        if(this.props.loading) {
+            return (
+                <Loader/>
+            );
+        }
         const currentStep = this.state.currentStep;
         const howMany = parseInt(this.props.howMany);
         if (currentStep <= howMany) {
