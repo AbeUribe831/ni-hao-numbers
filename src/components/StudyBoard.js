@@ -101,6 +101,9 @@ export default class StudyBoard extends Component {
         const sizeOfList = this.props.howMany;
         let minBound = this.props.minBound;
         let maxBound = this.props.maxBound;
+        let decimalPlacement = this.props.decimalPlacement;
+        let practiceQuestions = [];
+        /*
         const isFloat = minBound.includes('.') | maxBound.includes('.');
         let practiceQuestions = [];
         let randomNum;
@@ -120,6 +123,7 @@ export default class StudyBoard extends Component {
                 answer_type: getAnswerType(questionType, speak)
             });
         }
+        */
         this.state = {
             currentNumber: 0,
             practiceQuestions: practiceQuestions
@@ -134,15 +138,32 @@ export default class StudyBoard extends Component {
         }));
     }
     componentDidMount() {
+        /*
         const requestOptions = {
             method: "POST",
             mode: "cors",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({practice_questions: this.state.practiceQuestions})
         };
-        fetch('http://localhost:3000/studyboardSetup', requestOptions)
+        */
+       const requestOptions = {
+           method: "POST",
+           mode: "cors",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify({
+                min_bound: this.props.minBound,
+                max_bound: this.props.maxBound,
+                how_many: this.props.howMany,
+                decimal_placement: this.props.decimalPlacement,
+                questions: this.props.questions,
+                answers: this.props.answers,
+
+           })
+        }
+        fetch('http://localhost:5000/studyboardSetup', requestOptions)
             .then(response => response.json())
             .then(translated_data => {
+                console.log(translated_data);
                 this.setState(() => ({
                     currentStep: 1,
                     practiceQuestions: translated_data,

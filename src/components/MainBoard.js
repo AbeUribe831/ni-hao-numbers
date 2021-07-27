@@ -3,7 +3,7 @@ import '../App.css'
 import MenuBoard from './MenuBoard'
 import StudyBoard from './StudyBoard'
 
-
+// add a loading state 
 export default class MainBoard extends Component {
     constructor(props){
         super(props);
@@ -19,6 +19,7 @@ export default class MainBoard extends Component {
                 listen: true
             },
             answers: {speak: false},
+            loading: false,
             started: false 
         }
         this.updateQuestions = this.updateQuestions.bind(this);
@@ -28,6 +29,7 @@ export default class MainBoard extends Component {
         this.updateMinBound = this.updateMinBound.bind(this);
         this.updateMaxBound = this.updateMaxBound.bind(this);
         this.updateHowMany = this.updateHowMany.bind(this);
+        this.updateLoading = this.updateLoading.bind(this);
         this.confirmMinIsNumber = this.confirmMinIsNumber.bind(this);
         this.confirmMaxIsNumber = this.confirmMaxIsNumber.bind(this);
         this.confirmHowMany = this.confirmHowMany.bind(this);
@@ -122,26 +124,21 @@ export default class MainBoard extends Component {
             }));
         }
     }
+    // TODO:: determine whether to toggle the loading or set true/false
+    updateLoading() {
+        this.setState((prevState) =>({
+            loading: !prevState.loading
+        }));
+    }
     resetQAndA() {
-        if(this.state.started){
-            this.setState({
-                questions: {
-                    readCharacter: true,
-                    readNumber: true,
-                    listen: true,
-                },
-            });
-        }
-        else {
-            this.setState({
-                questions: {
-                    readCharacter: true,
-                    readNumber: true,
-                    listen: true,
-                },
-                answers: {speak: false}
-            });
-        }
+        this.setState({
+            questions: {
+                readCharacter: true,
+                readNumber: true,
+                listen: true,
+            },
+            answers: {speak: false}
+        });
     }
     updateDecimalPlacement(event) {
         this.setState({
@@ -183,6 +180,7 @@ export default class MainBoard extends Component {
         }));
     }
     onClickStartedTrue() {
+        console.log('on click started');
         this.setState({
             started: true
         });
@@ -203,6 +201,7 @@ export default class MainBoard extends Component {
                         howMany={this.state.howMany}
                         questions={this.state.questions} 
                         answers={this.state.answers}
+                        started={this.state.started}
                         decimalPlacement={this.state.decimalPlacement}
                         updateDecimalPlacement={this.updateDecimalPlacement}
                         updateQuestions={this.updateQuestions} 
@@ -227,8 +226,10 @@ export default class MainBoard extends Component {
                     howMany={this.state.howMany}
                     questions={this.state.questions}
                     answers={this.state.answers}
+                    loading={this.state.loading}
                     decimalPlacement={this.state.decimalPlacement}
                     onClickExit={this.onClickStartedFalse}
+                    updateLoading={this.updateLoading}
                     resetQAndA={this.resetQAndA}
                 />
             </div>

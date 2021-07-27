@@ -10,11 +10,7 @@ class MoreOptions extends Component {
         this.rNum = 'readNumber';
         this.listen = 'listen';
     }
-
-    componentWillUnmount() {
-        this.props.resetQAndA();
-    }
-
+    
     render(){
         return(
             <div className='flex-column'>
@@ -81,7 +77,7 @@ function NumberOptions(props) {
                 onChange={props.updateHowMany}
                 onKeyDown={props.confirmHowMany}
             />
-            <p>decial placement</p>
+            <p>decial placement:</p>
             <select name="decimal" value={props.decimalPlacement} onChange={props.updateDecimalPlacement} id="decimal">
                 <option value="0">0</option>
                 <option value="1">1</option>
@@ -140,6 +136,7 @@ function Options (props) {
                     <MoreOptions 
                         questions={props.questions} 
                         answers={props.answers} 
+                        started={props.started}
                         onClickMoreOptions={props.onClickMoreOptions} 
                         updateQuestions={props.updateQuestions}
                         updateAnswers={props.updateAnswers}
@@ -172,6 +169,7 @@ export default class MenuBoard extends Component {
                     moreOptions: !prevState.moreOptions
             });
         });
+        this.props.resetQAndA();
     }
     // in from add : <form onClick={this.method}
     render() {
@@ -186,6 +184,7 @@ export default class MenuBoard extends Component {
                         howMany={this.props.howMany}
                         questions={this.props.questions} 
                         answers={this.props.answers}
+                        started={this.props.started}
                         decimalPlacement={this.props.decimalPlacement}
                         onClickMoreOptions={this.onClickMoreOptions} 
                         moreOptions={this.state.moreOptions} 
