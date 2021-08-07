@@ -13,6 +13,7 @@ export default class MainBoard extends Component {
             maxBound: '10',
             howMany: '15',
             decimalPlacement: '0',
+            chnCharType: 'sc',
             questions: {
                 readCharacter: true,
                 readNumber: true,
@@ -37,6 +38,7 @@ export default class MainBoard extends Component {
         this.onClickStartedFalse = this.onClickStartedFalse.bind(this);
     }
 
+    // TODO:: modify to work with largest and smallest number
     confirmMaxIsValid() {
         const minBound = parseFloat(this.state.minBound);
         const maxBound =  parseFloat(this.state.maxBound);
@@ -93,6 +95,7 @@ export default class MainBoard extends Component {
             });
         }
     }
+    // TODO:: add a limit to min -9,999,999,999,999.99
     updateMinBound(event)
     {
         let allNumRegex = /^[-]{0,1}[\0\d]*[.]{0,1}[\0\d]*$/g;
@@ -109,6 +112,7 @@ export default class MainBoard extends Component {
             });
         }
     }
+    // TODO:: add a limit to max 9,999,999,999,999.99
     updateMaxBound(event)
     {
         // let regex = /^[-]{0,1}[\0\d]*$/g;
@@ -227,6 +231,7 @@ export default class MainBoard extends Component {
                     questions={this.state.questions}
                     answers={this.state.answers}
                     loading={this.state.loading}
+                    chnCharType={this.state.chnCharType}
                     decimalPlacement={this.state.decimalPlacement}
                     onClickExit={this.onClickStartedFalse}
                     updateLoading={this.updateLoading}

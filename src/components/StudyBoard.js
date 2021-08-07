@@ -188,6 +188,7 @@ export default class StudyBoard extends Component {
                 decimal_placement: this.props.decimalPlacement,
                 questions: this.props.questions,
                 answers: this.props.answers,
+                chn_char_type: this.props.chnCharType
 
            })
         }
