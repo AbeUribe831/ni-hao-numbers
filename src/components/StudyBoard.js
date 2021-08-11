@@ -39,14 +39,19 @@ function CurrentStep(props) {
 }
 // else display props.question
 // TODO:: create a new button for listening
+// TODO:: on unmount stop audio (so audio doesn't play after submit is done)
 function QuestionStep(props) {
     console.log(props);
     if(props.currentNumber.listen != null) {
         // convert base64 string to Audio via blob -> url -> audio
-        const base64Audio = props.currentNumber.listen
+        const base64Audio = props.currentNumber.listen;
+        console.log(atob(base64Audio));
         const blob = base64StringToBlob(base64Audio);
+        console.log(blob);
         const url = URL.createObjectURL(blob);
+        console.log(url);
         const audio = new Audio(url);
+        
         return (
             <button 
                 className='basic-button'
