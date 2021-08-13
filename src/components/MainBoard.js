@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../App.css'
+import '../component-styles/MainBoard.css'
 import MenuBoard from './MenuBoard'
 import StudyBoard from './StudyBoard'
 
@@ -198,7 +198,7 @@ export default class MainBoard extends Component {
         const started = this.state.started;
         if(!started) { 
             return (
-                <div className='main-board'>
+                <div className='main-board' style={{flex: '12'}}>
                     <MenuBoard 
                         minBound={this.state.minBound}
                         maxBound={this.state.maxBound}

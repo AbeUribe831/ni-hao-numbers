@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import '../component-styles/MenuBoard.css'
 import '../component-styles/MainBoard.css'
-
 // TODO:: add ID to each button
 class MoreOptions extends Component {
     constructor(props){
@@ -14,38 +13,36 @@ class MoreOptions extends Component {
     render(){
         return(
             <div className='flex-column'>
-                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-                    <p className={'no-padding-margin'}>questions:</p>
-                    <div style={{flexWrap: 'nowrap'}}>
-                        <button 
-                            style={{backgroundColor: this.props.questions.readCharacter ? '#07CDB6' : 'white'}} 
+                    <p className={'no-padding-margin margin-top'} style={{fontWeight: 'bold', alignSelf:'center', color: 'white'}}>Questions</p>
+                    <div className='flex-row margin-top'>
+                        <button className='question-button' 
+                            style={{
+                                backgroundColor: this.props.questions.readCharacter ? '#cd071e' : 'white',
+                                color: this.props.questions.readCharacter ? 'white' : '#cd071e'}} 
                             onClick={() => this.props.updateQuestions(this.rChar)}
                         >
                             read character
                         </button>
-                        <button 
-                            style={{backgroundColor: this.props.questions.readNumber ? '#07CDB6' : 'white'}} 
+                        <div style={{marginLeft: '0.5em'}}></div>
+                        <button className='question-button'
+                            style={{
+                                backgroundColor: this.props.questions.readNumber ? '#cd071e' : 'white',
+                                color: this.props.questions.readNumber ? 'white' : '#cd071e'}} 
                             onClick={() => this.props.updateQuestions(this.rNum)}
                         >
                             read number
                         </button>
-                        <button 
-                            style={{backgroundColor: this.props.questions.listen ? '#07CDB6' : 'white'}} 
+                        <div style={{marginLeft: '0.5em'}}></div>
+                        <button className='question-button'
+                            style={{
+                                backgroundColor: this.props.questions.listen ? '#cd071e' : 'white',
+                                color: this.props.questions.listen ? 'white' : '#cd071e'}} 
                             onClick={() => this.props.updateQuestions(this.listen)}
                         >
                             listen
                         </button>
                     </div>
-                </div>
-                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-                    <p className={'no-padding-margin'}>answers:</p>
-                    <div style={{flexWrap: 'nowrap'}}>
-                        <button 
-                            style={{backgroundColor: this.props.answers.speak ? '#07CDB6' : 'white'}} 
-                            onClick={this.props.updateAnswers}>speak</button>
-                    </div>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <div className={'margin-top'} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <button onClick={this.props.onClickMoreOptions} className='underline-button' style={{textAlign: 'center'}}>hide</button>
                 </div>
             </div>
@@ -55,34 +52,56 @@ class MoreOptions extends Component {
 
 function NumberOptions(props) {
     return (
-        <div className='row-flex-wrap' style={{alignItems: 'center', justifyContent: 'center'}}>
-            <p>range: </p>
-            <input 
-                name={'minBound'} 
-                value={props.minBound} 
-                onChange={props.updateMinBound} 
-                onKeyDown={props.confirmMinIsNumber}
-            />
-            <p>to</p>
-            <input 
-                name={'maxBound'}
-                value={props.maxBound}    
-                onChange={props.updateMaxBound}
-                onKeyDown={props.confirmMaxIsNumber}
-            />
-            <p>how many: </p>
-            <input 
-                name={'howMany'}
-                value={props.howMany}
-                onChange={props.updateHowMany}
-                onKeyDown={props.confirmHowMany}
-            />
-            <p>decial placement:</p>
-            <select name="decimal" value={props.decimalPlacement} onChange={props.updateDecimalPlacement} id="decimal">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-            </select>
+        <div className='flex-column'>
+            <div className='flex-row margin-top'>
+                <div className='flex-column'>            
+                    <p className='sub-titles'>From</p>
+                    <input
+                        name={'minBound'} 
+                        value={props.minBound} 
+                        onChange={props.updateMinBound} 
+                        onKeyDown={props.confirmMinIsNumber}
+                    />
+                </div>
+                <div style={{marginLeft: '1em'}}></div>
+                <div className='flex-column'>
+                    <p className='sub-titles'>To</p>
+                    <input
+                        name={'maxBound'}
+                        value={props.maxBound}    
+                        onChange={props.updateMaxBound}
+                        onKeyDown={props.confirmMaxIsNumber}
+                    />
+                </div>
+                <div style={{marginLeft: '1em'}}></div>
+                <div className='flex-column'>
+                    <p className='sub-titles'>How Many</p>
+                    <input
+                        name={'howMany'}
+                        value={props.howMany}
+                        onChange={props.updateHowMany}
+                        onKeyDown={props.confirmHowMany}
+                    />
+                </div>
+            </div>
+            <div className='flex-row margin-top'>
+                <div className='flex-column'>
+                    <p className='sub-titles'>Decimal</p>
+                    <select name="decimal" value={props.decimalPlacement} onChange={props.updateDecimalPlacement} id="decimal">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+                <div style={{marginLeft: '1em'}}></div>
+                <div className='flex-column'>
+                    <p className='sub-titles'>Characters</p>
+                    <select name="chinese-character-type"   id="chinese-character-type">
+                        <option value="simplified">简体</option>
+                        <option value="traditional">繁體</option>
+                    </select>
+                </div>
+            </div>
         </div>
     );
 }
@@ -104,12 +123,14 @@ function Options (props) {
                     updateHowMany={props.updateHowMany}
                     confirmHowMany={props.confirmHowMany}
                 />
-                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button onClick={props.onClickMoreOptions} className='underline-button' style={{textAlign: 'center'}}>more options</button>
+                <div className='margin-top' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <button onClick={props.onClickMoreOptions} className='underline-button'>
+                        more options
+                    </button>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button 
-                        style={{type: 'button', cursor: 'pointer'}}
+                    <button className='question-button'
+                        style={{color: 'white', backgroundColor: '#cd071e', type: 'button', cursor: 'pointer'}}
                         onClick={props.onClickStart}
                     >
                         start
@@ -144,8 +165,8 @@ function Options (props) {
                     />
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button 
-                        style={{type: 'button', cursor: 'pointer'}}
+                    <button className='question-button'
+                        style={{color: 'white', backgroundColor: '#cd071e', type: 'button', cursor: 'pointer'}}
                         onClick={props.onClickStart}
                     >
                         start
@@ -174,7 +195,8 @@ export default class MenuBoard extends Component {
     // in from add : <form onClick={this.method}
     render() {
         return (
-            <div>
+        <div style={{height: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <div style={{flexDirection: 'column'}}>
                 <div className='welcome-text'>
                     准备好了吗？
                 </div>
@@ -200,6 +222,7 @@ export default class MenuBoard extends Component {
                         resetQAndA={this.props.resetQAndA}
                         onClickStart={this.props.onClickStart}
                     />
+                </div>
             </div>
         )
     }

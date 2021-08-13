@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { base64StringToBlob, blobToBase64String } from "blob-util";
 import '../component-styles/MenuBoard.css'
 import '../component-styles/StudyBoard.css'
