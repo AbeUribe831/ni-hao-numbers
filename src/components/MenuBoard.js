@@ -13,10 +13,11 @@ class MoreOptions extends Component {
     render(){
         return(
             <div className='flex-column'>
-                    <p className={'no-padding-margin margin-top'} style={{fontWeight: 'bold', alignSelf:'center', color: 'white'}}>Questions</p>
+                    <p className={'no-padding-margin margin-top'} style={{fontWeight: 'bold', alignSelf:'center', color: 'rgb(235, 200, 5)'}}>Questions</p>
                     <div className='flex-row margin-top'>
                         <button className='question-button' 
                             style={{
+                                transitionDuration: '0.1s',
                                 backgroundColor: this.props.questions.readCharacter ? '#cd071e' : 'white',
                                 color: this.props.questions.readCharacter ? 'white' : '#cd071e'}} 
                             onClick={() => this.props.updateQuestions(this.rChar)}
@@ -26,6 +27,7 @@ class MoreOptions extends Component {
                         <div style={{marginLeft: '0.5em'}}></div>
                         <button className='question-button'
                             style={{
+                                transitionDuration: '0.1s',
                                 backgroundColor: this.props.questions.readNumber ? '#cd071e' : 'white',
                                 color: this.props.questions.readNumber ? 'white' : '#cd071e'}} 
                             onClick={() => this.props.updateQuestions(this.rNum)}
@@ -35,6 +37,7 @@ class MoreOptions extends Component {
                         <div style={{marginLeft: '0.5em'}}></div>
                         <button className='question-button'
                             style={{
+                                transitionDuration: '0.1s',
                                 backgroundColor: this.props.questions.listen ? '#cd071e' : 'white',
                                 color: this.props.questions.listen ? 'white' : '#cd071e'}} 
                             onClick={() => this.props.updateQuestions(this.listen)}
@@ -96,9 +99,9 @@ function NumberOptions(props) {
                 <div style={{marginLeft: '1em'}}></div>
                 <div className='flex-column'>
                     <p className='sub-titles'>Characters</p>
-                    <select name="chinese-character-type"   id="chinese-character-type">
-                        <option value="simplified">简体</option>
-                        <option value="traditional">繁體</option>
+                    <select name="chinese-character-type" onChange={props.updateChnCharType} id="chinese-character-type" >
+                        <option value="sc">简体</option>
+                        <option value="tc">繁體</option>
                     </select>
                 </div>
             </div>
@@ -121,6 +124,7 @@ function Options (props) {
                     confirmMaxIsNumber={props.confirmMaxIsNumber}
                     howMany={props.howMany}
                     updateHowMany={props.updateHowMany}
+                    updateChnCharType={props.updateChnCharType}
                     confirmHowMany={props.confirmHowMany}
                 />
                 <div className='margin-top' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -129,7 +133,7 @@ function Options (props) {
                     </button>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button className='question-button'
+                    <button className='start-button'
                         style={{color: 'white', backgroundColor: '#cd071e', type: 'button', cursor: 'pointer'}}
                         onClick={props.onClickStart}
                     >
@@ -165,7 +169,7 @@ function Options (props) {
                     />
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button className='question-button'
+                    <button className='start-button'
                         style={{color: 'white', backgroundColor: '#cd071e', type: 'button', cursor: 'pointer'}}
                         onClick={props.onClickStart}
                     >
@@ -195,8 +199,8 @@ export default class MenuBoard extends Component {
     // in from add : <form onClick={this.method}
     render() {
         return (
-        <div style={{height: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <div style={{flexDirection: 'column'}}>
+        <div style={{height: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+            <div style={{flexDirection: 'column', paddingTop: '3em'}}>
                 <div className='welcome-text'>
                     准备好了吗？
                 </div>
@@ -216,6 +220,7 @@ export default class MenuBoard extends Component {
                         updateMinBound={this.props.updateMinBound}
                         updateMaxBound={this.props.updateMaxBound}
                         updateHowMany={this.props.updateHowMany}
+                        updateChnCharType={this.props.updateChnCharType}
                         confirmMinIsNumber={this.props.confirmMinIsNumber}
                         confirmMaxIsNumber={this.props.confirmMaxIsNumber}
                         confirmHowMany={this.props.confirmHowMany}

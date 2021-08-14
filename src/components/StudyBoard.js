@@ -2,39 +2,14 @@ import React, { Component } from "react";
 import { base64StringToBlob, blobToBase64String } from "blob-util";
 import '../component-styles/MenuBoard.css'
 import '../component-styles/StudyBoard.css'
+import '../component-styles/MainBoard.css'
 
-const AnswerTypes = ['writeCharacter', 'writeNumber', 'speak'];
+const AnswerTypes = {'writeCharacter': 'write character', 'writeNumber': 'write number'};
 
-function getRandomInclusiveInt(min, max) {
-    var minNum = parseInt(min);
-    var maxNum = parseInt(max);
-    return Math.floor(Math.random() * (maxNum - minNum + 1) + minNum);
-}
-// TODO:: figure out either having a set decimal percision or user decided or input based
-function getRandomInclusiveFloat(min, max) {
-    var minNum = parseFloat(min);
-    var maxNum = parseFloat(max);
-    return Math.random() * (maxNum - minNum + 1) + minNum;
-}
-
-function getAnswerType(questionType, speakBool) {
-   let randomNum;
-   // range from 0-2 or 0-1
-   let range = 1 + (speakBool ? 1 : 0);
-   do {
-        randomNum = getRandomInclusiveInt(0, range);
-   } while (
-       (questionType === 'readCharacter' && AnswerTypes[randomNum] === 'writeCharacter') ||
-       (questionType === 'readNumber' && AnswerTypes[randomNum] === 'writeNumber') ||
-       (questionType === 'listen' && AnswerTypes[randomNum] === 'speak')
-    );
-    return AnswerTypes[randomNum];
-
-}
 /*--------------------------- Actual Components------------------------------------*/
 function CurrentStep(props) {
    return(
-       <p styles={{fontSize: '2em'}}>{props.currentStep} / {props.totalSteps}</p>
+       <p className='non-ui-text'>{props.currentStep} / {props.totalSteps}</p>
    );
 }
 // else display props.question
@@ -53,25 +28,39 @@ function QuestionStep(props) {
         const audio = new Audio(url);
         
         return (
-            <button 
-                className='basic-button'
+            <button style={{margin: '12px 0 0 0'}}
+                className='gg-play-button'
                 onClick={() => audio.play() }>
-                Play
+                
             </button>
         );
     }
     return (
-        <p>{props.currentNumber.question}</p>
+        <p className='non-ui-text' style={{textAlign:'center', color:'rgb(235, 200, 5)'}}>{props.currentNumber.question}</p>
+    );
+}
+
+// change the answer title based on answer type 
+function AnswerStep(props) {
+    return(
+        <div style={{width: '100%', display:'flex', flexDirection:'column' , alignItems: 'center'}}>
+            <p style={{textAlign:'center'}} className='non-ui-text'>{AnswerTypes[props.answerType]}</p>
+            <input style={{ width:'90%', textAlign: 'center'}}
+            name={'answer'}
+            value={props.userAnswer}
+            onChange={props.updateUserAnswer}
+            />
+        </div>
     );
 }
 
 function Buttons(props) {
     return (
-        <div className='row-flex-wrap' >
-            <button className='basic-button' onClick={props.onClickExit}>Exit</button>
+        <div style={{display:'flex', flexDirection:'row'}} >
+            <button className='start-button exit-submit-color' onClick={props.onClickExit}>Exit</button>
             <div style={{marginLeft: '0.5em', marginRight: '0.5em'}}/>
             <button 
-                className='basic-button'
+                className='start-button exit-submit-color' 
                 onClick={props.onClickSubmit}>Sumbit</button>
         </div>
     );
@@ -103,23 +92,34 @@ class Loader extends Component {
 
     render() {
         return (
-            <p>Loading{this.state.idle_animation}</p>
+            <p style={{fontSize: '2em', textAlign: 'center', color: 'white'}}>Loading{this.state.idle_animation}</p>
         )
     }
 }
 function EndPage(props) {
     return (
-        <div>
-            <p>非常好</p>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <p style={{
+                textAlign: 'center',
+                color: 'rgb(235, 200, 5)',
+                fontSize: '2em'
+            }}>
+                非常好!!!
+            </p>
+            <p style={{
+                marginTop: '0%',
+                textAlign: 'center',
+                color: 'white',
+                fontSize: '1.5em'
+            }}>
+                {props.totalCorrect} / {props.howMany} correct
+            </p>
             <button 
-                className='basic-button'
+                className='start-button exit-submit-color'
                 onClick={props.onClickExit}>Exit</button>
         </div>
     )
 }
-// TODO:: make user answer a state updated by Answer component
-// TODO:: get numbers from google translate
-// TODO:: add a loading page between StudyBoard and post mount
 export default class StudyBoard extends Component {
     constructor(props){
         super(props);
@@ -131,47 +131,40 @@ export default class StudyBoard extends Component {
                 validQuestions.push(key);
             }
         });
-        // creates list of objects that contain the each number the user will practice with along with the 
-        // type of question: like read the numbers as arabic numberal or chineses characters or listening audio
-        // type of answers: either speaking, writing numbers as characters, or write numbers arabic numerals
-        const sizeOfList = this.props.howMany;
-        let minBound = this.props.minBound;
-        let maxBound = this.props.maxBound;
-        let decimalPlacement = this.props.decimalPlacement;
         let practiceQuestions = [];
-        /*
-        const isFloat = minBound.includes('.') | maxBound.includes('.');
-        let practiceQuestions = [];
-        let randomNum;
-        let questionType;
-        const speak = this.props.answers.speak;
-        for(let i = 0; i < sizeOfList; i++) {
-            questionType = validQuestions[getRandomInclusiveInt(0, validQuestions.length - 1)];
-            if(isFloat) {
-                randomNum = getRandomInclusiveFloat(minBound, maxBound);
-            }
-            else {
-                randomNum = getRandomInclusiveInt(minBound, maxBound);
-            }
-            practiceQuestions.push({
-                number: randomNum,
-                question_type: questionType,
-                answer_type: getAnswerType(questionType, speak)
-            });
-        }
-        */
+        
         this.state = {
-            currentNumber: 0,
-            practiceQuestions: practiceQuestions
+            currentStep: -1,
+            totalCorrect: 0,
+            practiceQuestions: practiceQuestions,
+            userAnswer: ''
         }
         // TODO:: after practiceQuestions is filled use a promise to either get translated questions and answers or call onClickExit
         
         this.onClickSubmit = this.onClickSubmit.bind(this);
+        this.updateUserAnswer = this.updateUserAnswer.bind(this);
     }
     onClickSubmit() {
-        this.setState((prevState) => ({
-            currentStep: prevState.currentStep + 1
-        }));
+        const userAnswer = this.state.userAnswer;
+        const correctAnswer = this.state.practiceQuestions[this.state.currentStep - 1]['answer'];
+        if(userAnswer == correctAnswer) {
+            this.setState((prevState) => ({
+                totalCorrect: prevState.totalCorrect + 1,
+                currentStep: prevState.currentStep + 1,
+                userAnswer: ''
+            }));
+        }
+        else {
+            this.setState((prevState) => ({
+                currentStep: prevState.currentStep + 1,
+                userAnswer: ''
+            }));
+        }
+    }
+    updateUserAnswer(event) {
+        this.setState({
+            userAnswer: event.target.value 
+        });
     }
     componentDidMount() {
         /*
@@ -216,18 +209,18 @@ export default class StudyBoard extends Component {
         this.props.resetQAndA();
     }
     render() {
-        if(this.props.loading) {
+        const currentStep = this.state.currentStep;
+        if(this.props.loading || currentStep === -1) {
             return (
                 <Loader/>
             );
         }
-        const currentStep = this.state.currentStep;
         const howMany = parseInt(this.props.howMany);
         if (currentStep <= howMany) {
             // const currentNumber = this.state.practiceQuestions[currentStep - 1].number;
             const currentNumber = this.state.practiceQuestions[currentStep - 1];
             return (
-                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
+                <div className='white-text' style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}} >
                     <CurrentStep 
                         currentStep={currentStep}
                         totalSteps={this.props.howMany}
@@ -235,7 +228,12 @@ export default class StudyBoard extends Component {
                     <QuestionStep
                         currentNumber={currentNumber}
                     />
-                    <p>Answers</p>
+                    <AnswerStep
+                        answerType={currentNumber.answer_type}
+                        userAnswer={this.state.userAnswer}
+                        updateUserAnswer={this.updateUserAnswer}
+                    />
+                    <div style={{marginTop:'1em'}}/>
                     <Buttons 
                         onClickExit={this.props.onClickExit}
                         onClickSubmit={this.onClickSubmit}
@@ -245,7 +243,11 @@ export default class StudyBoard extends Component {
         } 
         return(
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
-                    <EndPage onClickExit={this.props.onClickExit} />
+                    <EndPage 
+                        onClickExit={this.props.onClickExit}
+                        howMany={this.props.howMany}    
+                        totalCorrect={this.state.totalCorrect}
+                    />
                 </div>
 
         )

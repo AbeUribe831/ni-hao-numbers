@@ -1,4 +1,7 @@
 .header-bar {
+  position: fixed;
+  height: 3em;
+  width: 100%;
   list-style-type: none; 
   margin: 0;
   padding: 0;
@@ -11,13 +14,14 @@
 .mobile-nav-bar {
   width: 100%;
   background-color: rgb(82, 80, 80);
+  padding-bottom: 0.5em;
 }
 .link-color {
   color: white;
 }
 
 .black-hover:hover {
-    background-color: #f00f1e;
+    background-color: #cd071e;
 }
 .nav-bar-link {
   display:block;

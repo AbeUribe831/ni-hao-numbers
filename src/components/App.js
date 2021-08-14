@@ -51,15 +51,16 @@ class App extends Component {
         <p>not mobile</p>
       )}
       {this.state.is_mobile && (
-        <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
-          <div className='header-bar' style={{flex:'0 1 3em'}}>
+        <div style={{height: '100%'}}>
+          <div className='header-bar'>
             <p style={{fontFamily:'KaiTi, sans-serif', textAlign: 'center', color: 'white'}}>你 好 numbers</p>
           </div>
+          <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
             <BrowserRouter>
               <Route exact path='/' component={MainBoard}/>
               <Route path='/resources' component={Resources}/> 
-             <nav>
-                <table id='mobile-nav-bar-table' style={{flex:'1', paddingBottom: '0.5em'}}className='mobile-nav-bar'>
+            <nav>
+                <table id='mobile-nav-bar-table' className='mobile-nav-bar'>
                   <tbody>
                     <tr>
                       <th id='home-th' ><Link onClick={() => this.highlightClickedPage('home-th')} style={{color: '#cd071e'}} to='/'>Home</Link></th>
@@ -69,30 +70,12 @@ class App extends Component {
                 </table>
               </nav>
             </BrowserRouter>
-        </div>
+            </div>
+      </div>
       )}
    </div>
   );
   }
 }
-/*
-function App() {
-  return (
-    <div>
-     <ul className="nav-bar">
-            <BrowserRouter>
-                <nav>
-                    <li className="nav-bar-item black-hover"><Link className="nav-bar-link" to='/'>Ni Hao Hao</Link></li>
-                    <li className="float-right end"><Link className="nav-bar-link"to='/signin'>Resources</Link></li>
-                    <li className="float-right black-hover"><Link className="nav-bar-link"to='/eng'>Eng</Link></li>
-                </nav>
 
-                <Route exact path='/' component={MainBoard}/>
-                <Route path='/signin' component={Resources}/>
-            </BrowserRouter>
-        </ul> 
-    </div>
-  );
-}
-*/
 export default App;

@@ -31,6 +31,7 @@ export default class MainBoard extends Component {
         this.updateMaxBound = this.updateMaxBound.bind(this);
         this.updateHowMany = this.updateHowMany.bind(this);
         this.updateLoading = this.updateLoading.bind(this);
+        this.updateChnCharType = this.updateChnCharType.bind(this);
         this.confirmMinIsNumber = this.confirmMinIsNumber.bind(this);
         this.confirmMaxIsNumber = this.confirmMaxIsNumber.bind(this);
         this.confirmHowMany = this.confirmHowMany.bind(this);
@@ -183,6 +184,11 @@ export default class MainBoard extends Component {
             answers: {speak: !prevState.answers.speak}
         }));
     }
+    updateChnCharType(event) {
+        this.setState({
+            chnCharType: event.target.value
+        });
+    }
     onClickStartedTrue() {
         console.log('on click started');
         this.setState({
@@ -198,7 +204,7 @@ export default class MainBoard extends Component {
         const started = this.state.started;
         if(!started) { 
             return (
-                <div className='main-board' style={{flex: '12'}}>
+                <div className='main-board'>
                     <MenuBoard 
                         minBound={this.state.minBound}
                         maxBound={this.state.maxBound}
@@ -213,6 +219,7 @@ export default class MainBoard extends Component {
                         updateMinBound={this.updateMinBound}
                         updateMaxBound={this.updateMaxBound}
                         updateHowMany={this.updateHowMany}
+                        updateChnCharType={this.updateChnCharType}
                         confirmMinIsNumber={this.confirmMinIsNumber}
                         confirmMaxIsNumber={this.confirmMaxIsNumber}
                         confirmHowMany={this.confirmHowMany}
@@ -223,7 +230,7 @@ export default class MainBoard extends Component {
             )
         }
         return (
-            <div className='main-board'>
+            <div className='main-board' style={{paddingTop: '5em'}}>
                 <StudyBoard
                     minBound={this.state.minBound}
                     maxBound={this.state.maxBound} 

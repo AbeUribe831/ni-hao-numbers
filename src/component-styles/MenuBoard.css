@@ -10,6 +10,7 @@
 .welcome-text {
     color: white;
     text-align: center;
+    padding-bottom: 0.25em;
 }
 .no-padding-margin {
     padding: 0;
@@ -33,7 +34,7 @@
 }
 .sub-titles {
     margin: 0;
-    color: white;
+    color: rgb(235, 200, 5);
     font-weight: bold;
 }
 .underline-button:hover {
@@ -43,9 +44,18 @@
 }
 .question-button {
     border: none;
-    height: 2.5em;
-    width: 8.5em;
-    border-radius: 35%;
+    /*height: 2.5em;*/
+    height: 3em;
+    width: 6em;
+    border-radius: 3em;
+    font-weight: bold;
+    cursor: pointer;
+}
+.start-button {
+    border: none;
+    height: 3em;
+    width: 6em;
+    border-radius: 3em;
     font-weight: bold;
 }
 p {
