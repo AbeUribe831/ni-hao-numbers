@@ -96,29 +96,139 @@ class Loader extends Component {
         )
     }
 }
-function EndPage(props) {
+// param: wrongAnswers: object array
+// param: howMany: string
+function ReviewPage(props) {
     return (
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <p style={{
-                textAlign: 'center',
-                color: 'rgb(235, 200, 5)',
-                fontSize: '2em'
-            }}>
-                非常好!!!
-            </p>
-            <p style={{
-                marginTop: '0%',
-                textAlign: 'center',
-                color: 'white',
-                fontSize: '1.5em'
-            }}>
-                {props.totalCorrect} / {props.howMany} correct
-            </p>
-            <button 
-                className='start-button exit-submit-color'
-                onClick={props.onClickExit}>Exit</button>
+        <div className='white-text' 
+            style={{width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'}}
+        >
+            <CurrentStep
+                currentStep={props.wrongAnswers}
+            />
         </div>
-    )
+    ); 
+}
+class EndPage extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            reviewInstance: -1
+        }
+        this.startReview = this.startReview.bind(this);
+        this.nextReview = this.nextReview.bind(this);
+        this.prevReview = this.prevReview.bind(this);
+    }
+    startReview() {
+        this.setState({
+            reviewInstance: 0
+        });
+    }
+    nextReview() {
+        if(this.state.reviewInstance < this.props.wrongAnswers.length - 1) {
+            this.setState((prevState) =>({
+                reviewInstance: prevState.reviewInstance + 1
+            }));
+        }
+    }
+    prevReview() {
+        if(this.state.reviewInstance > 0) {
+            this.setState((prevState) =>({
+                reviewInstance: prevState.reviewInstance - 1
+            }));
+        }
+    }
+    render() {
+        if(this.state.reviewInstance == -1) {
+            return (
+                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    <p style={{
+                        textAlign: 'center',
+                        color: 'rgb(235, 200, 5)',
+                        fontSize: '2.5em',
+                        marginBottom: '0px'
+                    }}>
+                        非常好!!!
+                    </p>
+                    <p style={{
+                        marginTop: '20px',
+                        textAlign: 'center',
+                        color: 'white',
+                        fontSize: '1.5em'
+                    }}>
+                        {this.props.totalCorrect} / {this.props.howMany} correct
+                    </p>
+                    {this.props.totalCorrect != this.props.howMany && (
+                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                            <button 
+                                className='start-button exit-submit-color'
+                                onClick={this.props.onClickExit}>Exit</button>
+                            <div style={{paddingLeft:'1em'}}/>
+                            <button
+                                className='start-button exit-submit-color'
+                                onClick={this.startReview}
+                            >
+                                Review
+                            </button>
+                        </div>
+                    )}
+                    {this.props.totalCorrect == this.props.howMany && (
+                        <button
+                            className='start-button exit-submit-color'
+                            onClick={this.props.onClickExit}>Exit</button>
+                    )}
+                </div>
+            );
+        }
+        else {
+            console.log(this.state.reviewInstance)
+            const wrongAnswer = this.props.wrongAnswers[this.state.reviewInstance];
+            return (
+                <div className='white-text' 
+                    style={{
+                        width: '100%', 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'}}
+                >
+                    <CurrentStep
+                        currentStep={wrongAnswer.step}
+                        totalSteps={this.props.howMany}
+                    />
+                    <QuestionStep
+                        currentNumber={wrongAnswer.practiceQuestion}
+                    />
+                    <div style={{textAlign: 'center'}}>
+                        <p className='non-ui-text'>{AnswerTypes[wrongAnswer.practiceQuestion['answer_type']]}</p>
+                        <p className='non-ui-text' style={{color:'red'}}>{wrongAnswer.wrongAnswer}</p>
+                        <p className='non-ui-text'>correct answer</p>
+                        <p className='non-ui-text' style={{marginBottom:'0.5em'}}>{wrongAnswer.practiceQuestion['answer']}</p>
+                    </div>
+                    <div style={{display:'flex', flexDirection: 'row'}}>
+                        <button className='review-buttons' onClick={this.prevReview} 
+                            style={(this.state.reviewInstance != 0) ? 
+                                {marginRight: '0.5em', visibility:'visible'}
+                                :{marginRight: '0.5em', visibility:'hidden'}}>
+                                &laquo; prev 
+                        </button>
+                        <button
+                            className='review-buttons'
+                            onClick={this.props.onClickExit}>Exit</button>
+                            <button className='review-buttons' onClick={this.nextReview}
+                                style={(this.state.reviewInstance != this.props.wrongAnswers.length - 1) ? 
+                                    {marginLeft: '0.5em', visibility:'visible'}
+                                    :{marginLeft: '0.5em', visibility: 'hidden'}}>
+                                next &raquo;
+                            </button>
+                    </div>
+                </div>
+            );
+        }
+    }
 }
 export default class StudyBoard extends Component {
     constructor(props){
@@ -137,6 +247,7 @@ export default class StudyBoard extends Component {
             currentStep: -1,
             totalCorrect: 0,
             practiceQuestions: practiceQuestions,
+            wrongAnswers: [],
             userAnswer: ''
         }
         // TODO:: after practiceQuestions is filled use a promise to either get translated questions and answers or call onClickExit
@@ -157,6 +268,11 @@ export default class StudyBoard extends Component {
         else {
             this.setState((prevState) => ({
                 currentStep: prevState.currentStep + 1,
+                wrongAnswers: [...prevState.wrongAnswers, {
+                    'practiceQuestion': prevState.practiceQuestions[prevState.currentStep - 1],
+                    'wrongAnswer': prevState.userAnswer,
+                    'step': prevState.currentStep
+                }],
                 userAnswer: ''
             }));
         }
@@ -220,7 +336,13 @@ export default class StudyBoard extends Component {
             // const currentNumber = this.state.practiceQuestions[currentStep - 1].number;
             const currentNumber = this.state.practiceQuestions[currentStep - 1];
             return (
-                <div className='white-text' style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}} >
+                <div className='white-text' 
+                    style={{
+                        width: '100%', 
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'}}
+                >
                     <CurrentStep 
                         currentStep={currentStep}
                         totalSteps={this.props.howMany}
@@ -242,11 +364,12 @@ export default class StudyBoard extends Component {
             ) 
         } 
         return(
-                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
+                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} >
                     <EndPage 
                         onClickExit={this.props.onClickExit}
                         howMany={this.props.howMany}    
                         totalCorrect={this.state.totalCorrect}
+                        wrongAnswers={this.state.wrongAnswers}
                     />
                 </div>
 

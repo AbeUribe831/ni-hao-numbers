@@ -19,6 +19,16 @@
   background-color: #cd071e;
 }
 .non-ui-text {
-  margin: 12px 0px 0px 0px;
+  margin: 10px 0px 0px 0px;
   font-size: 1.5em;
+}
+
+.review-buttons {
+  cursor: pointer;
+  border: none;
+  width: 5em;
+  border-radius: 5%;
+  height: 2em;
+  background-color: #cd071e;
+  color: white;
 }
