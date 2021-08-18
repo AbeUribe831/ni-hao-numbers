@@ -194,17 +194,19 @@ export default class MainBoard extends Component {
         this.setState({
             started: true
         });
+        this.props.hideMobileNav(true);
     }
     onClickStartedFalse() {
         this.setState({
             started: false 
         });
+        this.props.hideMobileNav(false);
     }
     render() {
         const started = this.state.started;
         if(!started) { 
             return (
-                <div className='main-board'>
+                <div className='main-board' style={{paddingTop: '3em'}}>
                     <MenuBoard 
                         minBound={this.state.minBound}
                         maxBound={this.state.maxBound}
@@ -213,6 +215,7 @@ export default class MainBoard extends Component {
                         answers={this.state.answers}
                         started={this.state.started}
                         decimalPlacement={this.state.decimalPlacement}
+                        chnCharType={this.state.chnCharType}
                         updateDecimalPlacement={this.updateDecimalPlacement}
                         updateQuestions={this.updateQuestions} 
                         updateAnswers={this.updateAnswers}

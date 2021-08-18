@@ -4,7 +4,8 @@ import MainBoard from './MainBoard'
 import Resources from './Resources'
 import {
     BrowserRouter,
-    Link,
+    NavLink,
+    withRouter,
     Route
 } from 'react-router-dom'
 
@@ -22,12 +23,19 @@ class App extends Component {
     super(props);
     this.state = {
       is_mobile: window.matchMedia("(max-width: 800px)").matches,
+      hide_mobile_nav: false
     }
     this.highlightClickedPage = this.highlightClickedPage.bind(this); 
+    this.hideMobileNav = this.hideMobileNav.bind(this);
   }
   componentDidMount() {
     const handler = e => this.setState({is_mobile: e.matches});
     window.matchMedia("(max-width: 800px)").addEventListener('change', handler);
+  }
+  hideMobileNav(bool_val) {
+    this.setState({
+      hide_mobile_nav: bool_val
+    });
   }
   // changle color to the current page
   highlightClickedPage(table_id) {
@@ -53,22 +61,26 @@ class App extends Component {
       {this.state.is_mobile && (
         <div style={{height: '100%'}}>
           <div className='header-bar'>
-            <p style={{fontFamily:'KaiTi, sans-serif', textAlign: 'center', color: 'white'}}>你 好 numbers</p>
+            <p style={{fontFamily:'KaiTi', textAlign: 'center', color: 'white'}}>你 好 numbers</p>
           </div>
           <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
             <BrowserRouter>
-              <Route exact path='/' component={MainBoard}/>
+              <Route exact path='/'>
+                <MainBoard hideMobileNav={this.hideMobileNav}/>
+              </Route> 
               <Route path='/resources' component={Resources}/> 
+            {!this.state.hide_mobile_nav && (
             <nav>
                 <table id='mobile-nav-bar-table' className='mobile-nav-bar'>
                   <tbody>
                     <tr>
-                      <th id='home-th' ><Link onClick={() => this.highlightClickedPage('home-th')} style={{color: '#cd071e'}} to='/'>Home</Link></th>
-                      <th id='resources-th'><Link onClick={() => this.highlightClickedPage('resources-th')} style={{color: 'white'}} to='/resources'>Resources</Link></th>
+                      <th id='home-th' ><NavLink onClick={() => this.highlightClickedPage('home-th')} style={window.location.href.match(/\/$/g) != null ? {color: '#cd071e'} : {color: 'white'}} to='/'>Home</NavLink></th>
+                      <th id='resources-th'><NavLink onClick={() => this.highlightClickedPage('resources-th')} style={window.location.href.match(/\/resources$/g) != null ? {color: '#cd071e'} : {color: 'white'}} to='/resources'>Resources</NavLink></th>
                     </tr>
                   </tbody>
                 </table>
               </nav>
+              )}
             </BrowserRouter>
             </div>
       </div>

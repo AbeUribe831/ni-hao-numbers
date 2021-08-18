@@ -99,7 +99,7 @@ function NumberOptions(props) {
                 <div style={{marginLeft: '1em'}}></div>
                 <div className='flex-column'>
                     <p className='sub-titles'>Characters</p>
-                    <select name="chinese-character-type" onChange={props.updateChnCharType} id="chinese-character-type" >
+                    <select name="chinese-character-type" value={props.chnCharType} onChange={props.updateChnCharType} id="chinese-character-type" >
                         <option value="sc">简体</option>
                         <option value="tc">繁體</option>
                     </select>
@@ -119,6 +119,7 @@ function Options (props) {
                     confirmMinIsNumber={props.confirmMinIsNumber}
                     maxBound={props.maxBound}
                     decimalPlacement={props.decimalPlacement}
+                    chnCharType={props.chnCharType}
                     updateMaxBound={props.updateMaxBound}
                     updateDecimalPlacement={props.updateDecimalPlacement}
                     confirmMaxIsNumber={props.confirmMaxIsNumber}
@@ -200,7 +201,7 @@ export default class MenuBoard extends Component {
     render() {
         return (
         <div style={{height: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-            <div style={{flexDirection: 'column', paddingTop: '3em'}}>
+            <div style={{flexDirection: 'column'}}>
                 <div className='welcome-text'>
                     准备好了吗？
                 </div>
@@ -212,6 +213,7 @@ export default class MenuBoard extends Component {
                         answers={this.props.answers}
                         started={this.props.started}
                         decimalPlacement={this.props.decimalPlacement}
+                        chnCharType={this.props.chnCharType}
                         onClickMoreOptions={this.onClickMoreOptions} 
                         moreOptions={this.state.moreOptions} 
                         updateDecimalPlacement={this.props.updateDecimalPlacement}
