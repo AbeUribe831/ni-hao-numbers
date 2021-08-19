@@ -15,29 +15,48 @@ function CurrentStep(props) {
 // else display props.question
 // TODO:: create a new button for listening
 // TODO:: on unmount stop audio (so audio doesn't play after submit is done)
-function QuestionStep(props) {
-    console.log(props);
-    if(props.currentNumber.listen != null) {
-        // convert base64 string to Audio via blob -> url -> audio
-        const base64Audio = props.currentNumber.listen;
-        console.log(atob(base64Audio));
-        const blob = base64StringToBlob(base64Audio);
-        console.log(blob);
-        const url = URL.createObjectURL(blob);
-        console.log(url);
-        const audio = new Audio(url);
-        
-        return (
-            <button style={{margin: '12px 0 0 0'}}
-                className='gg-play-button'
-                onClick={() => audio.play() }>
-                
-            </button>
-        );
+class QuestionStep extends Component {
+    constructor(props) {
+        super(props);
     }
-    return (
-        <p className='non-ui-text' style={{textAlign:'center', color:'rgb(235, 200, 5)'}}>{props.currentNumber.question}</p>
-    );
+    // pauses the audio if user goes to next number and do not pause audio if user is tying answer
+       getSnapshotBeforeUpdate(prevProps, prevState) {
+           if(prevProps.audio != null && (prevProps.currentNumber != this.props.currentNumber || prevProps.userAnswer == this.props.userAnswer)) {
+               prevProps.audio.pause();
+           }
+           return null;
+       }
+       // only here to get rid of the warning for getSnapshotBeforeUpdate method
+       componentDidUpdate() {
+           return;
+       }
+        componentWillUnmount() {
+            if (this.props.audio != null) {
+                this.props.audio.pause();
+            }
+        }
+        // plays or resets the audio when button in clicked
+        playAudio() {
+            if(!this.props.audio.paused) {
+                this.props.audio.currentTime=0;
+            }
+            else {
+                this.props.audio.play();
+            }
+        }
+        render() {
+            if (this.props.audio != null) {
+                return (
+                    <button style={{margin: '10px 0 0 0'}}
+                        className='gg-play-button'
+                        onClick={() => this.playAudio() }>
+                    </button>
+                );
+            }
+            return (
+                <p className='non-ui-text' style={{textAlign:'center', color:'rgb(235, 200, 5)'}}>{this.props.currentNumber.question}</p>
+            );
+        }
 }
 
 // change the answer title based on answer type 
@@ -49,6 +68,7 @@ function AnswerStep(props) {
             name={'answer'}
             value={props.userAnswer}
             onChange={props.updateUserAnswer}
+            onKeyPress={(e) => {if(e.key == 'Enter') {props.onEnterSubmit()}}}
             />
         </div>
     );
@@ -96,22 +116,7 @@ class Loader extends Component {
         )
     }
 }
-// param: wrongAnswers: object array
-// param: howMany: string
-function ReviewPage(props) {
-    return (
-        <div className='white-text' 
-            style={{width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'}}
-        >
-            <CurrentStep
-                currentStep={props.wrongAnswers}
-            />
-        </div>
-    ); 
-}
+
 class EndPage extends Component {
     constructor(props) {
         super(props);
@@ -185,7 +190,6 @@ class EndPage extends Component {
             );
         }
         else {
-            console.log(this.state.reviewInstance)
             const wrongAnswer = this.props.wrongAnswers[this.state.reviewInstance];
             return (
                 <div className='white-text' 
@@ -201,6 +205,8 @@ class EndPage extends Component {
                     />
                     <QuestionStep
                         currentNumber={wrongAnswer.practiceQuestion}
+                        audio={this.props.createAudio(wrongAnswer.practiceQuestion)}
+                        userAnswer={wrongAnswer.wrongAnswer}
                     />
                     <div style={{textAlign: 'center'}}>
                         <p className='non-ui-text'>{AnswerTypes[wrongAnswer.practiceQuestion['answer_type']]}</p>
@@ -254,6 +260,7 @@ export default class StudyBoard extends Component {
         
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.updateUserAnswer = this.updateUserAnswer.bind(this);
+        this.createAudio = this.createAudio.bind(this);
     }
     onClickSubmit() {
         const userAnswer = this.state.userAnswer;
@@ -310,7 +317,6 @@ export default class StudyBoard extends Component {
         fetch('http://localhost:5000/studyboardSetup', requestOptions)
             .then(response => response.json())
             .then(translated_data => {
-                console.log(translated_data);
                 this.setState(() => ({
                     currentStep: 1,
                     practiceQuestions: translated_data,
@@ -324,6 +330,18 @@ export default class StudyBoard extends Component {
     componentWillUnmount() {
         this.props.resetQAndA();
     }
+
+    createAudio(currentNumber) {
+        if(currentNumber.listen != null) {
+            // convert base64 string to Audio via blob -> url -> audio
+            const base64Audio = currentNumber.listen;
+            const blob = base64StringToBlob(base64Audio);
+            const url = URL.createObjectURL(blob);
+            const audio = new Audio(url);
+            return audio;
+        }
+        return null;
+    }
     render() {
         const currentStep = this.state.currentStep;
         if(this.props.loading || currentStep === -1) {
@@ -335,6 +353,7 @@ export default class StudyBoard extends Component {
         if (currentStep <= howMany) {
             // const currentNumber = this.state.practiceQuestions[currentStep - 1].number;
             const currentNumber = this.state.practiceQuestions[currentStep - 1];
+            const audio = this.createAudio(currentNumber);
             return (
                 <div className='white-text' 
                     style={{
@@ -349,11 +368,14 @@ export default class StudyBoard extends Component {
                     />
                     <QuestionStep
                         currentNumber={currentNumber}
+                        audio={audio}
+                        userAnswer={this.state.userAnswer}
                     />
                     <AnswerStep
                         answerType={currentNumber.answer_type}
                         userAnswer={this.state.userAnswer}
                         updateUserAnswer={this.updateUserAnswer}
+                        onEnterSubmit={this.onClickSubmit}
                     />
                     <div style={{marginTop:'1em'}}/>
                     <Buttons 
@@ -370,6 +392,7 @@ export default class StudyBoard extends Component {
                         howMany={this.props.howMany}    
                         totalCorrect={this.state.totalCorrect}
                         wrongAnswers={this.state.wrongAnswers}
+                        createAudio={this.createAudio}
                     />
                 </div>
 

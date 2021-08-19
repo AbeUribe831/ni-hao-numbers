@@ -14,15 +14,24 @@
   color: white;
   font-family: sans-serif;
 }
+
 .exit-submit-color {
   color: white;
   background-color: #cd071e;
 }
+
 .non-ui-text {
   margin: 10px 0px 0px 0px;
   font-size: 1.5em;
 }
 
+p {
+  font-family: 'sans-serif';
+}
+
+button {
+  font-family: 'sans-serif';
+}
 .review-buttons {
   cursor: pointer;
   border: none;

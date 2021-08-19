@@ -5,7 +5,6 @@ import Resources from './Resources'
 import {
     BrowserRouter,
     NavLink,
-    withRouter,
     Route
 } from 'react-router-dom'
 
@@ -40,8 +39,6 @@ class App extends Component {
   // changle color to the current page
   highlightClickedPage(table_id) {
     var table_row = document.getElementById('mobile-nav-bar-table').rows[0];
-    console.log(table_id)
-    console.log(table_row);
     for (var i = 0; i < table_row.cells.length; i++) {
       if(table_id === table_row.cells[i].id) {
         table_row.cells[i].lastChild.style.color = '#cd071e';
@@ -56,12 +53,25 @@ class App extends Component {
   return (
     <div style={{height: '100%'}}>
       {!this.state.is_mobile && (
-        <p>not mobile</p>
+        <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
+          <BrowserRouter>
+            <Route exact path='/'>
+              <MainBoard isMobile={this.state.is_mobile}/>
+            </Route>
+            <Route path='/resources' component={Resources}/>
+            <div className="header-bar">
+            <NavLink  style={{color: 'white', fontFamily:'serif', marginLeft: '0.3em', fontSize:'1.5em'}} to='/'>你 好 numbers</NavLink>
+            <NavLink  style={window.location.href.match(/\/resources$/g) != null ? 
+              {textDecoration:'underline 1px white', color: 'white', float: 'right', marginTop: '0.3em', marginRight: '0.3em', fontFamily: 'serif', fontSize:'1.5em'} 
+              : {textDecoration: 'none', color: 'white', float: 'right',  marginTop: '0.3em', marginRight: '0.5em', fontFamily: 'serif', fontSize:'1.5em'}} to='/resources'>Resources</NavLink>
+            </div> 
+         </BrowserRouter>
+        </div>
       )}
       {this.state.is_mobile && (
         <div style={{height: '100%'}}>
           <div className='header-bar'>
-            <p style={{fontFamily:'KaiTi', textAlign: 'center', color: 'white'}}>你 好 numbers</p>
+            <p style={{margin: '0', marginTop:'0.3em', fontSize:'1.5em', fontFamily:'serif', textAlign: 'center', color: 'white'}}>你 好 numbers</p>
           </div>
           <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
             <BrowserRouter>
@@ -82,7 +92,7 @@ class App extends Component {
               </nav>
               )}
             </BrowserRouter>
-            </div>
+          </div>
       </div>
       )}
    </div>

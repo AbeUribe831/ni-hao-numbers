@@ -190,17 +190,20 @@ export default class MainBoard extends Component {
         });
     }
     onClickStartedTrue() {
-        console.log('on click started');
         this.setState({
             started: true
         });
-        this.props.hideMobileNav(true);
+        if(this.props.isMobile) {
+            this.props.hideMobileNav(true);
+        }
     }
     onClickStartedFalse() {
         this.setState({
             started: false 
         });
-        this.props.hideMobileNav(false);
+        if(this.props.isMobile) {
+            this.props.hideMobileNav(false);
+        }
     }
     render() {
         const started = this.state.started;
@@ -208,6 +211,7 @@ export default class MainBoard extends Component {
             return (
                 <div className='main-board' style={{paddingTop: '3em'}}>
                     <MenuBoard 
+                        isMobile={this.props.isMobile}
                         minBound={this.state.minBound}
                         maxBound={this.state.maxBound}
                         howMany={this.state.howMany}

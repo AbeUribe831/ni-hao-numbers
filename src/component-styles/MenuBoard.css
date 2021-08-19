@@ -51,6 +51,7 @@
     cursor: pointer;
 }
 .start-button {
+    cursor: pointer;
     border: none;
     height: 3em;
     width: 6em;
