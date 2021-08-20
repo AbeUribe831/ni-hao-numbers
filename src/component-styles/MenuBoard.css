@@ -37,6 +37,15 @@
     color: rgb(235, 200, 5);
     font-weight: bold;
 }
+.desktop-sub-titles {
+    margin: 0;
+    color: rgb(235, 200, 5);
+    font-weight: normal;
+    font-size: 1.5em;
+}
+.desktop-input {
+    font-size: 1.5em;
+}
 .underline-button:hover {
     color: white;
     border-radius: 2px;

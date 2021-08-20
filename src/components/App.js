@@ -15,21 +15,29 @@ import {
 // signin is signup component
 // TODO:: add a css class to add a container for the main board / signin
 // change Eng button to select div
-
+const url = 'http://localhost:3000';
 // will treat (0, 1224px] as mobile / tablet
 class App extends Component {
   constructor(props) {
     super(props);
+    const curr_page = window.location.href.split(url);
     this.state = {
       is_mobile: window.matchMedia("(max-width: 800px)").matches,
+      curr_page: curr_page[curr_page.length - 1],
       hide_mobile_nav: false
     }
     this.highlightClickedPage = this.highlightClickedPage.bind(this); 
     this.hideMobileNav = this.hideMobileNav.bind(this);
+    this.onClickNewPage = this.onClickNewPage.bind(this);
   }
   componentDidMount() {
     const handler = e => this.setState({is_mobile: e.matches});
     window.matchMedia("(max-width: 800px)").addEventListener('change', handler);
+  }
+  onClickNewPage(page) {
+    this.setState({
+      curr_page: page
+    });
   }
   hideMobileNav(bool_val) {
     this.setState({
@@ -60,10 +68,34 @@ class App extends Component {
             </Route>
             <Route path='/resources' component={Resources}/>
             <div className="header-bar">
-            <NavLink  style={{color: 'white', fontFamily:'serif', marginLeft: '0.3em', fontSize:'1.5em'}} to='/'>你 好 numbers</NavLink>
-            <NavLink  style={window.location.href.match(/\/resources$/g) != null ? 
-              {textDecoration:'underline 1px white', color: 'white', float: 'right', marginTop: '0.3em', marginRight: '0.3em', fontFamily: 'serif', fontSize:'1.5em'} 
-              : {textDecoration: 'none', color: 'white', float: 'right',  marginTop: '0.3em', marginRight: '0.5em', fontFamily: 'serif', fontSize:'1.5em'}} to='/resources'>Resources</NavLink>
+            <NavLink  onClick={() => this.onClickNewPage('/')} style={{color: 'white', fontFamily:'serif', marginTop: '0.3em', marginLeft: '0.3em', fontSize:'1.5em'}} to='/'>你 好 numbers</NavLink>
+            {this.state.curr_page === '/resources' && (
+              <NavLink onClick={() => this.onClickNewPage('/resources')} style=
+                {{ 
+                  height: '100%', 
+                  backgroundColor: '#e42e43',
+                  color: 'white', 
+                  float: 'right',
+                  paddingTop: '0.3em', 
+                  marginRight: '0.5em', 
+                  fontFamily: 'serif', 
+                  fontSize:'1.5em'
+                }} to='/resources'>resources</NavLink>
+            )}
+            {this.state.curr_page !== '/resources' && (
+              <NavLink onClick={() => this.onClickNewPage('/resources')} style=
+              {{
+                height: '100%', 
+                backgroundColor: 'none', 
+                color: 'white', 
+                float: 'right', 
+                paddingTop: '0.3em', 
+                marginRight: '0.5em', 
+                fontFamily: 'serif', 
+                fontSize:'1.5em'
+              }} to='/resources'>resources</NavLink>
+            )}
+            
             </div> 
          </BrowserRouter>
         </div>
@@ -76,7 +108,10 @@ class App extends Component {
           <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
             <BrowserRouter>
               <Route exact path='/'>
-                <MainBoard hideMobileNav={this.hideMobileNav}/>
+                <MainBoard 
+                  hideMobileNav={this.hideMobileNav}
+                  isMobile={this.state.is_mobile}
+                  />
               </Route> 
               <Route path='/resources' component={Resources}/> 
             {!this.state.hide_mobile_nav && (

@@ -55,11 +55,11 @@ class MoreOptions extends Component {
 
 function NumberOptions(props) {
     return (
-        <div className='flex-column'>
+        <div className='flex-column' >
             <div className='flex-row margin-top'>
                 <div className='flex-column'>            
-                    <p className='sub-titles'>From</p>
-                    <input
+                    <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'}>From</p>
+                    <input className={props.isMobile === true ? '' : 'desktop-input'}
                         name={'minBound'} 
                         value={props.minBound} 
                         onChange={props.updateMinBound} 
@@ -68,8 +68,8 @@ function NumberOptions(props) {
                 </div>
                 <div style={{marginLeft: '1em'}}></div>
                 <div className='flex-column'>
-                    <p className='sub-titles'>To</p>
-                    <input
+                    <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'} >To</p>
+                    <input className={props.isMobile === true ? '' : 'desktop-input'}
                         name={'maxBound'}
                         value={props.maxBound}    
                         onChange={props.updateMaxBound}
@@ -78,8 +78,8 @@ function NumberOptions(props) {
                 </div>
                 <div style={{marginLeft: '1em'}}></div>
                 <div className='flex-column'>
-                    <p className='sub-titles'>How Many</p>
-                    <input
+                    <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'}>How Many</p>
+                    <input className={props.isMobile === true ? '' : 'desktop-input'}
                         name={'howMany'}
                         value={props.howMany}
                         onChange={props.updateHowMany}
@@ -89,8 +89,9 @@ function NumberOptions(props) {
             </div>
             <div className='flex-row margin-top'>
                 <div className='flex-column'>
-                    <p className='sub-titles'>Decimal</p>
-                    <select name="decimal" value={props.decimalPlacement} onChange={props.updateDecimalPlacement} id="decimal">
+                    <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'}>Decimal</p>
+                    <select className={props.isMobile === true ? '' : 'desktop-input'}
+                        name="decimal" value={props.decimalPlacement} onChange={props.updateDecimalPlacement} id="decimal">
                         <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -98,8 +99,9 @@ function NumberOptions(props) {
                 </div>
                 <div style={{marginLeft: '1em'}}></div>
                 <div className='flex-column'>
-                    <p className='sub-titles'>Characters</p>
-                    <select name="chinese-character-type" value={props.chnCharType} onChange={props.updateChnCharType} id="chinese-character-type" >
+                    <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'}>Characters</p>
+                    <select className={props.isMobile === true ? '' : 'desktop-input'}
+                        name="chinese-character-type" value={props.chnCharType} onChange={props.updateChnCharType} id="chinese-character-type" >
                         <option value="sc">简体</option>
                         <option value="tc">繁體</option>
                     </select>
@@ -112,8 +114,9 @@ function NumberOptions(props) {
 function Options (props) {
    if (props.moreOptions === false) {
        return (
-           <div className='flex-column'>
+           <div className='flex-column' style={(props.isMobile === false) ? {width: '100%'}: {}}>
                 <NumberOptions
+                    isMobile={props.isMobile}
                     minBound={props.minBound}
                     updateMinBound={props.updateMinBound}
                     confirmMinIsNumber={props.confirmMinIsNumber}
@@ -145,8 +148,9 @@ function Options (props) {
        )
    } 
    return (
-            <div className="flex-column">
+            <div className="flex-column" style={(props.isMobile === false) ? {width: '100%'}: {}}>
                  <NumberOptions
+                    isMobile={props.isMobile}
                     minBound={props.minBound}
                     updateMinBound={props.updateMinBound}
                     confirmMinIsNumber={props.confirmMinIsNumber}
@@ -199,13 +203,51 @@ export default class MenuBoard extends Component {
     }
     // in from add : <form onClick={this.method}
     render() {
-        return (
-        <div style={{height: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-            <div style={{flexDirection: 'column'}}>
+        if(this.props.isMobile === true) {
+            return (
+            <div >
                 <div className='welcome-text'>
                     准备好了吗？
                 </div>
+                <div>
                     <Options 
+                        isMobile={this.props.isMobile}
+                        minBound={this.props.minBound}
+                        maxBound={this.props.maxBound}
+                        howMany={this.props.howMany}
+                        questions={this.props.questions} 
+                        answers={this.props.answers}
+                        started={this.props.started}
+                        decimalPlacement={this.props.decimalPlacement}
+                        chnCharType={this.props.chnCharType}
+                        onClickMoreOptions={this.onClickMoreOptions} 
+                        moreOptions={this.state.moreOptions} 
+                        updateDecimalPlacement={this.props.updateDecimalPlacement}
+                        updateQuestions={this.props.updateQuestions}
+                        updateAnswers={this.props.updateAnswers}
+                        updateMinBound={this.props.updateMinBound}
+                        updateMaxBound={this.props.updateMaxBound}
+                        updateHowMany={this.props.updateHowMany}
+                        updateChnCharType={this.props.updateChnCharType}
+                        confirmMinIsNumber={this.props.confirmMinIsNumber}
+                        confirmMaxIsNumber={this.props.confirmMaxIsNumber}
+                        confirmHowMany={this.props.confirmHowMany}
+                        resetQAndA={this.props.resetQAndA}
+                        onClickStart={this.props.onClickStart}
+                    />
+                    </div>
+                </div>
+            )
+        }
+        return (
+            <div style={{width: '100%'}}>
+                <div className='welcome-text'>
+                    准备好了吗？
+                </div>
+            <div style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                
+                    <Options 
+                        isMobile={this.props.isMobile}
                         minBound={this.props.minBound}
                         maxBound={this.props.maxBound}
                         howMany={this.props.howMany}
@@ -230,7 +272,7 @@ export default class MenuBoard extends Component {
                         onClickStart={this.props.onClickStart}
                     />
                 </div>
-            </div>
+        </div>
         )
     }
 }
