@@ -6,10 +6,31 @@ import '../component-styles/MainBoard.css'
 
 const AnswerTypes = {'writeCharacter': 'write character', 'writeNumber': 'write number'};
 
+function isOverflown(element, defaultHeight) {
+    console.log(element);
+    return element.scrollHeight > defaultHeight;
+}
+
+function adjustTextQuestion(textElementName) {
+    let textElement = document.getElementById(textElementName);
+    console.log('adjusted');
+    if(textElement !== null) {
+        console.log('will auto ', textElement)
+        textElement.style.height = 'auto';
+        if (isOverflown(textElement, 35)) {
+            textElement.style.height = '64px';
+        }
+        else {
+            textElement.style.height = '35px';
+        }    
+    }
+}
+
+
 /*--------------------------- Actual Components------------------------------------*/
 function CurrentStep(props) {
    return(
-       <p className='non-ui-text'>{props.currentStep} / {props.totalSteps}</p>
+       <p className={props.isMobile === false ? 'non-ui-desktop-text' : 'non-ui-text'}>{props.currentStep} / {props.totalSteps}</p>
    );
 }
 // else display props.question
@@ -18,6 +39,9 @@ function CurrentStep(props) {
 class QuestionStep extends Component {
     constructor(props) {
         super(props);
+
+        // addding this event window to adjust the height of question div if the number is too long for its window
+        window.addEventListener('resize', adjustTextQuestion('textQuestion'));
     }
     // pauses the audio if user goes to next number and do not pause audio if user is tying answer
        getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -25,15 +49,16 @@ class QuestionStep extends Component {
                prevProps.audio.pause();
            }
            return null;
-       }
+        }
        // only here to get rid of the warning for getSnapshotBeforeUpdate method
        componentDidUpdate() {
-           return;
+            return;
        }
         componentWillUnmount() {
             if (this.props.audio != null) {
                 this.props.audio.pause();
             }
+            window.removeEventListener('resize', adjustTextQuestion(document.getElementById('textQuestion')));
         }
         // plays or resets the audio when button in clicked
         playAudio() {
@@ -48,13 +73,13 @@ class QuestionStep extends Component {
             if (this.props.audio != null) {
                 return (
                     <button style={{margin: '10px 0 0 0'}}
-                        className='gg-play-button'
+                        className={this.props.isMobile === false ? 'desktop-gg-play-button' : 'gg-play-button'}
                         onClick={() => this.playAudio() }>
                     </button>
                 );
             }
             return (
-                <p className='non-ui-text' style={{textAlign:'center', color:'rgb(235, 200, 5)'}}>{this.props.currentNumber.question}</p>
+                <p id='textQuestion' className={this.props.isMobile === false ? 'non-ui-desktop-text' : 'non-ui-text'} style={{textAlign:'center', color:'rgb(235, 200, 5)'}}>{this.props.currentNumber.question}</p>
             );
         }
 }
@@ -63,8 +88,8 @@ class QuestionStep extends Component {
 function AnswerStep(props) {
     return(
         <div style={{width: '100%', display:'flex', flexDirection:'column' , alignItems: 'center'}}>
-            <p style={{textAlign:'center'}} className='non-ui-text'>{AnswerTypes[props.answerType]}</p>
-            <input style={{ width:'90%', textAlign: 'center'}}
+            <p style={{textAlign:'center'}} className={props.isMobile === false ? 'non-ui-desktop-text' : 'non-ui-text'}>{AnswerTypes[props.answerType]}</p>
+            <input style={props.isMobile === false ? {width:'90%', textAlign: 'center', fontSize: '2.5em'} : {width:'90%', textAlign: 'center', fontSize: '1.5em'}}
             name={'answer'}
             value={props.userAnswer}
             onChange={props.updateUserAnswer}
@@ -75,12 +100,13 @@ function AnswerStep(props) {
 }
 
 function Buttons(props) {
+    const which_button = props.isMobile === false ? 'standard-button exit-submit-color' : 'mobile-standard-button exit-submit-color';
     return (
         <div style={{display:'flex', flexDirection:'row'}} >
-            <button className='start-button exit-submit-color' onClick={props.onClickExit}>Exit</button>
+            <button className={which_button} onClick={props.onClickExit}>Exit</button>
             <div style={{marginLeft: '0.5em', marginRight: '0.5em'}}/>
             <button 
-                className='start-button exit-submit-color' 
+                className={which_button} 
                 onClick={props.onClickSubmit}>Sumbit</button>
         </div>
     );
@@ -148,6 +174,7 @@ class EndPage extends Component {
         }
     }
     render() {
+        const which_button = this.props.isMobile === false ? 'standard-button exit-submit-color' : 'mobile-standard-button exit-submit-color';
         if(this.state.reviewInstance == -1) {
             return (
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -170,11 +197,11 @@ class EndPage extends Component {
                     {this.props.totalCorrect != this.props.howMany && (
                         <div style={{display: 'flex', flexDirection: 'row'}}>
                             <button 
-                                className='start-button exit-submit-color'
+                                className={which_button}
                                 onClick={this.props.onClickExit}>Exit</button>
                             <div style={{paddingLeft:'1em'}}/>
                             <button
-                                className='start-button exit-submit-color'
+                                className={which_button}
                                 onClick={this.startReview}
                             >
                                 Review
@@ -183,54 +210,89 @@ class EndPage extends Component {
                     )}
                     {this.props.totalCorrect == this.props.howMany && (
                         <button
-                            className='start-button exit-submit-color'
+                            className={which_button}
                             onClick={this.props.onClickExit}>Exit</button>
                     )}
                 </div>
             );
         }
+        // the review UI
         else {
+            const desktop_review_button = this.props.isMobile === false;
             const wrongAnswer = this.props.wrongAnswers[this.state.reviewInstance];
             return (
-                <div className='white-text' 
-                    style={{
-                        width: '100%', 
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center'}}
-                >
+                <div className='white-text center-aligned-flex' >
                     <CurrentStep
+                        isMobile={this.props.isMobile}
                         currentStep={wrongAnswer.step}
                         totalSteps={this.props.howMany}
                     />
                     <QuestionStep
+                        isMobile={this.props.isMobile}
                         currentNumber={wrongAnswer.practiceQuestion}
                         audio={this.props.createAudio(wrongAnswer.practiceQuestion)}
                         userAnswer={wrongAnswer.wrongAnswer}
                     />
-                    <div style={{textAlign: 'center'}}>
-                        <p className='non-ui-text'>{AnswerTypes[wrongAnswer.practiceQuestion['answer_type']]}</p>
-                        <p className='non-ui-text' style={{color:'red'}}>{wrongAnswer.wrongAnswer}</p>
-                        <p className='non-ui-text'>correct answer</p>
-                        <p className='non-ui-text' style={{marginBottom:'0.5em'}}>{wrongAnswer.practiceQuestion['answer']}</p>
-                    </div>
-                    <div style={{display:'flex', flexDirection: 'row'}}>
-                        <button className='review-buttons' onClick={this.prevReview} 
-                            style={(this.state.reviewInstance != 0) ? 
-                                {marginRight: '0.5em', visibility:'visible'}
-                                :{marginRight: '0.5em', visibility:'hidden'}}>
-                                &laquo; prev 
-                        </button>
-                        <button
-                            className='review-buttons'
-                            onClick={this.props.onClickExit}>Exit</button>
-                            <button className='review-buttons' onClick={this.nextReview}
-                                style={(this.state.reviewInstance != this.props.wrongAnswers.length - 1) ? 
-                                    {marginLeft: '0.5em', visibility:'visible'}
-                                    :{marginLeft: '0.5em', visibility: 'hidden'}}>
-                                next &raquo;
-                            </button>
-                    </div>
+                    {desktop_review_button && (
+                        <div className='center-aligned-flex'>
+                            <div style={{textAlign: 'center'}}>
+                                <p className='non-ui-desktop-text'>{AnswerTypes[wrongAnswer.practiceQuestion['answer_type']]}</p>
+                                <p className='non-ui-desktop-text' style={{color:'red'}}>{wrongAnswer.wrongAnswer}</p>
+                                <p className='non-ui-desktop-text'>correct answer</p>
+                                <p className='non-ui-desktop-text' style={{marginBottom:'0.5em', color: '#1338c6'}}>{wrongAnswer.practiceQuestion['answer']}</p>
+                            </div>
+                            <div style={{display:'flex', flexDirection: 'row', paddingBottom: '1em'}}>
+                                    
+                                <button className='desktop-review-button' onClick={this.prevReview} 
+                                    style={(this.state.reviewInstance != 0) ? 
+                                        {marginRight: '0.5em', visibility:'visible'}
+                                        :{marginRight: '0.5em', visibility:'hidden'}}>
+                                        &laquo; prev 
+                                </button>
+                                <button
+                                    className='desktop-review-button'
+                                    onClick={this.props.onClickExit}>
+                                    Exit
+                                </button>
+                                <button className='desktop-review-button' onClick={this.nextReview}
+                                    style={(this.state.reviewInstance != this.props.wrongAnswers.length - 1) ? 
+                                        {marginLeft: '0.5em', visibility:'visible'}
+                                        :{marginLeft: '0.5em', visibility: 'hidden'}}>
+                                    next &raquo;
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                    {!desktop_review_button && (
+                        <div className='center-aligned-flex'>
+                            <div style={{textAlign: 'center'}}>
+                                <p className='non-ui-text'>{AnswerTypes[wrongAnswer.practiceQuestion['answer_type']]}</p>
+                                <p className='non-ui-text' style={{color:'red'}}>{wrongAnswer.wrongAnswer}</p>
+                                <p className='non-ui-text'>correct answer</p>
+                                <p className='non-ui-text' style={{marginBottom:'0.5em'}}>{wrongAnswer.practiceQuestion['answer']}</p>
+                            </div>
+                            <div style={{display:'flex', flexDirection: 'row', paddingBottom: '1em'}}>
+                                    
+                                <button className='mobile-standard-button exit-submit-color' onClick={this.prevReview} 
+                                    style={(this.state.reviewInstance != 0) ? 
+                                        {marginRight: '0.5em', visibility:'visible'}
+                                        :{marginRight: '0.5em', visibility:'hidden'}}>
+                                        &laquo; prev 
+                                </button>
+                                <button
+                                    className='mobile-standard-button exit-submit-color'
+                                    onClick={this.props.onClickExit}>
+                                    Exit
+                                </button>
+                                <button className='mobile-standard-button exit-submit-color' onClick={this.nextReview}
+                                    style={(this.state.reviewInstance != this.props.wrongAnswers.length - 1) ? 
+                                        {marginLeft: '0.5em', visibility:'visible'}
+                                        :{marginLeft: '0.5em', visibility: 'hidden'}}>
+                                    next &raquo;
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             );
         }
@@ -358,20 +420,24 @@ export default class StudyBoard extends Component {
                 <div className='white-text' 
                     style={{
                         width: '100%', 
+                        height: '100%',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center'}}
                 >
                     <CurrentStep 
+                        isMobile={this.props.isMobile}
                         currentStep={currentStep}
                         totalSteps={this.props.howMany}
                     />
                     <QuestionStep
+                        isMobile={this.props.isMobile}
                         currentNumber={currentNumber}
                         audio={audio}
                         userAnswer={this.state.userAnswer}
                     />
                     <AnswerStep
+                        isMobile={this.props.isMobile}
                         answerType={currentNumber.answer_type}
                         userAnswer={this.state.userAnswer}
                         updateUserAnswer={this.updateUserAnswer}
@@ -379,6 +445,7 @@ export default class StudyBoard extends Component {
                     />
                     <div style={{marginTop:'1em'}}/>
                     <Buttons 
+                        isMobile={this.props.isMobile}
                         onClickExit={this.props.onClickExit}
                         onClickSubmit={this.onClickSubmit}
                     />
@@ -388,6 +455,7 @@ export default class StudyBoard extends Component {
         return(
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} >
                     <EndPage 
+                        isMobile={this.props.isMobile}
                         onClickExit={this.props.onClickExit}
                         howMany={this.props.howMany}    
                         totalCorrect={this.state.totalCorrect}

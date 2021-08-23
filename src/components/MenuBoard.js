@@ -11,11 +11,18 @@ class MoreOptions extends Component {
     }
     
     render(){
+        
+        const which_button = this.props.isMobile === false ? 'standard-button' : 'mobile-standard-button';
         return(
             <div className='flex-column'>
-                    <p className={'no-padding-margin margin-top'} style={{fontWeight: 'bold', alignSelf:'center', color: 'rgb(235, 200, 5)'}}>Questions</p>
+                    <p className={this.props.isMobile === false ? 'desktop-sub-titles': ''} 
+                        style={{
+                            margin: '8px 0px 0px 0px',
+                            alignSelf:'center', 
+                            color: 'rgb(235, 200, 5)'
+                        }}>Questions</p>
                     <div className='flex-row margin-top'>
-                        <button className='question-button' 
+                        <button className={which_button} 
                             style={{
                                 transitionDuration: '0.1s',
                                 backgroundColor: this.props.questions.readCharacter ? '#cd071e' : 'white',
@@ -25,7 +32,7 @@ class MoreOptions extends Component {
                             read character
                         </button>
                         <div style={{marginLeft: '0.5em'}}></div>
-                        <button className='question-button'
+                        <button className={which_button}
                             style={{
                                 transitionDuration: '0.1s',
                                 backgroundColor: this.props.questions.readNumber ? '#cd071e' : 'white',
@@ -35,7 +42,7 @@ class MoreOptions extends Component {
                             read number
                         </button>
                         <div style={{marginLeft: '0.5em'}}></div>
-                        <button className='question-button'
+                        <button className={which_button}
                             style={{
                                 transitionDuration: '0.1s',
                                 backgroundColor: this.props.questions.listen ? '#cd071e' : 'white',
@@ -112,6 +119,7 @@ function NumberOptions(props) {
 }
 
 function Options (props) {
+   const which_button = props.isMobile === false ? 'standard-button' : 'mobile-standard-button';
    if (props.moreOptions === false) {
        return (
            <div className='flex-column' style={(props.isMobile === false) ? {width: '100%'}: {}}>
@@ -137,7 +145,7 @@ function Options (props) {
                     </button>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button className='start-button'
+                    <button className={which_button}
                         style={{color: 'white', backgroundColor: '#cd071e', type: 'button', cursor: 'pointer'}}
                         onClick={props.onClickStart}
                     >
@@ -164,6 +172,7 @@ function Options (props) {
                 />
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <MoreOptions 
+                        isMobile={props.isMobile}
                         questions={props.questions} 
                         answers={props.answers} 
                         started={props.started}
@@ -174,7 +183,7 @@ function Options (props) {
                     />
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button className='start-button'
+                    <button className={which_button}
                         style={{color: 'white', backgroundColor: '#cd071e', type: 'button', cursor: 'pointer'}}
                         onClick={props.onClickStart}
                     >
@@ -240,12 +249,12 @@ export default class MenuBoard extends Component {
             )
         }
         return (
-            <div style={{width: '100%'}}>
-                <div className='welcome-text'>
+                
+            <div style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                <div className='welcome-text' style={{display:'flex', flex:'1',alignItems:'flex-end', color: 'white', textAlign: 'center', paddingBottom: '0px', fontSize:'4em'}}>
                     准备好了吗？
                 </div>
-            <div style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                
+                <div style={{flex:'3'}}>
                     <Options 
                         isMobile={this.props.isMobile}
                         minBound={this.props.minBound}
@@ -270,9 +279,8 @@ export default class MenuBoard extends Component {
                         confirmHowMany={this.props.confirmHowMany}
                         resetQAndA={this.props.resetQAndA}
                         onClickStart={this.props.onClickStart}
-                    />
+                    /></div>
                 </div>
-        </div>
         )
     }
 }

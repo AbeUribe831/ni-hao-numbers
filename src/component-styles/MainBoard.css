@@ -13,16 +13,6 @@
   height: 100%;
   width: 100%;
 }
-.basic-button {
-    padding: 0em;
-    width: 4em;
-    height: 2em;
-    background: #cd071e;
-    border: none;
-    border-radius: 5%;
-    color: white;
-    cursor: pointer;
-}
 
 /* use margin to move background and mic button*/
 .mic-background {
@@ -82,7 +72,7 @@
   display: block;
   transform: scale(var(--ggs,1));
   width: 40px;
-  height: 29px;
+  height: 32px;
   color: white;
   background-color: #f00f1e;
   border-radius: 0.6em;
@@ -96,9 +86,37 @@
   position: absolute;
   width: 0;
   height: 20px;
-  border-top: 10px solid transparent;
-  border-bottom: 9px solid transparent;
+  border-top: 11px solid transparent;
+  border-bottom: 10px solid transparent;
   border-left: 12px solid;
   top: 5px;
   left: 16px
-} 
+}
+/* desktop play button width: 22, height: 22 */
+.desktop-gg-play-button {
+  border: none;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs,1));
+  width: 80px;
+  height: 64px;
+  color: white;
+  background-color: #f00f1e;
+  border-radius: 1.2em;
+}
+  
+.desktop-gg-play-button::before {
+  cursor: pointer;
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 0;
+  height: 40px;
+  border-top: 22px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 24px solid;
+  top: 10px;
+  left: 32px
+}  

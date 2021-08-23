@@ -12,11 +12,7 @@
     text-align: center;
     padding-bottom: 0.25em;
 }
-.no-padding-margin {
-    padding: 0;
-    margin: 0;
-    width: 5em;
-}
+
 .underline-button {
     font-family: 'sans-serif';
     color: white;
@@ -35,7 +31,6 @@
 .sub-titles {
     margin: 0;
     color: rgb(235, 200, 5);
-    font-weight: bold;
 }
 .desktop-sub-titles {
     margin: 0;
@@ -45,21 +40,21 @@
 }
 .desktop-input {
     font-size: 1.5em;
+    width: 10em;
 }
 .underline-button:hover {
     color: white;
     border-radius: 2px;
 }
-.question-button {
-    border: none;
-    /*height: 2.5em;*/
-    height: 3em;
-    width: 6em;
-    border-radius: 3em;
-    font-weight: bold;
+.standard-button {
     cursor: pointer;
+    border: none;
+    height: 4em;
+    width: 8em;
+    border-radius: 4em;
+    font-weight: bold;
 }
-.start-button {
+.mobile-standard-button {
     cursor: pointer;
     border: none;
     height: 3em;

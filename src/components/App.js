@@ -66,7 +66,9 @@ class App extends Component {
             <Route exact path='/'>
               <MainBoard isMobile={this.state.is_mobile}/>
             </Route>
-            <Route path='/resources' component={Resources}/>
+            <Route path='/resources'>
+              <Resources isMobile={this.state.is_mobile}/>
+            </Route>
             <div className="header-bar">
             <NavLink  onClick={() => this.onClickNewPage('/')} style={{color: 'white', fontFamily:'serif', marginTop: '0.3em', marginLeft: '0.3em', fontSize:'1.5em'}} to='/'>你 好 numbers</NavLink>
             {this.state.curr_page === '/resources' && (
@@ -111,9 +113,13 @@ class App extends Component {
                 <MainBoard 
                   hideMobileNav={this.hideMobileNav}
                   isMobile={this.state.is_mobile}
-                  />
+                />
               </Route> 
-              <Route path='/resources' component={Resources}/> 
+              <Route path='/resources'>
+                <Resources
+                  isMobile={this.state.is_mobile}
+                />
+              </Route>
             {!this.state.hide_mobile_nav && (
             <nav>
                 <table id='mobile-nav-bar-table' className='mobile-nav-bar'>

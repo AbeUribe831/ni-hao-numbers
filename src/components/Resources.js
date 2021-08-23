@@ -1,17 +1,26 @@
 import React from 'react'
 import '../component-styles/MainBoard.css'
 import '../component-styles/Resources.css'
-export default function Resources() {
+export default function Resources(props) {
+    console.log('is mobile ', props.isMobile);
+    // TODO:: on mobile have little side padding, desktop have about 8em padding on each side
     return (
-        <div className='main-board' style={{
-                overflowY: 'scroll', 
+        <div className='main-board' 
+            style={{
                 paddingTop: '3em',
                 color: 'white',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'normal'
-        }}>
-            <div style={{paddingLeft: '0.5em', paddingRight: '0.5em', fontSize:'15px', fontFamily: 'sans-serif'}}>
+                justifyContent: 'normal',
+                alignItems: 'center',
+                lineHeight: '25px',
+                fontSize: '17px',
+                fontFamily: 'sans-serif',
+            }}
+        >
+            <div style={props.isMobile === false ? 
+                {paddingLeft: '0.5em', paddingRight: '0.5em', width: '50%'} 
+                :{paddingLeft: '0.5em', paddingRight: '0.5em', width: '90%'}}>
                 <h3 style={{textAlign: 'center'}}>Resources</h3>
                 <p>The purpose of this page is to list out the resources I am using to learn Mandarin in hopes that they will help you as well.</p>
                 
@@ -52,7 +61,7 @@ export default function Resources() {
 
                 <h4>Language Learning with Netflix <a href="https://languagelearningwithnetflix.com/">(Google Chrome Plugin Link)</a></h4>
                 <p>
-                    Assuming you have netflix you can use this plugin to watch Chinese shows with pinyin, Chinese subtitles, and English translations all together.
+                    Assuming you have Netflix you can use this plugin to watch Chinese shows with pinyin, Chinese subtitles, and English translations all together.
                     The plugin keeps track of all the dialog in the show so you can press "a" to replay the start of the last bit of dialog you heard or press "d" to skip to the next bit of dialog.
                     Another feature includes putting a piece of dialog in a loop instead of having to manually rewind the same piece of dialog every time. Also you can click on a chinese character (from the subtitles) to get its individual definition. If the show is too fast then you can adjust the speed of the show as well.
                     
@@ -75,12 +84,12 @@ export default function Resources() {
 
                 <h4>Chinese Skill <a href="https://www.chineseskill.com/">(App Link)</a></h4>
                 <p>
-                    This is essentially a duolingo type app dedicated to Chinese. It contains a structured course around learning HSK 1-4 vocabulary through listening, speaking, and sentence forming lessons.
+                    This is essentially a Duolingo type app dedicated to Chinese. It contains a structured course around learning HSK 1-4 vocabulary through listening, speaking, and sentence forming lessons.
                     Most lessons also contain explanations on grammatical rules used in the lesson that have so far not conflicted with the textbooks I have used.
                     There are also topic based lessons like "asking for a charger" or "airport security check" that may be of use to even intermediate learners.
                 </p>
                 <p>
-                    If you're looking for a duolingo type of app then I believe this is the way to go, though it is not free.
+                    If you're looking for a Duolingo type of app then I believe this is the way to go, though it is not free.
                     What is free is their older "Chinese 1" and "Chinese 2" course that is not structured around the HSK 1-4 but feels similar to their main course.
                 </p>
 

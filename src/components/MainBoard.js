@@ -239,6 +239,7 @@ export default class MainBoard extends Component {
         return (
             <div className='main-board' style={{paddingTop: '5em'}}>
                 <StudyBoard
+                    isMobile={this.props.isMobile}
                     minBound={this.state.minBound}
                     maxBound={this.state.maxBound} 
                     howMany={this.state.howMany}

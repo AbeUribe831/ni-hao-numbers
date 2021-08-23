@@ -24,7 +24,26 @@
   margin: 10px 0px 0px 0px;
   font-size: 1.5em;
 }
-
+.non-ui-desktop-text {
+  margin: 10px 0px 0px 0px;
+  font-size: 2.5em;
+}
+.center-aligned-flex {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.desktop-review-button {
+  cursor: pointer;
+  border: none;
+  height: 4em;
+  width: 9em;
+  border-radius: 1em;
+  font-weight: bold;
+  color: white;
+  background-color: #cd071e;
+}
 p {
   font-family: 'sans-serif';
 }
