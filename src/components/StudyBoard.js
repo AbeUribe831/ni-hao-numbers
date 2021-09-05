@@ -72,15 +72,20 @@ class QuestionStep extends Component {
         render() {
             if (this.props.audio != null) {
                 return (
-                    <div style={{display:'flex', flexDirection:'column'}}>
-                        <button style={{margin: '10px 0 0 0'}}
+                    <div style={{display:'flex', flexDirection:'column', alignItems: 'center'}}>
+                        <button style={{ margin: '10px 0 0 0'}}
                             className={this.props.isMobile === false ? 'desktop-gg-play-button' : 'gg-play-button'}
                             onClick={() => this.playAudio() }>
                         </button>
-                        <select name='listen-speed' id='listen-speed' onClick={(event) => this.props.audio.playbackRate=parseFloat(event.target.value)}>
+                        <select 
+                            name='listen-speed'
+                            id='listen-speed'
+                            defaultValue={'1'}
+                            style={!this.props.isMobile ? {fontSize:'medium'}: {}}
+                            onClick={(event) => this.props.audio.playbackRate=parseFloat(event.target.value)}>
                             <option value='0.5'>x0.5</option>
                             <option value='0.75'>x0.75</option>
-                            <option value='1' selected>x1</option>
+                            <option value='1'>x1</option>
                         </select>
                     </div>
                 );
