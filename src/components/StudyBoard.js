@@ -72,10 +72,17 @@ class QuestionStep extends Component {
         render() {
             if (this.props.audio != null) {
                 return (
-                    <button style={{margin: '10px 0 0 0'}}
-                        className={this.props.isMobile === false ? 'desktop-gg-play-button' : 'gg-play-button'}
-                        onClick={() => this.playAudio() }>
-                    </button>
+                    <div style={{display:'flex', flexDirection:'column'}}>
+                        <button style={{margin: '10px 0 0 0'}}
+                            className={this.props.isMobile === false ? 'desktop-gg-play-button' : 'gg-play-button'}
+                            onClick={() => this.playAudio() }>
+                        </button>
+                        <select name='listen-speed' id='listen-speed' onClick={(event) => this.props.audio.playbackRate=parseFloat(event.target.value)}>
+                            <option value='0.5'>x0.5</option>
+                            <option value='0.75'>x0.75</option>
+                            <option value='1' selected>x1</option>
+                        </select>
+                    </div>
                 );
             }
             return (
@@ -377,15 +384,33 @@ export default class StudyBoard extends Component {
         }
         this.props.updateLoading();
         fetch('http://localhost:5000/studyboardSetup', requestOptions)
-            .then(response => response.json())
-            .then(translated_data => {
+            .then(response => {
+                if (response.status >= 400 && response.status <= 500) {
+                    //throw response.statusText;
+                   throw response.text();
+                }
+                console.log(response.status)
+                console.log(response)
+                return response.json()
+            }).then(translated_data => {
+                console.log('translated data ',translated_data)
                 this.setState(() => ({
                     currentStep: 1,
                     practiceQuestions: translated_data,
                 }));
                 this.props.updateLoading();
             }).catch(e => {
-                console.log(e);
+                // used for network error
+                if(e instanceof TypeError) {
+                    console.log(e)
+                }
+                else {
+                    e.then(value => {
+                        console.log(value)
+                    });
+                }
+                // testing this line
+                this.props.updateLoading();
                 this.props.onClickExit();
             });
     }
