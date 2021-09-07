@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { base64StringToBlob, blobToBase64String } from "blob-util";
+import { base64StringToBlob } from "blob-util";
 import '../component-styles/MenuBoard.css'
 import '../component-styles/StudyBoard.css'
 import '../component-styles/MainBoard.css'
@@ -25,8 +25,6 @@ function adjustTextQuestion(textElementName) {
         }    
     }
 }
-
-
 /*--------------------------- Actual Components------------------------------------*/
 function CurrentStep(props) {
    return(
@@ -39,13 +37,16 @@ function CurrentStep(props) {
 class QuestionStep extends Component {
     constructor(props) {
         super(props);
-
+        // we want a fixed height in em of the questions depending on the device type
+        this.state = {
+            height: this.props.isMobile ? 5 : 6.875 
+        }
         // addding this event window to adjust the height of question div if the number is too long for its window
         window.addEventListener('resize', adjustTextQuestion('textQuestion'));
     }
     // pauses the audio if user goes to next number and do not pause audio if user is tying answer
        getSnapshotBeforeUpdate(prevProps, prevState) {
-           if(prevProps.audio != null && (prevProps.currentNumber != this.props.currentNumber || prevProps.userAnswer == this.props.userAnswer)) {
+           if(prevProps.audio !== null && (prevProps.currentNumber !== this.props.currentNumber || prevProps.userAnswer === this.props.userAnswer)) {
                prevProps.audio.pause();
            }
            return null;
@@ -72,7 +73,7 @@ class QuestionStep extends Component {
         render() {
             if (this.props.audio != null) {
                 return (
-                    <div style={{display:'flex', flexDirection:'column', alignItems: 'center'}}>
+                    <div style={{display:'flex', flexDirection:'column', alignItems: 'center', height: this.state.height + 'em'}}>
                         <button style={{ margin: '10px 0 0 0'}}
                             className={this.props.isMobile === false ? 'desktop-gg-play-button' : 'gg-play-button'}
                             onClick={() => this.playAudio() }>
@@ -90,8 +91,9 @@ class QuestionStep extends Component {
                     </div>
                 );
             }
+            // subtract by 10 to account of the top margin for paragraph tag
             return (
-                <p id='textQuestion' className={this.props.isMobile === false ? 'non-ui-desktop-text' : 'non-ui-text'} style={{textAlign:'center', color:'rgb(235, 200, 5)'}}>{this.props.currentNumber.question}</p>
+                <p id='textQuestion' className={this.props.isMobile === false ? 'non-ui-desktop-text' : 'non-ui-text'} style={{textAlign:'center', color:'rgb(235, 200, 5)', height: (this.state.height - 0.625) + 'em'}}>{this.props.currentNumber.question}</p>
             );
         }
 }
@@ -105,7 +107,7 @@ function AnswerStep(props) {
             name={'answer'}
             value={props.userAnswer}
             onChange={props.updateUserAnswer}
-            onKeyPress={(e) => {if(e.key == 'Enter') {props.onEnterSubmit()}}}
+            onKeyPress={(e) => {if(e.key === 'Enter') {props.onEnterSubmit()}}}
             />
         </div>
     );
@@ -187,7 +189,7 @@ class EndPage extends Component {
     }
     render() {
         const which_button = this.props.isMobile === false ? 'standard-button exit-submit-color' : 'mobile-standard-button exit-submit-color';
-        if(this.state.reviewInstance == -1) {
+        if(this.state.reviewInstance === -1) {
             return (
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <p style={{
@@ -206,7 +208,7 @@ class EndPage extends Component {
                     }}>
                         {this.props.totalCorrect} / {this.props.howMany} correct
                     </p>
-                    {this.props.totalCorrect != this.props.howMany && (
+                    {this.props.totalCorrect !== this.props.howMany && (
                         <div style={{display: 'flex', flexDirection: 'row'}}>
                             <button 
                                 className={which_button}
@@ -220,7 +222,7 @@ class EndPage extends Component {
                             </button>
                         </div>
                     )}
-                    {this.props.totalCorrect == this.props.howMany && (
+                    {this.props.totalCorrect === this.props.howMany && (
                         <button
                             className={which_button}
                             onClick={this.props.onClickExit}>Exit</button>
@@ -256,7 +258,7 @@ class EndPage extends Component {
                             <div style={{display:'flex', flexDirection: 'row', paddingBottom: '1em'}}>
                                     
                                 <button className='desktop-review-button' onClick={this.prevReview} 
-                                    style={(this.state.reviewInstance != 0) ? 
+                                    style={(this.state.reviewInstance !== 0) ? 
                                         {marginRight: '0.5em', visibility:'visible'}
                                         :{marginRight: '0.5em', visibility:'hidden'}}>
                                         &laquo; prev 
@@ -267,7 +269,7 @@ class EndPage extends Component {
                                     Exit
                                 </button>
                                 <button className='desktop-review-button' onClick={this.nextReview}
-                                    style={(this.state.reviewInstance != this.props.wrongAnswers.length - 1) ? 
+                                    style={(this.state.reviewInstance !== this.props.wrongAnswers.length - 1) ? 
                                         {marginLeft: '0.5em', visibility:'visible'}
                                         :{marginLeft: '0.5em', visibility: 'hidden'}}>
                                     next &raquo;
@@ -286,7 +288,7 @@ class EndPage extends Component {
                             <div style={{display:'flex', flexDirection: 'row', paddingBottom: '1em'}}>
                                     
                                 <button className='mobile-standard-button exit-submit-color' onClick={this.prevReview} 
-                                    style={(this.state.reviewInstance != 0) ? 
+                                    style={(this.state.reviewInstance !== 0) ? 
                                         {marginRight: '0.5em', visibility:'visible'}
                                         :{marginRight: '0.5em', visibility:'hidden'}}>
                                         &laquo; prev 
@@ -297,7 +299,7 @@ class EndPage extends Component {
                                     Exit
                                 </button>
                                 <button className='mobile-standard-button exit-submit-color' onClick={this.nextReview}
-                                    style={(this.state.reviewInstance != this.props.wrongAnswers.length - 1) ? 
+                                    style={(this.state.reviewInstance !== this.props.wrongAnswers.length - 1) ? 
                                         {marginLeft: '0.5em', visibility:'visible'}
                                         :{marginLeft: '0.5em', visibility: 'hidden'}}>
                                     next &raquo;
@@ -339,7 +341,7 @@ export default class StudyBoard extends Component {
     onClickSubmit() {
         const userAnswer = this.state.userAnswer;
         const correctAnswer = this.state.practiceQuestions[this.state.currentStep - 1]['answer'];
-        if(userAnswer == correctAnswer) {
+        if(userAnswer === correctAnswer) {
             this.setState((prevState) => ({
                 totalCorrect: prevState.totalCorrect + 1,
                 currentStep: prevState.currentStep + 1,

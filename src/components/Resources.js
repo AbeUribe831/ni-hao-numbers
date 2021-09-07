@@ -23,7 +23,11 @@ export default function Resources(props) {
                 :{paddingLeft: '0.5em', paddingRight: '0.5em', width: '90%'}}>
                 <h3 style={{textAlign: 'center'}}>Resources</h3>
                 <p>The purpose of this page is to list out the resources I am using to learn Mandarin in hopes that they will help you as well.</p>
-                
+
+                <h4>Chinese Numbers <a href="https://ltl-taiwan.com/chinese-numbers">(Web Link)</a></h4>
+                <p>
+                    This website pretty much has you covered for learning how numbers 0 to 9 trillion work, decimals, and even counting with your hand.
+                </p>
                 <h4>Mandarin Click <a href="https://www.youtube.com/c/MandarinClick">(Youtube Link)</a></h4>
                 <p>
                     A youtube channel filled with short stories (under 5 minutes) narrated by a native speaker with pictures, pinyin, Chinese subtitles, and English subtitles as visual aids. 
