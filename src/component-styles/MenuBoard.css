@@ -87,6 +87,9 @@ select {
     color: white;
     border-bottom: 1px solid;
 }
+select option {
+    background-color: dimgray;
+}
 select:focus {
     outline: none;
     border-bottom-color: #cd071e;

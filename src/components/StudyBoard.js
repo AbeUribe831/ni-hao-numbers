@@ -39,7 +39,7 @@ class QuestionStep extends Component {
         super(props);
         // we want a fixed height in em of the questions depending on the device type
         this.state = {
-            height: this.props.isMobile ? 5 : 6.875 
+            height: this.props.isMobile ? 80 : 110 
         }
         // addding this event window to adjust the height of question div if the number is too long for its window
         window.addEventListener('resize', adjustTextQuestion('textQuestion'));
@@ -73,7 +73,7 @@ class QuestionStep extends Component {
         render() {
             if (this.props.audio != null) {
                 return (
-                    <div style={{display:'flex', flexDirection:'column', alignItems: 'center', height: this.state.height + 'em'}}>
+                    <div style={{display:'flex', flexDirection:'column', alignItems: 'center', height: this.state.height + 'px'}}>
                         <button style={{ margin: '10px 0 0 0'}}
                             className={this.props.isMobile === false ? 'desktop-gg-play-button' : 'gg-play-button'}
                             onClick={() => this.playAudio() }>
@@ -93,7 +93,9 @@ class QuestionStep extends Component {
             }
             // subtract by 10 to account of the top margin for paragraph tag
             return (
-                <p id='textQuestion' className={this.props.isMobile === false ? 'non-ui-desktop-text' : 'non-ui-text'} style={{textAlign:'center', color:'rgb(235, 200, 5)', height: (this.state.height - 0.625) + 'em'}}>{this.props.currentNumber.question}</p>
+                <div style={{display:'flex', flexDirection:'column', alignItems: 'center', height: (this.state.height -10) + 'px', justifyContent: 'center'}}>
+                    <p id='textQuestion' className={this.props.isMobile === false ? 'non-ui-desktop-text' : 'non-ui-text'} style={{textAlign:'center', color:'rgb(235, 200, 5)'}}>{this.props.currentNumber.question}</p>
+                </div>
             );
         }
 }
