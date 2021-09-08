@@ -86,6 +86,9 @@ select {
     border: none;
     color: white;
     border-bottom: 1px solid;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
 select option {
     background-color: dimgray;
