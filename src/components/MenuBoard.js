@@ -163,11 +163,14 @@ function Options (props) {
                     updateMinBound={props.updateMinBound}
                     confirmMinIsNumber={props.confirmMinIsNumber}
                     maxBound={props.maxBound}
-                    updateDecimalPlacement={props.updateDecimalPlacement}
+                    decimalPlacement={props.decimalPlacement}
+                    chnCharType={props.chnCharType}
                     updateMaxBound={props.updateMaxBound}
+                    updateDecimalPlacement={props.updateDecimalPlacement}
                     confirmMaxIsNumber={props.confirmMaxIsNumber}
                     howMany={props.howMany}
                     updateHowMany={props.updateHowMany}
+                    updateChnCharType={props.updateChnCharType}
                     confirmHowMany={props.confirmHowMany}
                 />
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -194,7 +197,7 @@ function Options (props) {
    )
 }
 // props: {questions, answers}
-export default class MenuBoard extends Component {
+class MenuBoard extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -283,4 +286,11 @@ export default class MenuBoard extends Component {
                 </div>
         )
     }
+}
+
+export {
+    MoreOptions,
+    NumberOptions,
+    Options,
+    MenuBoard
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../component-styles/MainBoard.css'
-import MenuBoard from './MenuBoard'
+import { MenuBoard } from './MenuBoard'
 import StudyBoard from './StudyBoard'
 
 // add a loading state 
