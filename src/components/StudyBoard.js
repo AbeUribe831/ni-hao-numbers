@@ -91,9 +91,8 @@ class QuestionStep extends Component {
                     </div>
                 );
             }
-            // subtract by 10 to account of the top margin for paragraph tag
             return (
-                <div style={{display:'flex', flexDirection:'column', alignItems: 'center', height: (this.state.height -10) + 'px', justifyContent: 'center'}}>
+                <div style={{display:'flex', flexDirection:'column', alignItems: 'center', height: this.state.height + 'px', justifyContent: 'center'}}>
                     <p id='textQuestion' className={this.props.isMobile === false ? 'non-ui-desktop-text' : 'non-ui-text'} style={{textAlign:'center', color:'rgb(235, 200, 5)'}}>{this.props.currentNumber.question}</p>
                 </div>
             );
