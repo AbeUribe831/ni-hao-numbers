@@ -1,0 +1,619 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshots MenuBoard renders when isMobile is false 1`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "100%",
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="welcome-text"
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "color": "white",
+        "display": "flex",
+        "flex": "1",
+        "fontSize": "4em",
+        "paddingBottom": "0px",
+        "textAlign": "center",
+      }
+    }
+  >
+    准备好了吗？
+  </div>
+  <div
+    style={
+      Object {
+        "flex": "3",
+      }
+    }
+  >
+    <Options
+      answers={
+        Object {
+          "speak": false,
+        }
+      }
+      chnCharType="sc"
+      confirmHowMany={[MockFunction]}
+      confirmMaxIsNumber={[MockFunction]}
+      confirmMinIsNumber={[MockFunction]}
+      decimalPlacement="0"
+      howMany="5"
+      isMobile={false}
+      maxBound="10"
+      minBound="0"
+      moreOptions={false}
+      onClickMoreOptions={[Function]}
+      onClickStart={[MockFunction]}
+      questions={
+        Object {
+          "listen": false,
+          "readCharacter": true,
+          "readNumber": true,
+        }
+      }
+      resetQAndA={[MockFunction]}
+      started={false}
+      updateAnswers={[MockFunction]}
+      updateChnCharType={[MockFunction]}
+      updateDecimalPlacement={[MockFunction]}
+      updateHowMany={[MockFunction]}
+      updateHowManyBlur={[MockFunction]}
+      updateMaxBound={[MockFunction]}
+      updateMaxBoundBlur={[MockFunction]}
+      updateMinBound={[MockFunction]}
+      updateMinBoundBlur={[MockFunction]}
+      updateQuestions={[MockFunction]}
+    />
+  </div>
+</div>
+`;
+
+exports[`snapshots MenuBoard renders when isMobile is true 1`] = `
+<div>
+  <div
+    className="welcome-text"
+  >
+    准备好了吗？
+  </div>
+  <div>
+    <Options
+      answers={
+        Object {
+          "speak": false,
+        }
+      }
+      chnCharType="sc"
+      confirmHowMany={[MockFunction]}
+      confirmMaxIsNumber={[MockFunction]}
+      confirmMinIsNumber={[MockFunction]}
+      decimalPlacement="0"
+      howMany="5"
+      isMobile={true}
+      maxBound="10"
+      minBound="0"
+      moreOptions={false}
+      onClickMoreOptions={[Function]}
+      onClickStart={[MockFunction]}
+      questions={
+        Object {
+          "listen": false,
+          "readCharacter": true,
+          "readNumber": true,
+        }
+      }
+      resetQAndA={[MockFunction]}
+      started={false}
+      updateAnswers={[MockFunction]}
+      updateChnCharType={[MockFunction]}
+      updateDecimalPlacement={[MockFunction]}
+      updateHowMany={[MockFunction]}
+      updateHowManyBlur={[MockFunction]}
+      updateMaxBound={[MockFunction]}
+      updateMaxBoundBlur={[MockFunction]}
+      updateMinBound={[MockFunction]}
+      updateMinBoundBlur={[MockFunction]}
+      updateQuestions={[MockFunction]}
+    />
+  </div>
+</div>
+`;
+
+exports[`snapshots renders MoreOptions with isMobile being false  1`] = `
+<div
+  className="flex-column"
+>
+  <p
+    className="desktop-sub-titles"
+    style={
+      Object {
+        "alignSelf": "center",
+        "color": "rgb(235, 200, 5)",
+        "margin": "8px 0px 0px 0px",
+      }
+    }
+  >
+    Questions
+  </p>
+  <div
+    className="flex-row margin-top"
+  >
+    <button
+      className="standard-button"
+      id="readCharacter"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#cd071e",
+          "color": "white",
+          "transitionDuration": "0.1s",
+        }
+      }
+    >
+      read character
+    </button>
+    <div
+      style={
+        Object {
+          "marginLeft": "0.5em",
+        }
+      }
+    />
+    <button
+      className="standard-button"
+      id="readNumber"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#cd071e",
+          "color": "white",
+          "transitionDuration": "0.1s",
+        }
+      }
+    >
+      read number
+    </button>
+    <div
+      style={
+        Object {
+          "marginLeft": "0.5em",
+        }
+      }
+    />
+    <button
+      className="standard-button"
+      id="listen"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "color": "#cd071e",
+          "transitionDuration": "0.1s",
+        }
+      }
+    >
+      listen
+    </button>
+  </div>
+  <div
+    className="margin-top"
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <button
+      className="underline-button"
+      id="hideButton"
+      onClick={[MockFunction]}
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+      hide
+    </button>
+  </div>
+</div>
+`;
+
+exports[`snapshots renders MoreOptions with isMobile being true 1`] = `
+<div
+  className="flex-column"
+>
+  <p
+    className=""
+    style={
+      Object {
+        "alignSelf": "center",
+        "color": "rgb(235, 200, 5)",
+        "margin": "8px 0px 0px 0px",
+      }
+    }
+  >
+    Questions
+  </p>
+  <div
+    className="flex-row margin-top"
+  >
+    <button
+      className="mobile-standard-button"
+      id="readCharacter"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#cd071e",
+          "color": "white",
+          "transitionDuration": "0.1s",
+        }
+      }
+    >
+      read character
+    </button>
+    <div
+      style={
+        Object {
+          "marginLeft": "0.5em",
+        }
+      }
+    />
+    <button
+      className="mobile-standard-button"
+      id="readNumber"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#cd071e",
+          "color": "white",
+          "transitionDuration": "0.1s",
+        }
+      }
+    >
+      read number
+    </button>
+    <div
+      style={
+        Object {
+          "marginLeft": "0.5em",
+        }
+      }
+    />
+    <button
+      className="mobile-standard-button"
+      id="listen"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "color": "#cd071e",
+          "transitionDuration": "0.1s",
+        }
+      }
+    >
+      listen
+    </button>
+  </div>
+  <div
+    className="margin-top"
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <button
+      className="underline-button"
+      id="hideButton"
+      onClick={[MockFunction]}
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+      hide
+    </button>
+  </div>
+</div>
+`;
+
+exports[`snapshots renders NumberOptions with isMobile false 1`] = `
+<div
+  className="flex-column"
+>
+  <div
+    className="flex-row margin-top"
+  >
+    <div
+      className="flex-column"
+    >
+      <p
+        className="desktop-sub-titles"
+      >
+        From
+      </p>
+      <input
+        className="desktop-input"
+        name="minBound"
+        onChange={[MockFunction]}
+        onKeyDown={[MockFunction]}
+        value="0"
+      />
+    </div>
+    <div
+      style={
+        Object {
+          "marginLeft": "1em",
+        }
+      }
+    />
+    <div
+      className="flex-column"
+    >
+      <p
+        className="desktop-sub-titles"
+      >
+        To
+      </p>
+      <input
+        className="desktop-input"
+        name="maxBound"
+        onChange={[MockFunction]}
+        onKeyDown={[MockFunction]}
+        value="10"
+      />
+    </div>
+    <div
+      style={
+        Object {
+          "marginLeft": "1em",
+        }
+      }
+    />
+    <div
+      className="flex-column"
+    >
+      <p
+        className="desktop-sub-titles"
+      >
+        How Many
+      </p>
+      <input
+        className="desktop-input"
+        name="howMany"
+        onChange={[MockFunction]}
+        onKeyDown={[MockFunction]}
+        value="5"
+      />
+    </div>
+  </div>
+  <div
+    className="flex-row margin-top"
+  >
+    <div
+      className="flex-column"
+    >
+      <p
+        className="desktop-sub-titles"
+      >
+        Decimal
+      </p>
+      <select
+        className="desktop-input"
+        id="decimal"
+        name="decimal"
+        onChange={[MockFunction]}
+        value="0"
+      >
+        <option
+          value="0"
+        >
+          0
+        </option>
+        <option
+          value="1"
+        >
+          1
+        </option>
+        <option
+          value="2"
+        >
+          2
+        </option>
+      </select>
+    </div>
+    <div
+      style={
+        Object {
+          "marginLeft": "1em",
+        }
+      }
+    />
+    <div
+      className="flex-column"
+    >
+      <p
+        className="desktop-sub-titles"
+      >
+        Characters
+      </p>
+      <select
+        className="desktop-input"
+        id="chinese-character-type"
+        name="chinese-character-type"
+        onChange={[MockFunction]}
+        value="sc"
+      >
+        <option
+          value="sc"
+        >
+          简体
+        </option>
+        <option
+          value="tc"
+        >
+          繁體
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snapshots renders NumberOptions with isMobile true 1`] = `
+<div
+  className="flex-column"
+>
+  <div
+    className="flex-row margin-top"
+  >
+    <div
+      className="flex-column"
+    >
+      <p
+        className="sub-titles"
+      >
+        From
+      </p>
+      <input
+        className=""
+        name="minBound"
+        onChange={[MockFunction]}
+        onKeyDown={[MockFunction]}
+        value="0"
+      />
+    </div>
+    <div
+      style={
+        Object {
+          "marginLeft": "1em",
+        }
+      }
+    />
+    <div
+      className="flex-column"
+    >
+      <p
+        className="sub-titles"
+      >
+        To
+      </p>
+      <input
+        className=""
+        name="maxBound"
+        onChange={[MockFunction]}
+        onKeyDown={[MockFunction]}
+        value="10"
+      />
+    </div>
+    <div
+      style={
+        Object {
+          "marginLeft": "1em",
+        }
+      }
+    />
+    <div
+      className="flex-column"
+    >
+      <p
+        className="sub-titles"
+      >
+        How Many
+      </p>
+      <input
+        className=""
+        name="howMany"
+        onChange={[MockFunction]}
+        onKeyDown={[MockFunction]}
+        value="5"
+      />
+    </div>
+  </div>
+  <div
+    className="flex-row margin-top"
+  >
+    <div
+      className="flex-column"
+    >
+      <p
+        className="sub-titles"
+      >
+        Decimal
+      </p>
+      <select
+        className=""
+        id="decimal"
+        name="decimal"
+        onChange={[MockFunction]}
+        value="0"
+      >
+        <option
+          value="0"
+        >
+          0
+        </option>
+        <option
+          value="1"
+        >
+          1
+        </option>
+        <option
+          value="2"
+        >
+          2
+        </option>
+      </select>
+    </div>
+    <div
+      style={
+        Object {
+          "marginLeft": "1em",
+        }
+      }
+    />
+    <div
+      className="flex-column"
+    >
+      <p
+        className="sub-titles"
+      >
+        Characters
+      </p>
+      <select
+        className=""
+        id="chinese-character-type"
+        name="chinese-character-type"
+        onChange={[MockFunction]}
+        value="sc"
+      >
+        <option
+          value="sc"
+        >
+          简体
+        </option>
+        <option
+          value="tc"
+        >
+          繁體
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+`;

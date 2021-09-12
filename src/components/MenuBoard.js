@@ -22,7 +22,8 @@ class MoreOptions extends Component {
                             color: 'rgb(235, 200, 5)'
                         }}>Questions</p>
                     <div className='flex-row margin-top'>
-                        <button className={which_button} 
+                        <button id='readCharacter' 
+                            className={which_button} 
                             style={{
                                 transitionDuration: '0.1s',
                                 backgroundColor: this.props.questions.readCharacter ? '#cd071e' : 'white',
@@ -32,7 +33,8 @@ class MoreOptions extends Component {
                             read character
                         </button>
                         <div style={{marginLeft: '0.5em'}}></div>
-                        <button className={which_button}
+                        <button id='readNumber' 
+                            className={which_button}
                             style={{
                                 transitionDuration: '0.1s',
                                 backgroundColor: this.props.questions.readNumber ? '#cd071e' : 'white',
@@ -42,7 +44,8 @@ class MoreOptions extends Component {
                             read number
                         </button>
                         <div style={{marginLeft: '0.5em'}}></div>
-                        <button className={which_button}
+                        <button id='listen' 
+                            className={which_button}
                             style={{
                                 transitionDuration: '0.1s',
                                 backgroundColor: this.props.questions.listen ? '#cd071e' : 'white',
@@ -53,7 +56,7 @@ class MoreOptions extends Component {
                         </button>
                     </div>
                 <div className={'margin-top'} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button onClick={this.props.onClickMoreOptions} className='underline-button' style={{textAlign: 'center'}}>hide</button>
+                    <button id='hideButton' onClick={this.props.onClickMoreOptions} className='underline-button' style={{textAlign: 'center'}}>hide</button>
                 </div>
             </div>
         );
@@ -71,6 +74,7 @@ function NumberOptions(props) {
                         value={props.minBound} 
                         onChange={props.updateMinBound} 
                         onKeyDown={props.confirmMinIsNumber}
+                        onBlur={props.updateMinBoundBlur}
                     />
                 </div>
                 <div style={{marginLeft: '1em'}}></div>
@@ -81,6 +85,7 @@ function NumberOptions(props) {
                         value={props.maxBound}    
                         onChange={props.updateMaxBound}
                         onKeyDown={props.confirmMaxIsNumber}
+                        onBlur={props.updateMaxBoundBlur}
                     />
                 </div>
                 <div style={{marginLeft: '1em'}}></div>
@@ -91,6 +96,7 @@ function NumberOptions(props) {
                         value={props.howMany}
                         onChange={props.updateHowMany}
                         onKeyDown={props.confirmHowMany}
+                        onBlur={props.updateHowManyBlur}
                     />
                 </div>
             </div>
@@ -127,15 +133,18 @@ function Options (props) {
                     isMobile={props.isMobile}
                     minBound={props.minBound}
                     updateMinBound={props.updateMinBound}
+                    updateMinBoundBlur={props.updateMinBoundBlur}
                     confirmMinIsNumber={props.confirmMinIsNumber}
                     maxBound={props.maxBound}
                     decimalPlacement={props.decimalPlacement}
                     chnCharType={props.chnCharType}
                     updateMaxBound={props.updateMaxBound}
+                    updateMaxBoundBlur={props.updateMaxBoundBlur}
                     updateDecimalPlacement={props.updateDecimalPlacement}
                     confirmMaxIsNumber={props.confirmMaxIsNumber}
                     howMany={props.howMany}
                     updateHowMany={props.updateHowMany}
+                    updateHowManyBlur={props.updateHowManyBlur}
                     updateChnCharType={props.updateChnCharType}
                     confirmHowMany={props.confirmHowMany}
                 />
@@ -161,15 +170,18 @@ function Options (props) {
                     isMobile={props.isMobile}
                     minBound={props.minBound}
                     updateMinBound={props.updateMinBound}
+                    updateMinBoundBlur={props.updateMinBoundBlur}
                     confirmMinIsNumber={props.confirmMinIsNumber}
                     maxBound={props.maxBound}
                     decimalPlacement={props.decimalPlacement}
                     chnCharType={props.chnCharType}
                     updateMaxBound={props.updateMaxBound}
+                    updateMaxBoundBlur={props.updateMaxBoundBlur}
                     updateDecimalPlacement={props.updateDecimalPlacement}
                     confirmMaxIsNumber={props.confirmMaxIsNumber}
                     howMany={props.howMany}
                     updateHowMany={props.updateHowMany}
+                    updateHowManyBlur={props.updateHowManyBlur}
                     updateChnCharType={props.updateChnCharType}
                     confirmHowMany={props.confirmHowMany}
                 />
@@ -238,8 +250,11 @@ class MenuBoard extends Component {
                         updateQuestions={this.props.updateQuestions}
                         updateAnswers={this.props.updateAnswers}
                         updateMinBound={this.props.updateMinBound}
+                        updateMinBoundBlur={this.props.updateMinBoundBlur}
                         updateMaxBound={this.props.updateMaxBound}
+                        updateMaxBoundBlur={this.props.updateMaxBoundBlur}
                         updateHowMany={this.props.updateHowMany}
+                        updateHowManyBlur={this.props.updateHowManyBlur}
                         updateChnCharType={this.props.updateChnCharType}
                         confirmMinIsNumber={this.props.confirmMinIsNumber}
                         confirmMaxIsNumber={this.props.confirmMaxIsNumber}
@@ -274,8 +289,11 @@ class MenuBoard extends Component {
                         updateQuestions={this.props.updateQuestions}
                         updateAnswers={this.props.updateAnswers}
                         updateMinBound={this.props.updateMinBound}
+                        updateMinBoundBlur={this.props.updateMinBoundBlur}
                         updateMaxBound={this.props.updateMaxBound}
+                        updateMaxBoundBlur={this.props.updateMaxBoundBlur}
                         updateHowMany={this.props.updateHowMany}
+                        updateHowManyBlur={this.props.updateHowManyBlur}
                         updateChnCharType={this.props.updateChnCharType}
                         confirmMinIsNumber={this.props.confirmMinIsNumber}
                         confirmMaxIsNumber={this.props.confirmMaxIsNumber}

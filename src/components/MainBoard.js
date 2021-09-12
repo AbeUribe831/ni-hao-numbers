@@ -28,8 +28,11 @@ export default class MainBoard extends Component {
         this.resetQAndA = this.resetQAndA.bind(this);
         this.updateDecimalPlacement = this.updateDecimalPlacement.bind(this);
         this.updateMinBound = this.updateMinBound.bind(this);
+        this.updateMinBoundBlur = this.updateMinBoundBlur.bind(this);
         this.updateMaxBound = this.updateMaxBound.bind(this);
+        this.updateMaxBoundBlur = this.updateMaxBoundBlur.bind(this);
         this.updateHowMany = this.updateHowMany.bind(this);
+        this.updateHowManyBlur = this.updateHowManyBlur.bind(this);
         this.updateLoading = this.updateLoading.bind(this);
         this.updateChnCharType = this.updateChnCharType.bind(this);
         this.confirmMinIsNumber = this.confirmMinIsNumber.bind(this);
@@ -43,9 +46,9 @@ export default class MainBoard extends Component {
     confirmMaxIsValid() {
         const minBound = parseFloat(this.state.minBound);
         const maxBound =  parseFloat(this.state.maxBound);
-            if (minBound >= maxBound) {
-                this.setState((prevState) => ({
-                    maxBound: (prevState.minBound + 1).toString()
+            if (minBound > maxBound) {
+                this.setState(() => ({
+                    maxBound: (minBound + 1).toString()
                 }));
             }
     }
@@ -60,7 +63,7 @@ export default class MainBoard extends Component {
         }
     }
     confirmMaxIsNumber(event) {
-        if ((event.key === 'Tab' || event.key ==='Enter') && (this.state.maxBound === '' || isNaN(this.state.maxBound) || parseFloat(this.state.minBound) >= parseFloat(this.state.maxBound))) {
+        if ((event.key === 'Tab' || event.key ==='Enter') && (this.state.maxBound === '' || isNaN(this.state.maxBound) || parseFloat(this.state.minBound) > parseFloat(this.state.maxBound))) {
             this.setState((prevState) => ({
                 maxBound: (parseFloat(prevState.minBound) + 1).toString()
             }));
@@ -69,6 +72,13 @@ export default class MainBoard extends Component {
     }
     confirmHowMany(event) {
         if ((event.key === 'Tab' || event.key ==='Enter') && (this.state.howMany === '' || parseInt(this.state.howMany)  < 1)) {
+            this.setState({
+                howMany: '1'
+            });
+        }
+    }
+    updateHowManyBlur(event) {
+        if(event.target.value === '') {
             this.setState({
                 howMany: '1'
             });
@@ -96,6 +106,14 @@ export default class MainBoard extends Component {
             });
         }
     }
+    updateMinBoundBlur(event) {
+        const minBound = parseFloat(event.target.value);
+        if(isNaN(event.target.value) || minBound < -9999999999999.99) {
+            this.setState(() => ({
+                minBound: '0'
+            }));
+        }
+    }
     // TODO:: add a limit to min -9,999,999,999,999.99
     updateMinBound(event)
     {
@@ -113,7 +131,19 @@ export default class MainBoard extends Component {
             });
         }
     }
-    // TODO:: add a limit to max 9,999,999,999,999.99
+    // used to update max_bound when focus is lost (example: empty 'To' div and clicking out of the div)
+    updateMaxBoundBlur(event) {
+        const minBound = parseFloat(this.state.minBound);
+        const maxBound = parseFloat(event.target.value);
+        if(isNaN(event.target.value) || maxBound > 9999999999999.99 || minBound > maxBound) {
+            this.setState((prevState) => ({
+                maxBound: (parseFloat(prevState.minBound) + 1).toString()
+            }));
+        }
+
+    }
+    // keeps MaxBound as a number but doesn't check if it is less than min bound
+    // this allows user to modify the number uninterrupted until: types a non number character, out of focus, clicks enter, or tab
     updateMaxBound(event)
     {
         // let regex = /^[-]{0,1}[\0\d]*$/g;
@@ -124,9 +154,11 @@ export default class MainBoard extends Component {
             });
         }
         else {
-            this.setState((prevState) => ({
-                maxBound: (parseFloat(prevState.minBound) + 1).toString()
-            }));
+            this.setState((prevState) => { 
+                return {
+                    maxBound: parseFloat(prevState.minBound) + 1
+                }
+            });
         }
     }
     // TODO:: determine whether to toggle the loading or set true/false
@@ -224,8 +256,11 @@ export default class MainBoard extends Component {
                         updateQuestions={this.updateQuestions} 
                         updateAnswers={this.updateAnswers}
                         updateMinBound={this.updateMinBound}
+                        updateMinBoundBlur={this.updateMinBoundBlur}
                         updateMaxBound={this.updateMaxBound}
+                        updateMaxBoundBlur={this.updateMaxBoundBlur}
                         updateHowMany={this.updateHowMany}
+                        updateHowManyBlur={this.updateHowManyBlur}
                         updateChnCharType={this.updateChnCharType}
                         confirmMinIsNumber={this.confirmMinIsNumber}
                         confirmMaxIsNumber={this.confirmMaxIsNumber}
