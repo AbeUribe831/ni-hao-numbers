@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`snapshots MenuBoard renders when isMobile is false 1`] = `
+exports[`snapshots renders MenuBoard with isMobile being false 1`] = `
 <div
   style={
     Object {
@@ -78,7 +78,7 @@ exports[`snapshots MenuBoard renders when isMobile is false 1`] = `
 </div>
 `;
 
-exports[`snapshots MenuBoard renders when isMobile is true 1`] = `
+exports[`snapshots renders MenuBoard with isMobile being true 1`] = `
 <div>
   <div
     className="welcome-text"
@@ -149,7 +149,7 @@ exports[`snapshots renders MoreOptions with isMobile being false  1`] = `
   >
     <button
       className="standard-button"
-      id="readCharacter"
+      id="read-character"
       onClick={[Function]}
       style={
         Object {
@@ -170,7 +170,7 @@ exports[`snapshots renders MoreOptions with isMobile being false  1`] = `
     />
     <button
       className="standard-button"
-      id="readNumber"
+      id="read-number"
       onClick={[Function]}
       style={
         Object {
@@ -216,7 +216,7 @@ exports[`snapshots renders MoreOptions with isMobile being false  1`] = `
   >
     <button
       className="underline-button"
-      id="hideButton"
+      id="hide-button"
       onClick={[MockFunction]}
       style={
         Object {
@@ -251,7 +251,7 @@ exports[`snapshots renders MoreOptions with isMobile being true 1`] = `
   >
     <button
       className="mobile-standard-button"
-      id="readCharacter"
+      id="read-character"
       onClick={[Function]}
       style={
         Object {
@@ -272,7 +272,7 @@ exports[`snapshots renders MoreOptions with isMobile being true 1`] = `
     />
     <button
       className="mobile-standard-button"
-      id="readNumber"
+      id="read-number"
       onClick={[Function]}
       style={
         Object {
@@ -318,7 +318,7 @@ exports[`snapshots renders MoreOptions with isMobile being true 1`] = `
   >
     <button
       className="underline-button"
-      id="hideButton"
+      id="hide-button"
       onClick={[MockFunction]}
       style={
         Object {
@@ -350,6 +350,7 @@ exports[`snapshots renders NumberOptions with isMobile false 1`] = `
       <input
         className="desktop-input"
         name="minBound"
+        onBlur={[MockFunction]}
         onChange={[MockFunction]}
         onKeyDown={[MockFunction]}
         value="0"
@@ -373,6 +374,7 @@ exports[`snapshots renders NumberOptions with isMobile false 1`] = `
       <input
         className="desktop-input"
         name="maxBound"
+        onBlur={[MockFunction]}
         onChange={[MockFunction]}
         onKeyDown={[MockFunction]}
         value="10"
@@ -396,6 +398,7 @@ exports[`snapshots renders NumberOptions with isMobile false 1`] = `
       <input
         className="desktop-input"
         name="howMany"
+        onBlur={[MockFunction]}
         onChange={[MockFunction]}
         onKeyDown={[MockFunction]}
         value="5"
@@ -493,6 +496,7 @@ exports[`snapshots renders NumberOptions with isMobile true 1`] = `
       <input
         className=""
         name="minBound"
+        onBlur={[MockFunction]}
         onChange={[MockFunction]}
         onKeyDown={[MockFunction]}
         value="0"
@@ -516,6 +520,7 @@ exports[`snapshots renders NumberOptions with isMobile true 1`] = `
       <input
         className=""
         name="maxBound"
+        onBlur={[MockFunction]}
         onChange={[MockFunction]}
         onKeyDown={[MockFunction]}
         value="10"
@@ -539,6 +544,7 @@ exports[`snapshots renders NumberOptions with isMobile true 1`] = `
       <input
         className=""
         name="howMany"
+        onBlur={[MockFunction]}
         onChange={[MockFunction]}
         onKeyDown={[MockFunction]}
         value="5"
@@ -614,6 +620,142 @@ exports[`snapshots renders NumberOptions with isMobile true 1`] = `
         </option>
       </select>
     </div>
+  </div>
+</div>
+`;
+
+exports[`snapshots renders Options with isMobile being false 1`] = `
+<div
+  className="flex-column"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <NumberOptions
+    chnCharType="sc"
+    confirmHowMany={[MockFunction]}
+    confirmMaxIsNumber={[MockFunction]}
+    confirmMinIsNumber={[MockFunction]}
+    decimalPlacement="0"
+    howMany="6"
+    isMobile={false}
+    maxBound="10"
+    minBound="0"
+    updateChnCharType={[MockFunction]}
+    updateDecimalPlacement={[MockFunction]}
+    updateHowMany={[MockFunction]}
+    updateMaxBound={[MockFunction]}
+    updateMinBound={[MockFunction]}
+  />
+  <div
+    className="margin-top"
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <button
+      className="underline-button"
+      id="more-options-button"
+      onClick={[MockFunction]}
+    >
+      more options
+    </button>
+  </div>
+  <div
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <button
+      className="standard-button"
+      onClick={[MockFunction]}
+      style={
+        Object {
+          "backgroundColor": "#cd071e",
+          "color": "white",
+          "cursor": "pointer",
+          "type": "button",
+        }
+      }
+    >
+      start
+    </button>
+  </div>
+</div>
+`;
+
+exports[`snapshots renders Options with isMobile being true 1`] = `
+<div
+  className="flex-column"
+  style={Object {}}
+>
+  <NumberOptions
+    chnCharType="sc"
+    confirmHowMany={[MockFunction]}
+    confirmMaxIsNumber={[MockFunction]}
+    confirmMinIsNumber={[MockFunction]}
+    decimalPlacement="0"
+    howMany="6"
+    isMobile={true}
+    maxBound="10"
+    minBound="0"
+    updateChnCharType={[MockFunction]}
+    updateDecimalPlacement={[MockFunction]}
+    updateHowMany={[MockFunction]}
+    updateMaxBound={[MockFunction]}
+    updateMinBound={[MockFunction]}
+  />
+  <div
+    className="margin-top"
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <button
+      className="underline-button"
+      id="more-options-button"
+      onClick={[MockFunction]}
+    >
+      more options
+    </button>
+  </div>
+  <div
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <button
+      className="mobile-standard-button"
+      onClick={[MockFunction]}
+      style={
+        Object {
+          "backgroundColor": "#cd071e",
+          "color": "white",
+          "cursor": "pointer",
+          "type": "button",
+        }
+      }
+    >
+      start
+    </button>
   </div>
 </div>
 `;

@@ -22,7 +22,7 @@ class MoreOptions extends Component {
                             color: 'rgb(235, 200, 5)'
                         }}>Questions</p>
                     <div className='flex-row margin-top'>
-                        <button id='readCharacter' 
+                        <button id='read-character' 
                             className={which_button} 
                             style={{
                                 transitionDuration: '0.1s',
@@ -33,7 +33,7 @@ class MoreOptions extends Component {
                             read character
                         </button>
                         <div style={{marginLeft: '0.5em'}}></div>
-                        <button id='readNumber' 
+                        <button id='read-number' 
                             className={which_button}
                             style={{
                                 transitionDuration: '0.1s',
@@ -56,7 +56,7 @@ class MoreOptions extends Component {
                         </button>
                     </div>
                 <div className={'margin-top'} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button id='hideButton' onClick={this.props.onClickMoreOptions} className='underline-button' style={{textAlign: 'center'}}>hide</button>
+                    <button id='hide-button' onClick={this.props.onClickMoreOptions} className='underline-button' style={{textAlign: 'center'}}>hide</button>
                 </div>
             </div>
         );
@@ -149,7 +149,7 @@ function Options (props) {
                     confirmHowMany={props.confirmHowMany}
                 />
                 <div className='margin-top' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button onClick={props.onClickMoreOptions} className='underline-button'>
+                    <button id='more-options-button' onClick={props.onClickMoreOptions} className='underline-button'>
                         more options
                     </button>
                 </div>

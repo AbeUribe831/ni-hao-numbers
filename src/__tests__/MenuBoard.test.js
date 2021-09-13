@@ -23,15 +23,18 @@ beforeEach(() => {
         isMobile:false,
         minBound:'0',
         updateMinBound:jest.fn(),
+        updateMinBoundBlur:jest.fn(),
         confirmMinIsNumber:jest.fn(),
         maxBound:'10',
         decimalPlacement:'0',
         chnCharType:'sc',
         updateMaxBound:jest.fn(),
+        updateMaxBoundBlur:jest.fn(),
         updateDecimalPlacement:jest.fn(),
         confirmMaxIsNumber:jest.fn(),
         howMany:'5',
         updateHowMany:jest.fn(),
+        updateHowManyBlur:jest.fn(),
         updateChnCharType:jest.fn(),
         confirmHowMany:jest.fn(),
     };
@@ -262,10 +265,7 @@ describe('passing props', () => {
         expect(typeof wrapper.props().onClickStart === typeof mock_function).toBe(true);
     })
 });
-// TODO:: test onClickMoreOptions (MenuBoard)
-// TODO:: click buttons with spy(?) to ensure button was clicked (NumberOptions, Options, MoreOptions)
-// TODO:: check button colors change
-// TODO:: check that max and min changes based on logic
+// Options will have no test in logic, clicking moreOptions method is in MenuBoard and passed to MoreOptions
 describe('logic', () => {
     const red_color = '#cd071e';
 
@@ -276,8 +276,8 @@ describe('logic', () => {
             />
         );
         // check color and backgroundColor of button before and after clicked
-        let read_character_button = wrapper.find('#readCharacter');
-        let read_number_button = wrapper.find('#readNumber');
+        let read_character_button = wrapper.find('#read-character');
+        let read_number_button = wrapper.find('#read-number');
         let listen_button = wrapper.find('#listen');
         read_character_button.simulate('click');
         // readCharacter true 
@@ -305,8 +305,8 @@ describe('logic', () => {
             />
         );
         // check color and backgroundColor of button before and after clicked
-        read_character_button = rev_color_wrapper.find('#readCharacter');
-        read_number_button = rev_color_wrapper.find('#readNumber');
+        read_character_button = rev_color_wrapper.find('#read-character');
+        read_number_button = rev_color_wrapper.find('#read-number');
         listen_button = rev_color_wrapper.find('#listen');
         read_character_button.simulate('click');
         // readCharacter false
@@ -324,12 +324,65 @@ describe('logic', () => {
         expect(listen_button.props().style.backgroundColor).toBe(red_color);
         expect(more_options_props.updateQuestions).toHaveBeenCalledTimes(6);
 
-        const hide_button = wrapper.find('#hideButton');
+        const hide_button = wrapper.find('#hide-button');
         hide_button.simulate('click');
         expect(more_options_props.onClickMoreOptions).toHaveBeenCalledTimes(1);
     });
 
-    // TODO:: NumberOptions logic
+    test('NumberOptions input changes are noted', () => {
+        const wrapper = Enzyme.mount(
+            <NumberOptions
+                {...number_options_props}
+            />
+        );
+        const min_bound_input = wrapper.find({name: 'minBound'});
+        const max_bound_input = wrapper.find({name: 'maxBound'});
+        const how_many_input = wrapper.find({name: 'howMany'});
+
+        min_bound_input.simulate('change', {target: {value: '3'}});
+        max_bound_input.simulate('change', {target: {value: '14'}});
+        how_many_input.simulate('change', {target: {value: '7'}});
+        expect(wrapper.props().updateMinBound).toHaveBeenCalledTimes(1);
+        expect(wrapper.props().updateMaxBound).toHaveBeenCalledTimes(1);
+        expect(wrapper.props().updateHowMany).toHaveBeenCalledTimes(1);
+
+        // press enter so this works
+        min_bound_input.simulate('keyDown');
+        max_bound_input.simulate('keyDown');
+        how_many_input.simulate('keyDown');
+        expect(wrapper.props().confirmMinIsNumber).toHaveBeenCalledTimes(1);
+        expect(wrapper.props().confirmMaxIsNumber).toHaveBeenCalledTimes(1);
+        expect(wrapper.props().confirmHowMany).toHaveBeenCalledTimes(1);
+        // unfocus so this works
+        min_bound_input.simulate('blur');
+        max_bound_input.simulate('blur');
+        how_many_input.simulate('blur');
+        expect(wrapper.props().updateMinBoundBlur).toHaveBeenCalledTimes(1);
+        expect(wrapper.props().updateMaxBoundBlur).toHaveBeenCalledTimes(1);
+        expect(wrapper.props().updateHowManyBlur).toHaveBeenCalledTimes(1);
+
+        const decimal_select = wrapper.find({name: 'decimal'});
+        decimal_select.simulate('change', {target: {value: '1'}})
+        expect(wrapper.props().updateDecimalPlacement).toHaveBeenCalledTimes(1);
+
+        const chn_char_select = wrapper.find({name: 'chinese-character-type'});
+        chn_char_select.simulate('change', {target: {value: 'tc'}});
+        expect(wrapper.props().updateChnCharType).toHaveBeenCalledTimes(1);
+    });
+    // click more options 
+    test('MenuBoard click MoreOptions button to show or hide MoreOptions', () => {
+        const wrapper = Enzyme.mount(
+            <MenuBoard
+                {...menu_board_props}
+            />
+        );
+        expect(wrapper.find(MoreOptions).exists()).toBe(false);
+        
+        wrapper.find('#more-options-button').simulate('click')
+        expect(wrapper.find(MoreOptions).exists()).toBe(true);
+        wrapper.find('#hide-button').simulate('click')
+        expect(wrapper.find(MoreOptions).exists()).toBe(false);
+    })
 });
 
 describe('snapshots', () => {
@@ -368,7 +421,24 @@ describe('snapshots', () => {
         )
         expect(toJson(wrapper)).toMatchSnapshot();
     });
-    test('MenuBoard renders when isMobile is false', () => {
+    test('renders Options with isMobile being false', () => {
+        const wrapper = Enzyme.shallow(
+            <Options
+                {...options_props}
+            />
+        );
+        expect(toJson(wrapper)).toMatchSnapshot();
+    });
+    test('renders Options with isMobile being true', () => {
+        options_props.isMobile = true
+        const wrapper = Enzyme.shallow(
+            <Options
+                {...options_props}
+            />
+        );
+        expect(toJson(wrapper)).toMatchSnapshot();
+    });
+    test('renders MenuBoard with isMobile being false', () => {
         const wrapper = Enzyme.shallow(
             <MenuBoard
                 {...menu_board_props}
@@ -376,7 +446,7 @@ describe('snapshots', () => {
         );
         expect(toJson(wrapper)).toMatchSnapshot();
     });
-    test('MenuBoard renders when isMobile is true', () => {
+    test('renders MenuBoard with isMobile being true', () => {
         menu_board_props.isMobile = true
         const wrapper = Enzyme.shallow(
             <MenuBoard
