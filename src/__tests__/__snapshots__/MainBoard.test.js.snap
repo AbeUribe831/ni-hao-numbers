@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshots renders MainBoard containing MenuBoard component when started is false 1`] = `
+<div
+  className="main-board"
+  style={
+    Object {
+      "paddingTop": "3em",
+    }
+  }
+>
+  <MenuBoard
+    answers={
+      Object {
+        "speak": false,
+      }
+    }
+    chnCharType="sc"
+    confirmHowMany={[Function]}
+    confirmMaxIsNumber={[Function]}
+    confirmMinIsNumber={[Function]}
+    decimalPlacement="0"
+    howMany="15"
+    isMobile={false}
+    maxBound="10"
+    minBound="0"
+    onClickStart={[Function]}
+    questions={
+      Object {
+        "listen": true,
+        "readCharacter": true,
+        "readNumber": true,
+      }
+    }
+    resetQAndA={[Function]}
+    started={false}
+    updateAnswers={[Function]}
+    updateChnCharType={[Function]}
+    updateDecimalPlacement={[Function]}
+    updateHowMany={[Function]}
+    updateHowManyBlur={[Function]}
+    updateMaxBound={[Function]}
+    updateMaxBoundBlur={[Function]}
+    updateMinBound={[Function]}
+    updateMinBoundBlur={[Function]}
+    updateQuestions={[Function]}
+  />
+</div>
+`;
+
+exports[`snapshots renders MainBoard containing StudyBoard when started is true 1`] = `
+<div
+  className="main-board"
+  style={
+    Object {
+      "paddingTop": "5em",
+    }
+  }
+>
+  <StudyBoard
+    answers={
+      Object {
+        "speak": false,
+      }
+    }
+    chnCharType="sc"
+    decimalPlacement="0"
+    howMany="15"
+    isMobile={false}
+    loading={false}
+    maxBound="10"
+    minBound="0"
+    onClickExit={[Function]}
+    questions={
+      Object {
+        "listen": true,
+        "readCharacter": true,
+        "readNumber": true,
+      }
+    }
+    resetQAndA={[Function]}
+    updateLoading={[Function]}
+  />
+</div>
+`;

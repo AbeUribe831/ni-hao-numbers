@@ -1,0 +1,232 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshots renders AnswerStep with isMobile false 1`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "width": "100%",
+    }
+  }
+>
+  <p
+    className="non-ui-desktop-text"
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    write character
+  </p>
+  <input
+    id="user-answer"
+    name="answer"
+    onChange={[MockFunction]}
+    onKeyPress={[Function]}
+    style={
+      Object {
+        "fontSize": "2.5em",
+        "textAlign": "center",
+        "width": "90%",
+      }
+    }
+    value=""
+  />
+</div>
+`;
+
+exports[`snapshots renders AnswerStep with isMobile false 2`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "width": "100%",
+    }
+  }
+>
+  <p
+    className="non-ui-text"
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    write character
+  </p>
+  <input
+    id="user-answer"
+    name="answer"
+    onChange={[MockFunction]}
+    onKeyPress={[Function]}
+    style={
+      Object {
+        "fontSize": "1.5em",
+        "textAlign": "center",
+        "width": "90%",
+      }
+    }
+    value=""
+  />
+</div>
+`;
+
+exports[`snapshots renders Buttons with isMobile false 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "row",
+    }
+  }
+>
+  <button
+    className="standard-button exit-submit-color"
+    id="exit-button"
+    onClick={[MockFunction]}
+  >
+    Exit
+  </button>
+  <div
+    style={
+      Object {
+        "marginLeft": "0.5em",
+        "marginRight": "0.5em",
+      }
+    }
+  />
+  <button
+    className="standard-button exit-submit-color"
+    id="submit-button"
+    onClick={[MockFunction]}
+  >
+    Sumbit
+  </button>
+</div>
+`;
+
+exports[`snapshots renders Buttons with isMobile true 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "row",
+    }
+  }
+>
+  <button
+    className="mobile-standard-button exit-submit-color"
+    id="exit-button"
+    onClick={[MockFunction]}
+  >
+    Exit
+  </button>
+  <div
+    style={
+      Object {
+        "marginLeft": "0.5em",
+        "marginRight": "0.5em",
+      }
+    }
+  />
+  <button
+    className="mobile-standard-button exit-submit-color"
+    id="submit-button"
+    onClick={[MockFunction]}
+  >
+    Sumbit
+  </button>
+</div>
+`;
+
+exports[`snapshots renders CurrentStep with isMobile false 1`] = `
+<p
+  className="non-ui-desktop-text"
+>
+  1
+   / 
+  2
+</p>
+`;
+
+exports[`snapshots renders CurrentStep with isMobile true 1`] = `
+<p
+  className="non-ui-text"
+>
+  1
+   / 
+  2
+</p>
+`;
+
+exports[`snapshots renders Loader 1`] = `
+<p
+  style={
+    Object {
+      "color": "white",
+      "fontSize": "2em",
+      "textAlign": "center",
+    }
+  }
+>
+  Loading
+  .
+</p>
+`;
+
+exports[`snapshots renders QuestionStep with isMobile false 1`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "110px",
+      "justifyContent": "center",
+    }
+  }
+>
+  <p
+    className="non-ui-desktop-text"
+    id="text-question"
+    style={
+      Object {
+        "color": "rgb(235, 200, 5)",
+        "textAlign": "center",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`snapshots renders QuestionStep with isMobile true 1`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "80px",
+      "justifyContent": "center",
+    }
+  }
+>
+  <p
+    className="non-ui-text"
+    id="text-question"
+    style={
+      Object {
+        "color": "rgb(235, 200, 5)",
+        "textAlign": "center",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`snapshots renders StudyBoard 1`] = `<Loader />`;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import '../component-styles/MainBoard.css'
 import { MenuBoard } from './MenuBoard'
-import StudyBoard from './StudyBoard'
+import { StudyBoard } from './StudyBoard'
 
 // add a loading state 
-export default class MainBoard extends Component {
+class MainBoard extends Component {
     constructor(props){
         super(props);
         // the values in questions and answers determine which options are pressed
@@ -290,4 +290,7 @@ export default class MainBoard extends Component {
             </div>
         )
     }
+}
+export {
+    MainBoard
 }
