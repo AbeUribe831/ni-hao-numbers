@@ -37,11 +37,6 @@ exports[`snapshots renders MenuBoard with isMobile being false 1`] = `
     }
   >
     <Options
-      answers={
-        Object {
-          "speak": false,
-        }
-      }
       chnCharType="sc"
       confirmHowMany={[MockFunction]}
       confirmMaxIsNumber={[MockFunction]}
@@ -87,11 +82,6 @@ exports[`snapshots renders MenuBoard with isMobile being true 1`] = `
   </div>
   <div>
     <Options
-      answers={
-        Object {
-          "speak": false,
-        }
-      }
       chnCharType="sc"
       confirmHowMany={[MockFunction]}
       confirmMaxIsNumber={[MockFunction]}
@@ -349,6 +339,7 @@ exports[`snapshots renders NumberOptions with isMobile false 1`] = `
       </p>
       <input
         className="desktop-input"
+        id="min-bound"
         name="minBound"
         onBlur={[MockFunction]}
         onChange={[MockFunction]}
@@ -373,6 +364,7 @@ exports[`snapshots renders NumberOptions with isMobile false 1`] = `
       </p>
       <input
         className="desktop-input"
+        id="max-bound"
         name="maxBound"
         onBlur={[MockFunction]}
         onChange={[MockFunction]}
@@ -397,6 +389,7 @@ exports[`snapshots renders NumberOptions with isMobile false 1`] = `
       </p>
       <input
         className="desktop-input"
+        id="how-many"
         name="howMany"
         onBlur={[MockFunction]}
         onChange={[MockFunction]}
@@ -495,6 +488,7 @@ exports[`snapshots renders NumberOptions with isMobile true 1`] = `
       </p>
       <input
         className=""
+        id="min-bound"
         name="minBound"
         onBlur={[MockFunction]}
         onChange={[MockFunction]}
@@ -519,6 +513,7 @@ exports[`snapshots renders NumberOptions with isMobile true 1`] = `
       </p>
       <input
         className=""
+        id="max-bound"
         name="maxBound"
         onBlur={[MockFunction]}
         onChange={[MockFunction]}
@@ -543,6 +538,7 @@ exports[`snapshots renders NumberOptions with isMobile true 1`] = `
       </p>
       <input
         className=""
+        id="how-many"
         name="howMany"
         onBlur={[MockFunction]}
         onChange={[MockFunction]}
@@ -678,6 +674,7 @@ exports[`snapshots renders Options with isMobile being false 1`] = `
   >
     <button
       className="standard-button"
+      id="start-button"
       onClick={[MockFunction]}
       style={
         Object {
@@ -744,6 +741,7 @@ exports[`snapshots renders Options with isMobile being true 1`] = `
   >
     <button
       className="mobile-standard-button"
+      id="start-button"
       onClick={[MockFunction]}
       style={
         Object {

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import '../component-styles/App.css';
 import { MainBoard } from './MainBoard'
 import Resources from './Resources'

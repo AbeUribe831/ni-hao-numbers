@@ -7,7 +7,7 @@ import { StudyBoard } from './StudyBoard'
 class MainBoard extends Component {
     constructor(props){
         super(props);
-        // the values in questions and answers determine which options are pressed
+        // the values in questions determine which options are pressed
         this.state = {
             minBound: '0',
             maxBound: '10',
@@ -19,12 +19,11 @@ class MainBoard extends Component {
                 readNumber: true,
                 listen: true
             },
-            answers: {speak: false},
             loading: false,
             started: false 
         }
         this.updateQuestions = this.updateQuestions.bind(this);
-        this.updateAnswers = this.updateAnswers.bind(this);
+        //this.updateAnswers = this.updateAnswers.bind(this);
         this.resetQAndA = this.resetQAndA.bind(this);
         this.updateDecimalPlacement = this.updateDecimalPlacement.bind(this);
         this.updateMinBound = this.updateMinBound.bind(this);
@@ -156,7 +155,7 @@ class MainBoard extends Component {
         else {
             this.setState((prevState) => { 
                 return {
-                    maxBound: parseFloat(prevState.minBound) + 1
+                    maxBound: (parseFloat(prevState.minBound) + 1).toString()
                 }
             });
         }
@@ -174,7 +173,6 @@ class MainBoard extends Component {
                 readNumber: true,
                 listen: true,
             },
-            answers: {speak: false}
         });
     }
     updateDecimalPlacement(event) {
@@ -211,11 +209,7 @@ class MainBoard extends Component {
             }));
         }
     }
-    updateAnswers() {
-        this.setState((prevState) => ({
-            answers: {speak: !prevState.answers.speak}
-        }));
-    }
+    
     updateChnCharType(event) {
         this.setState({
             chnCharType: event.target.value
@@ -248,7 +242,6 @@ class MainBoard extends Component {
                         maxBound={this.state.maxBound}
                         howMany={this.state.howMany}
                         questions={this.state.questions} 
-                        answers={this.state.answers}
                         started={this.state.started}
                         decimalPlacement={this.state.decimalPlacement}
                         chnCharType={this.state.chnCharType}
@@ -279,7 +272,6 @@ class MainBoard extends Component {
                     maxBound={this.state.maxBound} 
                     howMany={this.state.howMany}
                     questions={this.state.questions}
-                    answers={this.state.answers}
                     loading={this.state.loading}
                     chnCharType={this.state.chnCharType}
                     decimalPlacement={this.state.decimalPlacement}

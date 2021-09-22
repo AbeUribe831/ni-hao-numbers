@@ -450,8 +450,8 @@ describe('logic', () => {
     // StudyBoard
     test('StudyBoard to EndPage with no wrong answers', () => {
         // bypass fetch and the promises after
-        // fetch_mock.postOnce(url + post_url, Promise.resolve('value').then(response => {return Promise.resolve(response)}).then(response => {return Promise.resolve(response)}).catch((err) => {console.log(err)}));
-        fetch_mock.postOnce(url + post_url, Promise.resolve('value').then(response => {return Promise.resolve(response)}).then(response => {return Promise.resolve(response)}).catch((err) => {console.log(err)}));
+        fetch_mock.postOnce(url + post_url, Promise.resolve('value'));
+        //fetch_mock.postOnce(url + post_url, Promise.resolve('value').then(response => {return Promise.resolve(response)}).then(response => {return Promise.resolve(response)}).catch((err) => {console.log(err)}));
         const wrapper = mount(
             <StudyBoard
                 {...study_board_props}
@@ -482,7 +482,8 @@ describe('logic', () => {
     });
     test('StudyBoard to EndPage with a wrong answer', () => {
         // bypass fetch and the promises after
-        fetch_mock.postOnce(url + post_url, Promise.resolve('value').then(response => {return Promise.resolve(response)}).then(response => {return Promise.resolve(response)}).catch((err) => {console.log(err)}));
+        fetch_mock.postOnce(url + post_url, Promise.resolve('value'));
+        //fetch_mock.postOnce(url + post_url, Promise.resolve('value').then(response => {return Promise.resolve(response)}).then(response => {return Promise.resolve(response)}).catch((err) => {console.log(err)}));
         const wrapper = mount(
             <StudyBoard
                 {...study_board_props}
@@ -589,7 +590,8 @@ describe('snapshots', () => {
         expect(toJson(wrapper)).toMatchSnapshot();
     });
     test('renders StudyBoard', () => {
-        fetch_mock.postOnce(url + post_url, Promise.resolve('value').then(response => {return Promise.resolve(response)}).then(response => {return Promise.resolve(response)}).catch((err) => {console.log(err)}));
+        fetch_mock.postOnce(url + post_url, Promise.resolve('value'));
+        //fetch_mock.postOnce(url + post_url, Promise.resolve('value').then(response => {return Promise.resolve(response)}).then(response => {return Promise.resolve(response)}).catch((err) => {console.log(err)}));
         const wrapper = shallow(
             <StudyBoard
                 {...study_board_props}

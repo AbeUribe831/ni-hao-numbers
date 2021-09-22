@@ -69,7 +69,7 @@ function NumberOptions(props) {
             <div className='flex-row margin-top'>
                 <div className='flex-column'>            
                     <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'}>From</p>
-                    <input className={props.isMobile === true ? '' : 'desktop-input'}
+                    <input id='min-bound' className={props.isMobile === true ? '' : 'desktop-input'}
                         name={'minBound'} 
                         value={props.minBound} 
                         onChange={props.updateMinBound} 
@@ -80,7 +80,7 @@ function NumberOptions(props) {
                 <div style={{marginLeft: '1em'}}></div>
                 <div className='flex-column'>
                     <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'} >To</p>
-                    <input className={props.isMobile === true ? '' : 'desktop-input'}
+                    <input id='max-bound' className={props.isMobile === true ? '' : 'desktop-input'}
                         name={'maxBound'}
                         value={props.maxBound}    
                         onChange={props.updateMaxBound}
@@ -91,7 +91,7 @@ function NumberOptions(props) {
                 <div style={{marginLeft: '1em'}}></div>
                 <div className='flex-column'>
                     <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'}>How Many</p>
-                    <input className={props.isMobile === true ? '' : 'desktop-input'}
+                    <input id='how-many' className={props.isMobile === true ? '' : 'desktop-input'}
                         name={'howMany'}
                         value={props.howMany}
                         onChange={props.updateHowMany}
@@ -103,7 +103,8 @@ function NumberOptions(props) {
             <div className='flex-row margin-top'>
                 <div className='flex-column'>
                     <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'}>Decimal</p>
-                    <select className={props.isMobile === true ? '' : 'desktop-input'}
+                    <select 
+                        className={props.isMobile === true ? '' : 'desktop-input'}
                         name="decimal" value={props.decimalPlacement} onChange={props.updateDecimalPlacement} id="decimal">
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -154,7 +155,9 @@ function Options (props) {
                     </button>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button className={which_button}
+                    <button 
+                        id='start-button'
+                        className={which_button}
                         style={{color: 'white', backgroundColor: '#cd071e', type: 'button', cursor: 'pointer'}}
                         onClick={props.onClickStart}
                     >
@@ -189,7 +192,6 @@ function Options (props) {
                     <MoreOptions 
                         isMobile={props.isMobile}
                         questions={props.questions} 
-                        answers={props.answers} 
                         started={props.started}
                         onClickMoreOptions={props.onClickMoreOptions} 
                         updateQuestions={props.updateQuestions}
@@ -240,7 +242,6 @@ class MenuBoard extends Component {
                         maxBound={this.props.maxBound}
                         howMany={this.props.howMany}
                         questions={this.props.questions} 
-                        answers={this.props.answers}
                         started={this.props.started}
                         decimalPlacement={this.props.decimalPlacement}
                         chnCharType={this.props.chnCharType}
@@ -279,7 +280,6 @@ class MenuBoard extends Component {
                         maxBound={this.props.maxBound}
                         howMany={this.props.howMany}
                         questions={this.props.questions} 
-                        answers={this.props.answers}
                         started={this.props.started}
                         decimalPlacement={this.props.decimalPlacement}
                         chnCharType={this.props.chnCharType}

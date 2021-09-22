@@ -362,7 +362,7 @@ describe('logic', () => {
         expect(wrapper.props().updateHowManyBlur).toHaveBeenCalledTimes(1);
 
         const decimal_select = wrapper.find({name: 'decimal'});
-        decimal_select.simulate('change', {target: {value: '1'}})
+        decimal_select.simulate('change', {target: {value: '1'}});
         expect(wrapper.props().updateDecimalPlacement).toHaveBeenCalledTimes(1);
 
         const chn_char_select = wrapper.find({name: 'chinese-character-type'});

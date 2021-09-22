@@ -10,11 +10,6 @@ exports[`snapshots renders MainBoard containing MenuBoard component when started
   }
 >
   <MenuBoard
-    answers={
-      Object {
-        "speak": false,
-      }
-    }
     chnCharType="sc"
     confirmHowMany={[Function]}
     confirmMaxIsNumber={[Function]}
@@ -34,7 +29,6 @@ exports[`snapshots renders MainBoard containing MenuBoard component when started
     }
     resetQAndA={[Function]}
     started={false}
-    updateAnswers={[Function]}
     updateChnCharType={[Function]}
     updateDecimalPlacement={[Function]}
     updateHowMany={[Function]}
@@ -58,11 +52,6 @@ exports[`snapshots renders MainBoard containing StudyBoard when started is true 
   }
 >
   <StudyBoard
-    answers={
-      Object {
-        "speak": false,
-      }
-    }
     chnCharType="sc"
     decimalPlacement="0"
     howMany="15"
