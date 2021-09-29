@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import '../component-styles/MenuBoard.css'
 import '../component-styles/MainBoard.css'
 // TODO:: add ID to each button
+const simplified_welcome_title = '准备好了吗?';
+const traditional_welcome_title = '準備好了嗎?';
 class MoreOptions extends Component {
     constructor(props){
         super(props);
@@ -200,7 +202,9 @@ function Options (props) {
                     />
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <button className={which_button}
+                    <button 
+                        id='start-button' 
+                        className={which_button}
                         style={{color: 'white', backgroundColor: '#cd071e', type: 'button', cursor: 'pointer'}}
                         onClick={props.onClickStart}
                     >
@@ -231,9 +235,9 @@ class MenuBoard extends Component {
     render() {
         if(this.props.isMobile === true) {
             return (
-            <div >
-                <div className='welcome-text'>
-                    准备好了吗？
+            <div>
+                <div id='welcome-text' className='welcome-text'>
+                    {this.props.chnCharType === 'sc'? simplified_welcome_title : traditional_welcome_title}
                 </div>
                 <div>
                     <Options 
@@ -270,8 +274,8 @@ class MenuBoard extends Component {
         return (
                 
             <div style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                <div className='welcome-text' style={{display:'flex', flex:'1',alignItems:'flex-end', color: 'white', textAlign: 'center', paddingBottom: '0px', fontSize:'4em'}}>
-                    准备好了吗？
+                <div id='welcome-text' className='welcome-text' style={{display:'flex', flex:'1',alignItems:'flex-end', color: 'white', textAlign: 'center', paddingBottom: '0px', fontSize:'4em'}}>
+                    {this.props.chnCharType === 'sc'? simplified_welcome_title : traditional_welcome_title}
                 </div>
                 <div style={{flex:'3'}}>
                     <Options 

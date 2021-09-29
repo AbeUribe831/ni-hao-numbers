@@ -15,6 +15,7 @@ exports[`snapshots renders MenuBoard with isMobile being false 1`] = `
 >
   <div
     className="welcome-text"
+    id="welcome-text"
     style={
       Object {
         "alignItems": "flex-end",
@@ -27,7 +28,7 @@ exports[`snapshots renders MenuBoard with isMobile being false 1`] = `
       }
     }
   >
-    准备好了吗？
+    准备好了吗?
   </div>
   <div
     style={
@@ -73,16 +74,137 @@ exports[`snapshots renders MenuBoard with isMobile being false 1`] = `
 </div>
 `;
 
+exports[`snapshots renders MenuBoard with isMobile being false and chnCharType is traditional 1`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "100%",
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="welcome-text"
+    id="welcome-text"
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "color": "white",
+        "display": "flex",
+        "flex": "1",
+        "fontSize": "4em",
+        "paddingBottom": "0px",
+        "textAlign": "center",
+      }
+    }
+  >
+    準備好了嗎?
+  </div>
+  <div
+    style={
+      Object {
+        "flex": "3",
+      }
+    }
+  >
+    <Options
+      chnCharType="tc"
+      confirmHowMany={[MockFunction]}
+      confirmMaxIsNumber={[MockFunction]}
+      confirmMinIsNumber={[MockFunction]}
+      decimalPlacement="0"
+      howMany="5"
+      isMobile={false}
+      maxBound="10"
+      minBound="0"
+      moreOptions={false}
+      onClickMoreOptions={[Function]}
+      onClickStart={[MockFunction]}
+      questions={
+        Object {
+          "listen": false,
+          "readCharacter": true,
+          "readNumber": true,
+        }
+      }
+      resetQAndA={[MockFunction]}
+      started={false}
+      updateAnswers={[MockFunction]}
+      updateChnCharType={[MockFunction]}
+      updateDecimalPlacement={[MockFunction]}
+      updateHowMany={[MockFunction]}
+      updateHowManyBlur={[MockFunction]}
+      updateMaxBound={[MockFunction]}
+      updateMaxBoundBlur={[MockFunction]}
+      updateMinBound={[MockFunction]}
+      updateMinBoundBlur={[MockFunction]}
+      updateQuestions={[MockFunction]}
+    />
+  </div>
+</div>
+`;
+
 exports[`snapshots renders MenuBoard with isMobile being true 1`] = `
 <div>
   <div
     className="welcome-text"
+    id="welcome-text"
   >
-    准备好了吗？
+    准备好了吗?
   </div>
   <div>
     <Options
       chnCharType="sc"
+      confirmHowMany={[MockFunction]}
+      confirmMaxIsNumber={[MockFunction]}
+      confirmMinIsNumber={[MockFunction]}
+      decimalPlacement="0"
+      howMany="5"
+      isMobile={true}
+      maxBound="10"
+      minBound="0"
+      moreOptions={false}
+      onClickMoreOptions={[Function]}
+      onClickStart={[MockFunction]}
+      questions={
+        Object {
+          "listen": false,
+          "readCharacter": true,
+          "readNumber": true,
+        }
+      }
+      resetQAndA={[MockFunction]}
+      started={false}
+      updateAnswers={[MockFunction]}
+      updateChnCharType={[MockFunction]}
+      updateDecimalPlacement={[MockFunction]}
+      updateHowMany={[MockFunction]}
+      updateHowManyBlur={[MockFunction]}
+      updateMaxBound={[MockFunction]}
+      updateMaxBoundBlur={[MockFunction]}
+      updateMinBound={[MockFunction]}
+      updateMinBoundBlur={[MockFunction]}
+      updateQuestions={[MockFunction]}
+    />
+  </div>
+</div>
+`;
+
+exports[`snapshots renders MenuBoard with isMobile being true and chnCharType is traditional 1`] = `
+<div>
+  <div
+    className="welcome-text"
+    id="welcome-text"
+  >
+    準備好了嗎?
+  </div>
+  <div>
+    <Options
+      chnCharType="tc"
       confirmHowMany={[MockFunction]}
       confirmMaxIsNumber={[MockFunction]}
       confirmMinIsNumber={[MockFunction]}

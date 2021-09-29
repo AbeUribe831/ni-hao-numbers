@@ -158,7 +158,7 @@ class Loader extends Component {
 
     render() {
         return (
-            <p style={{fontSize: '2em', textAlign: 'center', color: 'white'}}>Loading{this.state.idle_animation}</p>
+            <p id='loader' style={{fontSize: '2em', textAlign: 'center', color: 'white'}}>Loading{this.state.idle_animation}</p>
         )
     }
 }
@@ -261,9 +261,9 @@ class EndPage extends Component {
                         <div className='center-aligned-flex'>
                             <div style={{textAlign: 'center'}}>
                                 <p className='non-ui-desktop-text'>{AnswerTypes[wrongAnswer.practiceQuestion['answer_type']]}</p>
-                                <p className='non-ui-desktop-text' style={{color:'red'}}>{wrongAnswer.wrongAnswer}</p>
+                                <p className='non-ui-desktop-text' style={{color: '#1338c6'}}>{wrongAnswer.wrongAnswer}</p>
                                 <p className='non-ui-desktop-text'>correct answer</p>
-                                <p className='non-ui-desktop-text' style={{marginBottom:'0.5em', color: '#1338c6'}}>{wrongAnswer.practiceQuestion['answer']}</p>
+                                <p className='non-ui-desktop-text' style={{marginBottom:'0.5em', color:'red'}}>{wrongAnswer.practiceQuestion['answer']}</p>
                             </div>
                             <div style={{display:'flex', flexDirection: 'row', paddingBottom: '1em'}}>
                                     
@@ -298,9 +298,9 @@ class EndPage extends Component {
                         <div className='center-aligned-flex'>
                             <div style={{textAlign: 'center'}}>
                                 <p className='non-ui-text'>{AnswerTypes[wrongAnswer.practiceQuestion['answer_type']]}</p>
-                                <p className='non-ui-text' style={{color:'red'}}>{wrongAnswer.wrongAnswer}</p>
+                                <p className='non-ui-text' style={{color: '#1338c6'}}>{wrongAnswer.wrongAnswer}</p>
                                 <p className='non-ui-text'>correct answer</p>
-                                <p className='non-ui-text' style={{marginBottom:'0.5em'}}>{wrongAnswer.practiceQuestion['answer']}</p>
+                                <p className='non-ui-text' style={{marginBottom:'0.5em', color:'red'}}>{wrongAnswer.practiceQuestion['answer']}</p>
                             </div>
                             <div style={{display:'flex', flexDirection: 'row', paddingBottom: '1em'}}>
                                     

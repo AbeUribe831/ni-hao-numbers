@@ -166,6 +166,7 @@ exports[`snapshots renders CurrentStep with isMobile true 1`] = `
 
 exports[`snapshots renders Loader 1`] = `
 <p
+  id="loader"
   style={
     Object {
       "color": "white",

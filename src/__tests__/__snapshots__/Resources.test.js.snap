@@ -3,6 +3,7 @@
 exports[`rendering snapshots Resources when isMobile is false 1`] = `
 <div
   className="main-board"
+  id="resource-div"
   style={
     Object {
       "alignItems": "center",
@@ -185,6 +186,7 @@ exports[`rendering snapshots Resources when isMobile is false 1`] = `
 exports[`rendering snapshots Resources when isMobile is true 1`] = `
 <div
   className="main-board"
+  id="resource-div"
   style={
     Object {
       "alignItems": "center",

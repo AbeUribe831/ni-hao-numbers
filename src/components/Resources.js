@@ -2,10 +2,10 @@ import React from 'react'
 import '../component-styles/MainBoard.css'
 import '../component-styles/Resources.css'
 export default function Resources(props) {
-    console.log('is mobile ', props.isMobile);
-    // TODO:: on mobile have little side padding, desktop have about 8em padding on each side
     return (
-        <div className='main-board' 
+        <div 
+            id='resource-div'
+            className='main-board' 
             style={{
                 paddingTop: '3em',
                 color: 'white',

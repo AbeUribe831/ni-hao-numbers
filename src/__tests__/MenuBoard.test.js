@@ -364,7 +364,7 @@ describe('logic', () => {
         const decimal_select = wrapper.find({name: 'decimal'});
         decimal_select.simulate('change', {target: {value: '1'}});
         expect(wrapper.props().updateDecimalPlacement).toHaveBeenCalledTimes(1);
-
+        
         const chn_char_select = wrapper.find({name: 'chinese-character-type'});
         chn_char_select.simulate('change', {target: {value: 'tc'}});
         expect(wrapper.props().updateChnCharType).toHaveBeenCalledTimes(1);
@@ -382,7 +382,11 @@ describe('logic', () => {
         expect(wrapper.find(MoreOptions).exists()).toBe(true);
         wrapper.find('#hide-button').simulate('click')
         expect(wrapper.find(MoreOptions).exists()).toBe(false);
-    })
+
+        expect(wrapper.find('#welcome-text').text()).toBe('准备好了吗?');
+        wrapper.setProps({chnCharType : 'tc'});
+        expect(wrapper.find('#welcome-text').text()).toBe('準備好了嗎?');
+    });
 });
 
 describe('snapshots', () => {
@@ -430,7 +434,7 @@ describe('snapshots', () => {
         expect(toJson(wrapper)).toMatchSnapshot();
     });
     test('renders Options with isMobile being true', () => {
-        options_props.isMobile = true
+        options_props.isMobile = true;
         const wrapper = Enzyme.shallow(
             <Options
                 {...options_props}
@@ -446,8 +450,27 @@ describe('snapshots', () => {
         );
         expect(toJson(wrapper)).toMatchSnapshot();
     });
+    test('renders MenuBoard with isMobile being false and chnCharType is traditional', () => {
+        menu_board_props.chnCharType = 'tc';
+        const wrapper = Enzyme.shallow(
+            <MenuBoard
+                {...menu_board_props}
+            />
+        );
+        expect(toJson(wrapper)).toMatchSnapshot();
+    });
     test('renders MenuBoard with isMobile being true', () => {
-        menu_board_props.isMobile = true
+        menu_board_props.isMobile = true;
+        const wrapper = Enzyme.shallow(
+            <MenuBoard
+                {...menu_board_props}   
+            />
+        );
+        expect(toJson(wrapper)).toMatchSnapshot();
+    });
+    test('renders MenuBoard with isMobile being true and chnCharType is traditional', () => {
+        menu_board_props.isMobile = true;
+        menu_board_props.chnCharType = 'tc';
         const wrapper = Enzyme.shallow(
             <MenuBoard
                 {...menu_board_props}   
