@@ -1,0 +1,8 @@
+FROM node:14.17.6-slim as build
+
+WORKDIR /opt/ni-hao-numbers
+
+COPY package*.json /opt/ni-hao-numbers/
+RUN npm install
+COPY . /opt/ni-hao-numbers/
+CMD ["npm", "start"]

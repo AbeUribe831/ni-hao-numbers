@@ -15,7 +15,7 @@ import {
 // signin is signup component
 // TODO:: add a css class to add a container for the main board / signin
 // change Eng button to select div
-const url = 'http://localhost:3000';
+const url = process.env.REACT_APP_BASE_URL + ':3000';
 // will treat (0, 1224px] as mobile / tablet
 class App extends Component {
   constructor(props) {
