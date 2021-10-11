@@ -5,7 +5,7 @@ describe('Ni Hao Numbers end to end tests', () => {
     const chinese_digits = /[零一二三四五六七八九十两千万亿兆点负兩萬億兆負]+/
     beforeEach(() => {
         cy.visit('http://localhost:3000');
-        cy.intercept('POST', '/studyboardSetup').as('study-board-setup');
+        cy.intercept('POST', '/study-board-setup').as('study-board-setup');
         cy.waitForReact();
     });
     const simplified_welcome_title = '准备好了吗?' 
