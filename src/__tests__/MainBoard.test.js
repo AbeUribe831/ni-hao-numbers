@@ -149,7 +149,7 @@ describe('logic', () => {
     });
     test('test starting StudyBoard', () => {
         window.URL.createObjectURL = jest.fn(() => 'some stuff');
-        fetch_mock.postOnce('http://localhost:5000/studyboardSetup', Promise.resolve('value'));
+        fetch_mock.postOnce('http://localhost:5000/study-board-setup', Promise.resolve('value'));
         const wrapper = mount(
             <MainBoard
                 {...main_board_props}

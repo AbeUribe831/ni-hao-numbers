@@ -29,7 +29,7 @@ let button_props
 const mock_function = jest.fn();
 
 const url = 'http://localhost:5000'
-const post_url = '/studyboardSetup'
+const post_url = '/study-board-setup'
 
 beforeEach(() => {
     question_step_props = {

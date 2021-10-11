@@ -414,7 +414,7 @@ class StudyBoard extends Component {
            })
         }
         this.props.updateLoading();
-        fetch('http://localhost:5000/studyboardSetup', requestOptions)
+        fetch('http://localhost:5000/study-board-setup', requestOptions)
             .then(response => {
                 if (response.status >= 400 && response.status <= 500) {
                     //throw response.statusText;
