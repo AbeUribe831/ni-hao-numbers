@@ -4,7 +4,7 @@ import 'cypress-react-selector';
 describe('Ni Hao Numbers end to end tests', () => {
     const chinese_digits = /[零一二三四五六七八九十两千万亿兆点负兩萬億兆負]+/
     beforeEach(() => {
-        cy.visit('http://localhost:3000');
+        cy.visit(Cypress.env("visit_url"));
         cy.intercept('POST', '/study-board-setup').as('study-board-setup');
         cy.waitForReact();
     });

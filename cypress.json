@@ -2,6 +2,7 @@
     "env": {
         "cypress-react-selector": {
             "root": "#root"
-        }
+        },
+        "visit_url": "http://localhost:3000"
     }
 }

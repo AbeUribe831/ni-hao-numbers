@@ -12,4 +12,5 @@ FROM nginx:1.20.1
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 # this will copy the compiled reactjs application to the container
 # --from gets allows us access to the previous container so we can copy the files to the nginx container
+EXPOSE 80
 COPY --from=build /opt/ni-hao-numbers/build /usr/share/nginx/html

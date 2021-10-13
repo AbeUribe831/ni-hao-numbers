@@ -9,6 +9,10 @@ import toJson from 'enzyme-to-json';
 import fetch_mock, { spy } from 'fetch-mock';
 import { StudyBoard } from '../components/StudyBoard';
 
+import "whatwg-fetch"
+import { rest } from "msw";
+import { setupServer } from "msw/node"
+
 Enzyme.configure({adapter: new Adapter()});
 
 let main_board_props;
@@ -23,8 +27,24 @@ beforeEach(() => {
 afterEach(() => {
     jest.clearAllMocks();
     fetch_mock.restore()
+    fetch_mock.reset()
 });
 
+const post_url = '/study-board-setup'
+const server = setupServer (
+    rest.post(`${process.env.REACT_APP_BASE_URL}${post_url}`, (req, res, context) => {
+        return res(
+            context.status(200),
+            context.json([{
+                    listen: null,
+                    answer: '9',
+                    answer_type: 'writeNumber',
+                    questions: '九'
+                }]
+            )
+        )
+    })
+);
 describe('rendering components', () => {
     test('rendering MainBoard', () => {
         shallow(
@@ -149,7 +169,7 @@ describe('logic', () => {
     });
     test('test starting StudyBoard', () => {
         window.URL.createObjectURL = jest.fn(() => 'some stuff');
-        fetch_mock.postOnce('http://localhost:5000/study-board-setup', Promise.resolve('value'));
+        
         const wrapper = mount(
             <MainBoard
                 {...main_board_props}

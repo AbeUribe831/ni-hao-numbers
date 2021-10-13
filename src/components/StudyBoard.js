@@ -36,15 +36,18 @@ class QuestionStep extends Component {
         super(props);
         // we want a fixed height in em of the questions depending on the device type
         this.state = {
-            height: this.props.isMobile ? 80 : 110 
+            height: this.props.isMobile ? 80 : 110, 
+            playPromise:  null
         }
         // addding this event window to adjust the height of question div if the number is too long for its window
         window.addEventListener('resize', adjustTextQuestion('textQuestion'));
     }
     // pauses the audio if user goes to next number and do not pause audio if user is tying answer
         getSnapshotBeforeUpdate(prevProps, prevState) {
-            if(prevProps.audio !== null && (prevProps.currentNumber !== this.props.currentNumber || prevProps.userAnswer === this.props.userAnswer)) {
-                prevProps.audio.pause();
+            if(prevState.playPromise !== null && (prevProps.currentNumber !== this.props.currentNumber || prevProps.userAnswer === this.props.userAnswer)) {
+                prevState.playPromise.then(_ => {
+                    prevProps.audio.pause();
+                })
             }
             return null;
         }
@@ -53,18 +56,23 @@ class QuestionStep extends Component {
             return;
         }
         componentWillUnmount() {
-            if (this.props.audio != null) {
-                this.props.audio.pause();
+            if (this.state.playPromise !== null) {
+                this.state.playPromise.then(_ => {
+                    this.props.audio.pause();
+                });
             }
             window.removeEventListener('resize', adjustTextQuestion(document.getElementById('textQuestion')));
         }
         // plays or resets the audio when button in clicked
         playAudio() {
-            if(!this.props.audio.paused) {
+            if(!this.props.audio.paused && this.state.playPromise !== null) {
                 this.props.audio.currentTime=0;
             }
             else {
-                this.props.audio.play();
+                const callPlay = this.props.audio.play(); 
+                this.setState({
+                    playPromise: callPlay
+                })
             }
         }
         render() {
@@ -414,7 +422,9 @@ class StudyBoard extends Component {
            })
         }
         this.props.updateLoading();
-        fetch('http://localhost:5000/study-board-setup', requestOptions)
+        const url = `${process.env.REACT_APP_BASE_URL}/study-board-setup` 
+        // TODO:: fix tests with adding a port to the link
+        fetch(url, requestOptions)
             .then(response => {
                 if (response.status >= 400 && response.status <= 500) {
                     //throw response.statusText;
@@ -430,11 +440,11 @@ class StudyBoard extends Component {
             }).catch(e => {
                 // used for network error
                 if(e instanceof TypeError) {
-                    console.log(e)
+                    console.error(e)
                 }
                 else {
                     e.then(value => {
-                        console.log(value)
+                        console.error(value)
                     });
                 }
                 // testing this line

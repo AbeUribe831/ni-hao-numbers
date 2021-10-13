@@ -14,9 +14,10 @@ import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import toJson from 'enzyme-to-json';
 import { base64StringToBlob } from 'blob-util';
-// use fetch-mock instead of nock because it mocks fetch calls. nock mocks xmlhttpreqeusts
-import fetch_mock, { spy } from 'fetch-mock';
-import { queryByTestId } from '@testing-library/react';
+
+import "whatwg-fetch"
+import { rest } from "msw";
+import { setupServer } from "msw/node";
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -28,9 +29,29 @@ let answer_step_props;
 let button_props
 const mock_function = jest.fn();
 
-const url = 'http://localhost:5000'
 const post_url = '/study-board-setup'
 
+const server = setupServer (
+    rest.post(`${process.env.REACT_APP_BASE_URL}${post_url}`, (req, res, context) => {
+        return res(
+            context.status(200),
+            context.json([{
+                    listen: null,
+                    answer: '9',
+                    answer_type: 'writeNumber',
+                    questions: '九'
+                }]
+            )
+        )
+    })
+);
+
+beforeAll(() => {
+    server.listen();
+});
+afterAll(() => {
+    server.close();
+});
 beforeEach(() => {
     question_step_props = {
         isMobile: false,
@@ -107,7 +128,7 @@ beforeEach(() => {
 
 afterEach (() => {
     jest.clearAllMocks();
-    fetch_mock.restore();
+    server.resetHandlers();
 })
 describe('rendering components', () => {
     test('rendering CurrentStep', () => {
@@ -155,14 +176,6 @@ describe('rendering components', () => {
     });
 
     test('rendering StudyBoard', () => {
-        fetch_mock.postOnce(url + post_url, {
-            body: [{
-                    listen: null,
-                    answer: '9',
-                    answer_type: 'writeNumber',
-                    questions: '九'
-                }]
-            })
         const wraper = shallow(
             <StudyBoard
                 {...study_board_props}
@@ -251,14 +264,7 @@ describe('passing props', () => {
     });
 
     test('passing props to StudyBoard', () => {
-        fetch_mock.postOnce(url + post_url, {
-            body: [{
-                    listen: null,
-                    answer: '9',
-                    answer_type: 'writeNumber',
-                    questions: '九'
-                }]
-            });
+        
         const wrapper = mount(
             <StudyBoard
                 {...study_board_props}
@@ -448,10 +454,9 @@ describe('logic', () => {
         expect(wrapper.find('#review-button').exists()).toBe(false);
     });
     // StudyBoard
+    // TODO:: figure out a way to async await the fetch inside StudyBoard because wrapper.setState() is a workaround
     test('StudyBoard to EndPage with no wrong answers', () => {
         // bypass fetch and the promises after
-        fetch_mock.postOnce(url + post_url, Promise.resolve('value'));
-        //fetch_mock.postOnce(url + post_url, Promise.resolve('value').then(response => {return Promise.resolve(response)}).then(response => {return Promise.resolve(response)}).catch((err) => {console.log(err)}));
         const wrapper = mount(
             <StudyBoard
                 {...study_board_props}
@@ -480,10 +485,9 @@ describe('logic', () => {
         expect(wrapper.find('#text-question').exists()).toBe(false);
         expect(wrapper.find('#review-button').exists()).toBe(false);
     });
+    // TODO:: figure out a way to async await the fetch inside StudyBoard because wrapper.setState() is a workaround
     test('StudyBoard to EndPage with a wrong answer', () => {
         // bypass fetch and the promises after
-        fetch_mock.postOnce(url + post_url, Promise.resolve('value'));
-        //fetch_mock.postOnce(url + post_url, Promise.resolve('value').then(response => {return Promise.resolve(response)}).then(response => {return Promise.resolve(response)}).catch((err) => {console.log(err)}));
         const wrapper = mount(
             <StudyBoard
                 {...study_board_props}
@@ -590,8 +594,6 @@ describe('snapshots', () => {
         expect(toJson(wrapper)).toMatchSnapshot();
     });
     test('renders StudyBoard', () => {
-        fetch_mock.postOnce(url + post_url, Promise.resolve('value'));
-        //fetch_mock.postOnce(url + post_url, Promise.resolve('value').then(response => {return Promise.resolve(response)}).then(response => {return Promise.resolve(response)}).catch((err) => {console.log(err)}));
         const wrapper = shallow(
             <StudyBoard
                 {...study_board_props}
