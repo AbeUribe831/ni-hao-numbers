@@ -180,6 +180,20 @@ exports[`rendering snapshots Resources when isMobile is false 1`] = `
       If there are any resources you think I should add (especially free ones), let me know! I hope this helps and keep on studying.
     </p>
   </div>
+  <div
+    style={
+      Object {
+        "color": "white",
+        "textAlign": "center",
+        "width": "100%",
+      }
+    }
+  >
+    <hr />
+    <p>
+      nihaonumbers@gmail.com
+    </p>
+  </div>
 </div>
 `;
 
@@ -361,6 +375,20 @@ exports[`rendering snapshots Resources when isMobile is true 1`] = `
     </p>
     <p>
       If there are any resources you think I should add (especially free ones), let me know! I hope this helps and keep on studying.
+    </p>
+  </div>
+  <div
+    style={
+      Object {
+        "color": "white",
+        "textAlign": "center",
+        "width": "100%",
+      }
+    }
+  >
+    <hr />
+    <p>
+      nihaonumbers@gmail.com
     </p>
   </div>
 </div>

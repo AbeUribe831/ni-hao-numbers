@@ -29,66 +29,57 @@ function CurrentStep(props) {
    );
 }
 // else display props.question
-// TODO:: create a new button for listening
 // TODO:: on unmount stop audio (so audio doesn't play after submit is done)
 class QuestionStep extends Component {
     constructor(props) {
         super(props);
         // we want a fixed height in em of the questions depending on the device type
         this.state = {
-            height: this.props.isMobile ? 80 : 110, 
-            playPromise:  null
+            height: this.props.isMobile ? 110 : 140, 
         }
         // addding this event window to adjust the height of question div if the number is too long for its window
         window.addEventListener('resize', adjustTextQuestion('textQuestion'));
     }
     // pauses the audio if user goes to next number and do not pause audio if user is tying answer
-        getSnapshotBeforeUpdate(prevProps, prevState) {
-            if(prevState.playPromise !== null && (prevProps.currentNumber !== this.props.currentNumber || prevProps.userAnswer === this.props.userAnswer)) {
-                prevState.playPromise.then(_ => {
-                    prevProps.audio.pause();
-                })
-            }
+        getSnapshotBeforeUpdate() {
             return null;
         }
        // only here to get rid of the warning for getSnapshotBeforeUpdate method
-        componentDidUpdate() {
+        componentDidUpdate(prevProps) {
+            if(this.props.audioURL !== null && prevProps.currentNumber !== this.props.currentNumber && prevProps.audioURL !== this.props.audioURL) {
+                this.refs.audio.pause();
+                this.refs.audio.load();
+                this.refs.audio.play();
+            }
             return;
         }
         componentWillUnmount() {
-            if (this.state.playPromise !== null) {
-                this.state.playPromise.then(_ => {
-                    this.props.audio.pause();
-                });
+            if (this.props.audioURL !== null) {
+                this.refs.audio.pause();
             }
             window.removeEventListener('resize', adjustTextQuestion(document.getElementById('textQuestion')));
         }
         // plays or resets the audio when button in clicked
-        playAudio() {
-            if(!this.props.audio.paused && this.state.playPromise !== null) {
-                this.props.audio.currentTime=0;
-            }
-            else {
-                const callPlay = this.props.audio.play(); 
-                this.setState({
-                    playPromise: callPlay
-                })
-            }
-        }
         render() {
-            if (this.props.audio != null) {
+            if (this.props.audioURL != null) {
                 return (
                     <div style={{display:'flex', flexDirection:'column', alignItems: 'center', height: this.state.height + 'px'}}>
-                        <button id='play-audio' style={{ margin: '10px 0 0 0'}}
-                            className={this.props.isMobile === false ? 'desktop-gg-play-button' : 'gg-play-button'}
-                            onClick={() => this.playAudio() }>
-                        </button>
+                        <p style={this.isMobile === false ? {textAlign:'center', margin: '8px 0px 4px 0px', fontSize: '2em'} : {textAlign:'center', margin: '8px 0px 0px 0px', fontSize: '1em'}}>Listen to number</p>
+                        <audio 
+                            id="question-audio"
+                            controls style={{marginTop: '6px', marginBottom: '6px'}}
+                            ref="audio"
+                            >
+                            <source 
+                                src={this.props.audioURL}
+                                type="audio/mpeg"></source>
+                        </audio>
                         <select 
                             name='listen-speed'
                             id='listen-speed'
                             defaultValue={'1'}
                             style={!this.props.isMobile ? {fontSize:'medium'}: {}}
-                            onClick={(event) => this.props.audio.playbackRate=parseFloat(event.target.value)}>
+                            onClick={(event) => document.getElementById("question-audio").playbackRate=parseFloat(event.target.value)}>
                             <option value='0.5'>x0.5</option>
                             <option value='0.75'>x0.75</option>
                             <option value='1'>x1</option>
@@ -252,6 +243,8 @@ class EndPage extends Component {
         else {
             const desktop_review_button = this.props.isMobile === false;
             const wrongAnswer = this.props.wrongAnswers[this.state.reviewInstance];
+            const audio = this.props.createAudio(wrongAnswer.practiceQuestion);
+            const audioURL = audio === null ? null : audio.src
             return (
                 <div className='white-text center-aligned-flex' >
                     <CurrentStep
@@ -262,7 +255,7 @@ class EndPage extends Component {
                     <QuestionStep
                         isMobile={this.props.isMobile}
                         currentNumber={wrongAnswer.practiceQuestion}
-                        audio={this.props.createAudio(wrongAnswer.practiceQuestion)}
+                        audioURL={audioURL}
                         userAnswer={wrongAnswer.wrongAnswer}
                     />
                     {desktop_review_button && (
@@ -423,14 +416,14 @@ class StudyBoard extends Component {
         }
         this.props.updateLoading();
         const url = `${process.env.REACT_APP_BASE_URL}/study-board-setup` 
+        function handleErrors(response) {
+            if(!response.ok) throw Error(response.statusText);
+            return response.json();
+        }
         // TODO:: fix tests with adding a port to the link
         fetch(url, requestOptions)
             .then(response => {
-                if (response.status >= 400 && response.status <= 500) {
-                    //throw response.statusText;
-                   throw response.text();
-                }
-                return response.json()
+                return handleErrors(response);
             }).then(translated_data => {
                 this.setState(() => ({
                     currentStep: 1,
@@ -439,16 +432,8 @@ class StudyBoard extends Component {
                 this.props.updateLoading();
             }).catch(e => {
                 // used for network error
-                if(e instanceof TypeError) {
-                    console.error(e)
-                }
-                else {
-                    e.then(value => {
-                        console.error(value)
-                    });
-                }
+               console.error(e)
                 // testing this line
-                this.props.updateLoading();
                 this.props.onClickExit();
             });
     }
@@ -479,6 +464,7 @@ class StudyBoard extends Component {
             // const currentNumber = this.state.practiceQuestions[currentStep - 1].number;
             const currentNumber = this.state.practiceQuestions[currentStep - 1];
             const audio = this.createAudio(currentNumber);
+            const audioURL = audio === null ? null : audio.src;
             return (
                 <div className='white-text' 
                     style={{
@@ -496,7 +482,7 @@ class StudyBoard extends Component {
                     <QuestionStep
                         isMobile={this.props.isMobile}
                         currentNumber={currentNumber}
-                        audio={audio}
+                        audioURL={audioURL}
                         userAnswer={this.state.userAnswer}
                     />
                     <AnswerStep

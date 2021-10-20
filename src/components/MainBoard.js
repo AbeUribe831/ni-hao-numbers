@@ -92,9 +92,9 @@ class MainBoard extends Component {
             this.setState({
                 howMany: event.target.value
             }, () => {
-                if (parseInt(this.state.howMany) > 50) {
+                if (parseInt(this.state.howMany) > 30) {
                     this.setState({
-                        howMany: '50'
+                        howMany: '30'
                     });
                 }
             });
@@ -225,7 +225,8 @@ class MainBoard extends Component {
     }
     onClickStartedFalse() {
         this.setState({
-            started: false 
+            started: false, 
+            loading: false
         });
         if(this.props.isMobile) {
             this.props.hideMobileNav(false);
@@ -235,7 +236,8 @@ class MainBoard extends Component {
         const started = this.state.started;
         if(!started) { 
             return (
-                <div className='main-board' style={{paddingTop: '3em'}}>
+                <div className='main-board' style={{flexDirection: 'column'}}>
+                    <div className='main-board' style={this.props.isMobile === true ? {paddingTop: '4em'} : {}}>
                     <MenuBoard 
                         isMobile={this.props.isMobile}
                         minBound={this.state.minBound}
@@ -261,6 +263,11 @@ class MainBoard extends Component {
                         resetQAndA={this.resetQAndA}
                         onClickStart={this.onClickStartedTrue}
                     />
+                    </div>
+                    <div style={{width: '100%', textAlign: 'center', color: 'white'}}>
+                        <hr/>
+                        <p>nihaonumbers@gmail.com</p>
+                    </div>
                 </div>
             )
         }

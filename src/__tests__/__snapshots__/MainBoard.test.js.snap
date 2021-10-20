@@ -5,40 +5,59 @@ exports[`snapshots renders MainBoard containing MenuBoard component when started
   className="main-board"
   style={
     Object {
-      "paddingTop": "3em",
+      "flexDirection": "column",
     }
   }
 >
-  <MenuBoard
-    chnCharType="sc"
-    confirmHowMany={[Function]}
-    confirmMaxIsNumber={[Function]}
-    confirmMinIsNumber={[Function]}
-    decimalPlacement="0"
-    howMany="15"
-    isMobile={false}
-    maxBound="10"
-    minBound="0"
-    onClickStart={[Function]}
-    questions={
+  <div
+    className="main-board"
+    style={Object {}}
+  >
+    <MenuBoard
+      chnCharType="sc"
+      confirmHowMany={[Function]}
+      confirmMaxIsNumber={[Function]}
+      confirmMinIsNumber={[Function]}
+      decimalPlacement="0"
+      howMany="15"
+      isMobile={false}
+      maxBound="10"
+      minBound="0"
+      onClickStart={[Function]}
+      questions={
+        Object {
+          "listen": true,
+          "readCharacter": true,
+          "readNumber": true,
+        }
+      }
+      resetQAndA={[Function]}
+      started={false}
+      updateChnCharType={[Function]}
+      updateDecimalPlacement={[Function]}
+      updateHowMany={[Function]}
+      updateHowManyBlur={[Function]}
+      updateMaxBound={[Function]}
+      updateMaxBoundBlur={[Function]}
+      updateMinBound={[Function]}
+      updateMinBoundBlur={[Function]}
+      updateQuestions={[Function]}
+    />
+  </div>
+  <div
+    style={
       Object {
-        "listen": true,
-        "readCharacter": true,
-        "readNumber": true,
+        "color": "white",
+        "textAlign": "center",
+        "width": "100%",
       }
     }
-    resetQAndA={[Function]}
-    started={false}
-    updateChnCharType={[Function]}
-    updateDecimalPlacement={[Function]}
-    updateHowMany={[Function]}
-    updateHowManyBlur={[Function]}
-    updateMaxBound={[Function]}
-    updateMaxBoundBlur={[Function]}
-    updateMinBound={[Function]}
-    updateMinBoundBlur={[Function]}
-    updateQuestions={[Function]}
-  />
+  >
+    <hr />
+    <p>
+      nihaonumbers@gmail.com
+    </p>
+  </div>
 </div>
 `;
 

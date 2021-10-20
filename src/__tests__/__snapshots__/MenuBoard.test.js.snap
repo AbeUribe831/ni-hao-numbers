@@ -507,7 +507,7 @@ exports[`snapshots renders NumberOptions with isMobile false 1`] = `
       <p
         className="desktop-sub-titles"
       >
-        How Many
+        Total Cards
       </p>
       <input
         className="desktop-input"
@@ -656,7 +656,7 @@ exports[`snapshots renders NumberOptions with isMobile true 1`] = `
       <p
         className="sub-titles"
       >
-        How Many
+        Total Cards
       </p>
       <input
         className=""

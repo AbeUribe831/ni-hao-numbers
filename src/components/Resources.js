@@ -119,6 +119,10 @@ export default function Resources(props) {
 
                 <p>If there are any resources you think I should add (especially free ones), let me know! I hope this helps and keep on studying.</p>
             </div>
+            <div style={{width: '100%', textAlign: 'center', color: 'white'}}>
+                <hr/>
+                <p>nihaonumbers@gmail.com</p>
+            </div>
         </div>
     )
 }

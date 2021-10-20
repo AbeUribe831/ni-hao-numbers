@@ -92,7 +92,7 @@ function NumberOptions(props) {
                 </div>
                 <div style={{marginLeft: '1em'}}></div>
                 <div className='flex-column'>
-                    <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'}>How Many</p>
+                    <p className={props.isMobile === true ? 'sub-titles' : 'desktop-sub-titles'}>Total Cards</p>
                     <input id='how-many' className={props.isMobile === true ? '' : 'desktop-input'}
                         name={'howMany'}
                         value={props.howMany}

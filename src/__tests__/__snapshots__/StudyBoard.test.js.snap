@@ -187,7 +187,7 @@ exports[`snapshots renders QuestionStep with isMobile false 1`] = `
       "alignItems": "center",
       "display": "flex",
       "flexDirection": "column",
-      "height": "110px",
+      "height": "140px",
       "justifyContent": "center",
     }
   }
@@ -212,7 +212,7 @@ exports[`snapshots renders QuestionStep with isMobile true 1`] = `
       "alignItems": "center",
       "display": "flex",
       "flexDirection": "column",
-      "height": "80px",
+      "height": "110px",
       "justifyContent": "center",
     }
   }

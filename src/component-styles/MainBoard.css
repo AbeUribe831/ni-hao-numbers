@@ -66,6 +66,7 @@
 } 
 /* play button width: 22, height: 22 */
 .gg-play-button {
+  cursor: pointer;
   border: none;
   box-sizing: border-box;
   position: relative;
@@ -94,6 +95,7 @@
 }
 /* desktop play button width: 22, height: 22 */
 .desktop-gg-play-button {
+  cursor: pointer;
   border: none;
   box-sizing: border-box;
   position: relative;

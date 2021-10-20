@@ -134,10 +134,10 @@ describe('logic', () => {
         max_bound.simulate('keyDown');
         expect(wrapper.instance().state.maxBound).toBe('9999999999998.99');
         */
-        how_many.simulate('change', {target: {value: '50'}});
-        expect(wrapper.instance().state.howMany).toBe('50');
+        how_many.simulate('change', {target: {value: '30'}});
+        expect(wrapper.instance().state.howMany).toBe('30');
         how_many.simulate('change', {target: {value: '51'}});
-        expect(wrapper.instance().state.howMany).toBe('50');
+        expect(wrapper.instance().state.howMany).toBe('30');
         
         decimal_select.simulate('change', {target: {value: '2'}});
         expect(wrapper.instance().state.decimalPlacement).toBe('2');

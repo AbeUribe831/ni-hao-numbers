@@ -125,7 +125,7 @@ describe('Ni Hao Numbers end to end tests', () => {
             cy.wait('@study-board-setup');
 
             // this does not test that audio acutally plays, just that the button is there
-            cy.get('#play-audio')
+            cy.get('#question-audio')
             .click();
             
             cy.get('#exit-button')
@@ -182,7 +182,7 @@ describe('Ni Hao Numbers end to end tests', () => {
         cy.wait('@study-board-setup');
 
 
-        cy.get('#play-audio')
+        cy.get('#question-audio')
         .click();
             
         cy.getReact('QuestionStep')

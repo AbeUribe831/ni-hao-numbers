@@ -309,7 +309,8 @@ describe('logic', () => {
             answer_type: 'writeNumber',
             questions: null
         };
-        question_step_props.audio = new Audio(URL.createObjectURL(base64StringToBlob(question_step_props.currentNumber.listen)));
+        question_step_props.audioURL = new Audio(URL.createObjectURL(base64StringToBlob(question_step_props.currentNumber.listen)));
+        question_step_props.audioURL = question_step_props.audioURL.src  
         const wrapper = mount(
             <QuestionStep
                 {...question_step_props}
@@ -326,18 +327,9 @@ describe('logic', () => {
             }
         })
         // wrapper.props().audio.play = jest.fn();
-        const play_audio_button = wrapper.find('#play-audio');
+        const play_audio_button = wrapper.find('source');
         expect(play_audio_button.exists()).toBe(true);
-
-        const spy_on_play_audio = jest.spyOn(wrapper.instance(), 'playAudio');
-        // click audio button, check playAudio() was called
-        play_audio_button.simulate('click');
-        expect(spy_on_play_audio).toBeCalledTimes(1);
-        play_audio_button.simulate('click');
-        expect(spy_on_play_audio).toBeCalledTimes(2);
-        expect(paused).toBe(false);
-        // check that audio resets
-        expect(wrapper.props().audio.currentTime).toBe(0)
+        expect(play_audio_button.prop('src')).toBeDefined()
     });
     // AnswerStep (update userAnswer)
     test('AnswerStep logic for pressing enter', () => {
